@@ -16,6 +16,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
 import { usePathname } from "next/navigation";
+import Cart from "./Cart/Cart";
 
 const navLinks = [
   { path: "/", label: "Home", icon: FaHome },
@@ -71,7 +72,7 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
         </ul>
-        <div>
+        <div className="flex items-center gap-6">
           {/* {user ? ( */}
           {/* <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-circle avatar">
@@ -96,6 +97,8 @@ const Navbar: React.FC = () => {
               </ul>
             </div> */}
           {/* //   ) : ( */}
+          <Cart />
+
           <Link className="" href={"/login"}>
             <Button>Login</Button>
           </Link>
