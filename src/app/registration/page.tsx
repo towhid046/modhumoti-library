@@ -76,9 +76,7 @@ function Registration() {
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-2" >
-              Photo
-            </label>
+            <label className="block text-gray-700 mb-2">Photo</label>
             <input
               type="file"
               {...register("photoFile", {
