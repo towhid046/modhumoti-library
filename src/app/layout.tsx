@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" data-theme="winter">
       <AuthProvider>
         <body className={inter.className}>
-          <header>
+          <header className='sticky top-0'>
             <Navbar />
           </header>
           <main>{children}</main>

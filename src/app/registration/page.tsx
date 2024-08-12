@@ -32,7 +32,7 @@ function Registration() {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-2">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
+      <div className="bg-white p-8 rounded shadow-2xl w-full max-w-2xl">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Register
         </h2>
@@ -50,7 +50,7 @@ function Registration() {
               placeholder="Your name"
               id="name"
               {...register("name", { required: true })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.name && (
               <span className="text-red-500">Name is required</span>
@@ -68,7 +68,7 @@ function Registration() {
                 required: true,
                 pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
               })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.email && (
               <span className="text-red-500">Valid email is required</span>
@@ -82,7 +82,7 @@ function Registration() {
               {...register("photoFile", {
                 required: true,
               })}
-              className="w-full cursor-pointer px-3 py-1.5 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full cursor-pointer px-3 py-1.5 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.photoFile && (
               <span className="text-red-500">PhotoFile is required</span>
@@ -97,7 +97,7 @@ function Registration() {
               type="password"
               placeholder="Create password"
               {...register("password")}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.password && (
               <span className="text-red-500">Password is required</span>
@@ -107,7 +107,7 @@ function Registration() {
           <div className="md:col-span-2">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+              className="w-full py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700 focus:outline-none"
             >
               Register
             </button>

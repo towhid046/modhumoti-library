@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
   //   };
 
   return (
-    <nav className={`py-3.5 shadow-sm bg-base-100 sticky top-0 z-40`}>
+    <nav className={`py-3.5 shadow-sm bg-white z-50`}>
       <div className="container flex justify-between mx-auto px-4 items-center">
         <div className="md:hidden text-xl mt-2">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)}>

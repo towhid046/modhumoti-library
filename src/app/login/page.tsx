@@ -65,7 +65,7 @@ function Login() {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-2">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
+      <div className="bg-white p-8 rounded shadow-2xl w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Login
         </h2>
@@ -79,7 +79,7 @@ function Login() {
               type="email"
               placeholder="Type your email"
               {...register("email", { required: true })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.email && (
               <span className="text-red-500">Email is required</span>
@@ -94,7 +94,7 @@ function Login() {
               type="password"
               placeholder="Type your password"
               {...register("password", { required: true })}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary-color"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.password && (
               <span className="text-red-500">Password is required</span>
@@ -103,7 +103,7 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+            className="w-full py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700 focus:outline-none"
           >
             {isLoading ? "Login..." : "Login"}
           </button>
