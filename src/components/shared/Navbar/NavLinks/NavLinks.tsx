@@ -4,7 +4,7 @@ import Link from "next/link";
 const navLinks = [
   { path: "/", label: "Home" },
   { path: "/books", label: "Books" },
-  { path: "/lecture_sheets", label: "Sheets" },
+  { path: "/sheets", label: "Sheets" },
   { path: "/stationeries", label: "Stationary" },
 ];
 

@@ -17,33 +17,38 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
-    <nav className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
-      <div className="container flex justify-between mx-auto px-4 items-center">
-
-        <div className="flex xl:flex-1 items-center xl:gap-7">
-        <div className="xl:hidden text-xl mt-2 mr-2">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-          <Logo />
-          <NavLinks />
-        </div>
-
-        <div className="flex xl:flex-1 items-center gap-8 justify-between">
-          <div className="w-full">
-            <SearchBook />
+    <>
+      <nav className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
+        <div className="container flex justify-between mx-auto px-4 items-center">
+          <div className="flex xl:flex-1 items-center xl:gap-7">
+            <div className="xl:hidden text-xl mt-2 mr-2">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {isMenuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
+            <Logo />
+            <NavLinks />
           </div>
-          {/* <Cart /> */}
-          <Link href={"/login"}>
-            <Button>Login</Button>
-          </Link>
-        </div>
-      </div>
 
-      {/* for responsive menu */}
-      {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
-    </nav>
+          <div className="flex xl:flex-1 items-center gap-8 justify-between">
+            <div className="w-full md:flex hidden">
+              <SearchBook />
+            </div>
+            {/* <Cart /> */}
+            <Link href={"/login"}>
+              <Button>Login</Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* for responsive menu */}
+        {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
+      </nav>
+
+      <div className='container md:hidden text-[15px] shadow-sm mx-auto px-4 bg-base-100 pt-1 pb-2 '>
+        <SearchBook />
+      </div>
+    </>
   );
 };
 

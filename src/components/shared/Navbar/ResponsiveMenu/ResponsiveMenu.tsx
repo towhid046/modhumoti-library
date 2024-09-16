@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { path: "/", label: "Home" },
   { path: "/books", label: "Books" },
-  { path: "/lecture_sheets", label: "Sheets" },
+  { path: "/sheets", label: "Sheets" },
   { path: "/stationeries", label: "Stationary" },
 ];
 
@@ -25,7 +25,7 @@ const ResponsiveMenu = ({ setIsMenuOpen }: ResponsiveMenuProps) => {
       <div className="relative container mx-auto px-4 top-0 left-0  w-full min-h-screen">
         <ul
           onClick={(e) => e.stopPropagation()}
-          className=" bg-gray-700 text-white max-w-max absolute shadow-xl left-4 top-24 py-5"
+          className=" bg-gray-700 text-white max-w-max absolute shadow-xl left-4 top-24 py-5 rounded-md"
         >
           <div className="absolute -top-5  left-2">
             <BiSolidDownArrow className="text-3xl text-gray-700 rotate-180" />

@@ -26,7 +26,10 @@ export default function RootLayout({
           <header className="sticky top-0 z-50">
             <Navbar />
           </header>
-          <main>{children}</main>
+          <main className='min-h-screen'>{children}</main>
+          <footer>
+            <p className=" text-center bg-gray-800 text-white py-2.5 text-[14px]">This is footer</p>
+          </footer>
           <ToastContainer />
         </body>
       </AuthProvider>
