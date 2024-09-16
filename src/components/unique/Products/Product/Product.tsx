@@ -16,7 +16,7 @@ const Product = ({ product }) => {
           <Image
             width={400}
             height={200}
-            className="object-cover rounded cursor-pointer hover:scale-125 transition duration-300 "
+            className="object-cover w-full h-60 rounded cursor-pointer hover:scale-125 transition duration-300 "
             src={productImage}
             alt="Image"
           />

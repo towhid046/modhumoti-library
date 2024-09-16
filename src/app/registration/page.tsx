@@ -3,31 +3,44 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import useAxios from "../../hooks/useAxios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+interface OnsubmitProps {
+  name: string;
+  img: string;
+  email: string;
+  password: string;
+}
 
 function Registration() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const axiosInstance = useAxios();
-  // const navigate = useNavigate();
+  const router = useRouter();
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    // try {
-    //   const res = await axiosInstance.post("/users", data);
-    //   if (res.data.insertedId) {
-    //     toast.success("Your account created Successfully! Please Login", {
-    //       position: "top-center",
-    //     });
-    //     navigate("/login");
-    //   }
-    // } catch (error) {
-    //   toast.error(error?.response?.data?.message, {
-    //     position: "top-center",
-    //   });
-    // }
+  const onSubmit = async (data: OnsubmitProps): Promise<void> => {
+    try {
+      const res = await axiosInstance.post("/registration/api", data);
+
+      if (res.data.insertedId) {
+        toast.success(
+          "Your account created Successfully! Check Email to verify Account",
+          {
+            position: "top-center",
+          }
+        );
+        reset();
+        router.push("/");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -48,12 +61,13 @@ function Registration() {
             <input
               type="text"
               placeholder="Your name"
+              required
               id="name"
               {...register("name", { required: true })}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.name && (
-              <span className="text-red-500">Name is required</span>
+              <small className="text-red-500">Name is required</small>
             )}
           </div>
 
@@ -63,7 +77,8 @@ function Registration() {
             </label>
             <input
               type="email"
-              placeholder="Your name"
+              placeholder="Your email"
+              required
               {...register("email", {
                 required: true,
                 pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -71,36 +86,46 @@ function Registration() {
               className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.email && (
-              <span className="text-red-500">Valid email is required</span>
+              <small className="text-red-500">Valid email is required</small>
             )}
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-2">Photo</label>
+            <label className="block text-gray-700 mb-2">Photo Url</label>
             <input
-              type="file"
-              {...register("photoFile", {
+              type="text"
+              {...register("img", {
                 required: true,
               })}
-              className="w-full cursor-pointer px-3 py-1.5 border rounded focus:outline-none focus:border-primary-color"
+              required
+              placeholder="Photo Url"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
-            {errors.photoFile && (
-              <span className="text-red-500">PhotoFile is required</span>
+            {errors.img && (
+              <small className="text-red-500">Photo Url is required</small>
             )}
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-2" htmlFor="pin">
+            <label className="block text-gray-700 mb-2" htmlFor="password">
               Password
             </label>
             <input
               type="password"
+              required
               placeholder="Create password"
-              {...register("password")}
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                  message:
+                    "Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, and a number",
+                },
+              })}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color"
             />
             {errors.password && (
-              <span className="text-red-500">Password is required</span>
+              <small className="text-red-500">{errors.password.message}</small>
             )}
           </div>
 

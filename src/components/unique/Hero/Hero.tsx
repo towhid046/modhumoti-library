@@ -1,8 +1,8 @@
-import heroImg from "../../../assets/images/hero-img.png";
 import React from "react";
 import Button from "@/components/shared/Button/Button";
-import Image from "next/image";
 import Link from "next/link";
+import { IoLibraryOutline } from "react-icons/io5";
+
 const Hero: React.FC = () => {
   return (
     <section className="flex flex-col md:flex-row max-w-5xl mx-auto min-h-[85vh] px-4 items-center gap-5 py-8 ">
@@ -12,10 +12,12 @@ const Hero: React.FC = () => {
             Welcome to{" "}
             <span className="bg-gradient-to-r from-primary-color  to-gray-300 inline-block text-transparent bg-clip-text">
               {" "}
-              E-Medicine!
+              Modhumoti Library!
             </span>
             <br />
-            <span className="font-medium">Choose your drags</span>
+            <span className="font-medium text-lg">
+              Choose your Books, Sheets or Stationeries{" "}
+            </span>
           </h2>
           <p className="text-gray-600 my-4">
             This is a dummy text replace this text with some meaning full text.
@@ -27,10 +29,8 @@ const Hero: React.FC = () => {
           </Link>
         </div>
       </div>
-      <div className="flex-1">
-        <figure className="flex md:flex-row-reverse">
-          <Image src={heroImg} className="min-w-full" alt="Hero banner image" />
-        </figure>
+      <div className="flex-1 flex justify-center">
+        <IoLibraryOutline className="text-[220px] text-gray-400" />
       </div>
     </section>
   );

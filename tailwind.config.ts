@@ -1,9 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  daisyui: {
-    themes: ["winter"],
-  },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,14 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-color' : '#60A5FA',
-        'secondary-color' : '#3B82F6'
-      }
+        "primary-color": "#60A5FA",
+        "secondary-color": "#3B82F6",
+      },
+      fontFamily: {
+        roboto: ["Roboto Serif", "system-ui"],
+      },
     },
   },
-  plugins: [
-    require('daisyui'),
-    
-  ],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["winter"],
+  },
 };
+
 export default config;
