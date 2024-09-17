@@ -1,25 +1,23 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-
 // import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
-
 import Button from "../Button/Button";
-
-import Cart from "./Cart/Cart";
 import Logo from "./../Logo/Logo";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
 import NavLinks from "./NavLinks/NavLinks";
 import { usePathname } from "next/navigation";
+import LoggedUser from "./LoggedUser/LoggedUser";
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = ({session}) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-const path = usePathname()
-console.log(path)
+  const path = usePathname();
   return (
-    <nav className={['/login', '/registration'].includes(path) && 'hidden'}>
+    <nav
+      className={`${["/login", "/registration"].includes(path) && "hidden"}`}
+    >
       <div className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">
           <div className="flex xl:flex-1 items-center xl:gap-7">
@@ -36,10 +34,16 @@ console.log(path)
             <div className="w-full md:flex hidden">
               <SearchBook />
             </div>
-            {/* <Cart /> */}
-            <Link href={"/login"}>
-              <Button>Login</Button>
-            </Link>
+
+            {session?.user ? (
+              <LoggedUser session={session} />
+            ) : (
+              <div>
+                <Link href={"/login"}>
+                  <Button>Login</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
