@@ -44,9 +44,10 @@ const Navbar: React.FC = () => {
         {/* for responsive menu */}
         {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
       </nav>
-
-      <div className='container md:hidden text-[15px] shadow-sm mx-auto px-4 bg-base-100 pt-1 pb-2 '>
-        <SearchBook />
+      <div className="shadow-sm  md:hidden text-[15px]">
+        <div className="container  mx-auto px-4 bg-base-100 pt-1 pb-2 ">
+          <SearchBook />
+        </div>
       </div>
     </>
   );
