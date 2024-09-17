@@ -24,7 +24,7 @@ const LoginPage = () => {
           </p>
           <p>
             Don't have any account yet ?{" "}
-            <Link href={"/registration"} className="text-blue-500">
+            <Link href={"/registration"} className="text-blue-500 underline">
               Register
             </Link>
           </p>

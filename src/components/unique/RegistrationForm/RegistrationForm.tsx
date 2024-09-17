@@ -11,11 +11,12 @@ const commonInputClassName =
 const inputParentClassName = "flex flex-col gap-1 mb-3 ";
 
 interface InputValue {
+  name: string;
   email: string;
   password: string;
 }
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const { register, handleSubmit, errors } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
@@ -26,6 +27,23 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Email */}
+      <div className={inputParentClassName}>
+        <label>Name:</label>
+        <input
+          {...register("name", {
+            required: "Name is required",
+          })}
+          type="text"
+          placeholder="Your Name"
+          className={commonInputClassName}
+          required
+        />
+        {errors?.name && (
+          <span className="text-red-500">{errors?.name?.message}</span>
+        )}
+      </div>
+
       {/* Email */}
       <div className={inputParentClassName}>
         <label>Email:</label>
@@ -47,7 +65,7 @@ const LoginForm = () => {
         )}
       </div>
 
-      {/* Name */}
+      {/* Password */}
       <div className={`${inputParentClassName} relative`}>
         <label>Password:</label>
         <input
@@ -59,7 +77,7 @@ const LoginForm = () => {
         />
         <div className="absolute top-10 right-4">
           <span
-          className='cursor-pointer'
+            className="cursor-pointer"
             onClick={() => setIsPassShow(!isPassShow)}
           >
             {isPassShow ? <FiEye /> : <GoEyeClosed />}
@@ -70,11 +88,11 @@ const LoginForm = () => {
       {/* Submit Button */}
       <div>
         <Button customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
-          {isLoading ? "login..." : "Login"}
+          {isLoading ? "Registering..." : "Register"}
         </Button>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;
