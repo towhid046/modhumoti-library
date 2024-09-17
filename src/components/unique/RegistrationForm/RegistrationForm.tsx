@@ -92,7 +92,7 @@ const RegistrationForm = () => {
         </Button>
       </div>
     </form>
-  );
+  ); 
 };
 
 export default RegistrationForm;

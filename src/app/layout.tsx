@@ -3,11 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./../components/shared/Navbar/Navbar";
 import AuthProvider from "./../providers/AuthProvider";
-
 const inter = Inter({ subsets: ["latin"] });
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/components/shared/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Modhumoti Library",
@@ -26,9 +26,9 @@ export default function RootLayout({
           <header className="sticky top-0 z-50">
             <Navbar />
           </header>
-          <main className='min-h-screen'>{children}</main>
+          <main className="min-h-screen">{children}</main>
           <footer>
-            <p className=" text-center bg-gray-800 text-white py-2.5 text-[14px]">This is footer</p>
+            <Footer />
           </footer>
           <ToastContainer />
         </body>

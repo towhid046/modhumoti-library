@@ -12,13 +12,15 @@ import Logo from "./../Logo/Logo";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
 import NavLinks from "./NavLinks/NavLinks";
+import { usePathname } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
+const path = usePathname()
+console.log(path)
   return (
-    <>
-      <nav className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
+    <nav className={['/login', '/registration'].includes(path) && 'hidden'}>
+      <div className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">
           <div className="flex xl:flex-1 items-center xl:gap-7">
             <div className="xl:hidden text-xl mt-2 mr-2">
@@ -43,13 +45,13 @@ const Navbar: React.FC = () => {
 
         {/* for responsive menu */}
         {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
-      </nav>
+      </div>
       <div className="shadow-sm  md:hidden text-[15px]">
         <div className="container  mx-auto px-4 bg-base-100 pt-1 pb-2 ">
           <SearchBook />
         </div>
       </div>
-    </>
+    </nav>
   );
 };
 

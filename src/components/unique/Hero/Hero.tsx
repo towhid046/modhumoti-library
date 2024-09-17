@@ -24,8 +24,8 @@ const Hero: React.FC = () => {
             This is a dummy text repeated and replace this text with some
             meaning full text{" "}
           </p>
-          <Link href="/contact">
-            <Button>Contact</Button>
+          <Link href="/books">
+            <Button>Books</Button>
           </Link>
         </div>
       </div>

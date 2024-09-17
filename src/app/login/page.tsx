@@ -8,7 +8,7 @@ const LoginPage = () => {
   // useToScrollTop();
 
   return (
-    <section className="flex items-center container mx-auto justify-center min-h-screen text-gray-700 px-4">
+    <section className="flex items-center container mx-auto justify-center min-h-screen text-gray-700 p-4">
       <div className="flex rounded-xl bg-gray-100 flex-col lg:flex-row lg:gap-12 gap-6 lg:py-20 py-12 lg:px-16 px-6">
         <div className="flex-1 flex  flex-col lg:space-y-7 space-y-3">
           <div className="">
