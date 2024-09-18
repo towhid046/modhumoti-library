@@ -23,7 +23,7 @@ const RegistrationPage = () => {
             stationeries, lecture sheets and so on.
           </p>
           <p>
-            Already have an account ?{" "}
+            Already have an account?{" "}
             <Link href={"/login"} className="text-blue-500 underline">
               Login
             </Link>

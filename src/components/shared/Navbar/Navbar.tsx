@@ -10,8 +10,10 @@ import SearchBook from "./SearchBook/SearchBook";
 import NavLinks from "./NavLinks/NavLinks";
 import { usePathname } from "next/navigation";
 import LoggedUser from "./LoggedUser/LoggedUser";
-
-const Navbar: React.FC = ({session}) => {
+interface NavbarProps {
+  session: object | null;
+}
+const Navbar = ({ session }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const path = usePathname();
   return (

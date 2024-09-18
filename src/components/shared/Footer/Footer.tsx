@@ -4,17 +4,16 @@ import { FaXTwitter, FaLinkedin, FaArrowTrendUp } from "react-icons/fa6";
 import { FiMapPin } from "react-icons/fi";
 import { LuPhone } from "react-icons/lu";
 import { IoMailOutline } from "react-icons/io5";
-import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Logo  from "@/components/shared/Logo/Logo";
+import Logo from "@/components/shared/Logo/Logo";
 
 const socialIcons = [
-  <FaFacebook />,
-  <FaLinkedin />,
-  <FaInstagram />,
-  <FaXTwitter />,
+  { component: FaFacebook, url: "https://facebook.com" },
+  { component: FaLinkedin, url: "https://linkedin.com" },
+  { component: FaInstagram, url: "https://instagram.com" },
+  { component: FaXTwitter, url: "https://twitter.com" },
 ];
 
 const contacts = [
@@ -32,39 +31,42 @@ const quickLinks = [
   { path: "/sheets", label: "Sheets" },
   { path: "/stationeries", label: "Stationary" },
 ];
+
 const Footer = () => {
   const path = usePathname();
+  const isHidden = ["/login", "/registration"].includes(path);
 
   return (
-    <footer
-      className={`bg-neutral ${
-        ["/login", "/registration"].includes(path) && "hidden"
-      } `}
-    >
+    <footer className={`bg-neutral ${isHidden ? "hidden" : ""}`}>
       <div>
-        <div className="footer  container border-b mx-auto px-4 p-10 text-neutral-content">
+        <div className="footer container border-b mx-auto px-4 p-10 text-neutral-content">
+          {/* Logo & Description */}
           <div className="max-w-xs">
             <Logo />
             <p>
-              At Modhumoti Library: You have your books, sheets and stationary
-              for Quick Solutions.
+              At Modhumoti Library: You have your books, sheets, and stationery
+              for quick solutions.
             </p>
-            <ul className="mt-6 flex gap-3 text-xl items-center text-primary-color ">
+
+            {/* Social Icons */}
+            <ul className="mt-6 flex gap-3 text-xl items-center text-primary-color">
               {socialIcons.map((icon, index) => (
                 <li
-                  className="cursor-pointer hover:text-base-300 transition duration-500 ease-in-out text-xl"
                   key={index}
+                  className="cursor-pointer hover:text-base-300 transition duration-500 ease-in-out text-xl"
                 >
-                  {icon}
+                  <Link href={icon.url}>
+                    <icon.component />
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Quick links */}
+          {/* Quick Links */}
           <nav>
             <h6 className="footer-title text-lg">Quick Links</h6>
-            {quickLinks?.map((link, index) => (
+            {quickLinks.map((link, index) => (
               <Link
                 href={link.path}
                 key={index}
@@ -76,7 +78,7 @@ const Footer = () => {
             ))}
           </nav>
 
-          {/* contact */}
+          {/* Contact Section */}
           <ul>
             <h6 className="footer-title text-lg">Contact</h6>
             {contacts.map((contact, index) => (
@@ -87,22 +89,22 @@ const Footer = () => {
             ))}
           </ul>
 
+          {/* Newsletter Form */}
           <form
             className="max-w-xs"
-            onClick={(e) => {
+            onSubmit={(e) => {
               e.preventDefault();
             }}
           >
             <h6 className="footer-title text-lg">Newsletter</h6>
-            <p>
-              Subscribe our news letter to get exciting latest and updated news.
-            </p>
+            <p>Subscribe to our newsletter for exciting latest updates.</p>
             <fieldset className="form-control mt-1">
               <div className="join">
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter Your Email"
                   className="input bg-base-200 text-base-content focus:outline-none border focus:border-primary-color join-item"
+                  required
                 />
                 <button className="btn bg-primary-color border-none join-item hover:bg-secondary-color">
                   <FaArrowTrendUp className="text-xl text-base-300" />
@@ -113,13 +115,14 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-neutral ">
-        <div className=" container md:flex-row flex-col flex justify-between  mx-auto px-4 items-center py-4 text-neutral-content text-[13px] gap-3">
-          <p>Copyright &copy; 2024 - All right reserved</p>
+      {/* Footer Bottom */}
+      <div className="bg-neutral">
+        <div className="container md:flex-row flex-col flex justify-between mx-auto px-4 items-center py-4 text-neutral-content text-[13px] gap-3">
+          <p>Copyright &copy; 2024 - All rights reserved</p>
           <ul className="flex gap-3">
             <li className="link link-hover hover:text-primary-color transition duration-300 ease-in-out">
               Terms of use
-            </li>{" "}
+            </li>
             |
             <li className="link link-hover hover:text-primary-color transition duration-300 ease-in-out">
               Privacy policy

@@ -7,8 +7,8 @@ import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
 
 const commonInputClassName =
-  "w-full px-3 py-2 border rounded focus:outline-none focus:border-primary-color";
-const inputParentClassName = "flex flex-col gap-1 mb-3 ";
+  "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
+const inputParentClassName = "flex flex-col gap-1 mb-3";
 
 interface InputValue {
   name: string;

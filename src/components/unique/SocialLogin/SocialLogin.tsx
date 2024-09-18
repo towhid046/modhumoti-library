@@ -1,11 +1,13 @@
 "use client";
 import { FaGoogle } from "react-icons/fa";
 import { socialLogin } from './../../../app/actions/index';
-
-
 const SocialLogin = () => {
 const handleGoogleLogin =  async() =>{
-  await socialLogin('google')
+ try{
+   await socialLogin('google')
+ }catch(err){
+  console.error(err.message)
+ }
 }
 
   return (
