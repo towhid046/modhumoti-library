@@ -1,43 +1,45 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getUserByEmail } from "./data";
+import bcrypt from "bcrypt";
+import { connectDB } from "./lib/connectDB";
 
 export const {
   handlers: { GET, POST },
-  signIn,
-  signOut,
-  auth,
 } = NextAuth({
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
   },
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      credentials: {
+        email: {},
+        password: {},
+      },
+
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        const { email, password } = credentials;
+        if (!email || !password) {
           throw new Error("Missing credentials");
         }
-        try {
-          const user = getUserByEmail(credentials.email);
 
+        try {
+          const db = await connectDB();
+          const usersCollection = db.collection("users");
+          const user = await usersCollection.findOne({ email });
           if (!user) {
             throw new Error("User not found");
           }
 
-          // Compare password
-          const isMatch = user.password === credentials.password;
-
+          const isMatch = bcrypt.compareSync(password, user?.password);
           if (!isMatch) {
             throw new Error("Incorrect password");
           }
-
-          // Return user object if authentication is successful
           return user;
         } catch (err) {
           console.error("Login error:", err);
-          throw new Error(err.message || "Login failed");
+          throw new Error(err?.message || "Login failed");
         }
       },
     }),
@@ -54,4 +56,8 @@ export const {
       },
     }),
   ],
+  callbacks: {},
+  pages: {
+    signIn: "/login",
+  },
 });

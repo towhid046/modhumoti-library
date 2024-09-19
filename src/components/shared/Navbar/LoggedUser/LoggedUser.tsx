@@ -6,6 +6,7 @@ import Cart from "../Cart/Cart";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import userProfile from "../../../../assets/images/profile_image.jpeg";
 
 const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -31,9 +32,9 @@ const LoggedUser = () => {
         <Image
           height={45}
           width={45}
-          src={session?.data?.user?.image || ""}
-          className="object-cover rounded-full border-2 hover:border-blue-200 transition duration-300"
-          alt={session?.data?.user?.name || ""}
+          src={session?.data?.user?.image || userProfile}
+          className="object-cover w-10 h-10 rounded-full border-2 hover:border-blue-200 transition duration-300"
+          alt={session?.data?.user?.name || "User Image"}
         />
       </button>
       {isOpen && (

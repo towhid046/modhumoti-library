@@ -18,22 +18,27 @@ interface InputValue {
 }
 
 const LoginForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<InputValue>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  const router = useRouter(); // Uncomment to use routing
+  const router = useRouter();
+
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
+    const { email, password } = data;
     try {
       const res = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
+        email,
+        password,
         redirect: false,
       });
-
       if (res?.error) {
-        toast.error('Email or password is wrong!!');
+        toast.error("Email or password is wrong!!");
       } else if (res?.ok) {
         toast.success("Login successful!");
         router.push("/");
@@ -63,7 +68,9 @@ const LoginForm = () => {
           placeholder="Your Email"
           className={commonInputClassName}
         />
-        {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+        {errors.email && (
+          <span className="text-red-500">{errors.email.message}</span>
+        )}
       </div>
 
       {/* Password */}
@@ -83,7 +90,9 @@ const LoginForm = () => {
             {isPassShow ? <FiEye /> : <GoEyeClosed />}
           </span>
         </div>
-        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
+        {errors.password && (
+          <span className="text-red-500">{errors.password.message}</span>
+        )}
       </div>
 
       {/* Submit Button */}
