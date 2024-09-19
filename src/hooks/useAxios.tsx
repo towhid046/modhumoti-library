@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const useAxios = () => {
-  const axiosInstance = axios.create({
+const useAxiosPublic = () => {
+  const axiosPublic = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
     withCredentials: true,
   });
-  return axiosInstance;
+  return axiosPublic;
 };
 
-export default useAxios;
+export default useAxiosPublic;

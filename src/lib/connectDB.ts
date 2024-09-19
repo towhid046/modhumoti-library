@@ -12,7 +12,7 @@ export const connectDB = async () => {
         deprecationErrors: true,
       },
     });
-    db = client.db("eMedicineDB");
+    db = client.db("modhumotiLibrary");
     return db;
   } catch (error) {
     console.error(error);
