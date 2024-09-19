@@ -1,14 +1,16 @@
 "use client";
 import { FaGoogle } from "react-icons/fa";
-import { socialLogin } from './../../../app/actions/index';
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+
 const SocialLogin = () => {
-const handleGoogleLogin =  async() =>{
- try{
-   await socialLogin('google')
- }catch(err){
-  console.error(err.message)
- }
-}
+  const handleGoogleLogin = async () => {
+    try {
+      await signIn("google", { redirect: true, redirectTo: "/" });
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
 
   return (
     <div>
@@ -23,7 +25,7 @@ const handleGoogleLogin =  async() =>{
       <button
         type="submit"
         className="w-full flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white py-2 rounded transition duration-300"
-        onClick={ handleGoogleLogin}
+        onClick={handleGoogleLogin}
       >
         <FaGoogle className="mr-2 " />
         Continue with Google

@@ -1,28 +1,24 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import Cart from "../Cart/Cart";
-import { logout } from "@/app/actions";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
-interface LoggedUserProps {
-  session: object | null;
-}
-const LoggedUser = ({ session }: LoggedUserProps) => {
+import { useRouter } from "next/navigation";
+
+const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleLogout = async () => {
+  const session = useSession();
+  const router = useRouter();
+  const handleLogout = () => {
     setIsLoading(true);
-    try {
-      await logout();
-      toast.success("Logout success!");
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      if (!session) {
-        setIsLoading(false);
-      }
+    signOut({ redirect: false });
+    router?.push("/");
+    toast.success("Logout success!");
+    if (!session) {
+      setIsLoading(false);
     }
   };
 
@@ -35,9 +31,9 @@ const LoggedUser = ({ session }: LoggedUserProps) => {
         <Image
           height={45}
           width={45}
-          src={session?.user?.image || ""}
+          src={session?.data?.user?.image || ""}
           className="object-cover rounded-full border-2 hover:border-blue-200 transition duration-300"
-          alt={session?.user?.name || ""}
+          alt={session?.data?.user?.name || ""}
         />
       </button>
       {isOpen && (
@@ -50,7 +46,7 @@ const LoggedUser = ({ session }: LoggedUserProps) => {
               onClick={(e) => e.stopPropagation()}
               className="bg-white shadow-md px-8 py-4 space-y-3 z-50  text-[17px] absolute right-4 top-16"
             >
-              <li>Hi, {session?.user?.name}</li>
+              <li>Hi, {session?.data?.user?.name}</li>
               <li>
                 <button
                   onClick={handleLogout}

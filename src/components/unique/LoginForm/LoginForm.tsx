@@ -4,9 +4,9 @@ import { useState } from "react";
 import Button from "@/components/shared/Button/Button";
 import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
-import { credentialLogin } from "./../../../app/actions/index";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { signIn } from "next-auth/react";
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
@@ -18,25 +18,29 @@ interface InputValue {
 }
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm<InputValue>();
+  const { register, handleSubmit, formState: { errors } } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  const router = useRouter();
-
+  const router = useRouter(); // Uncomment to use routing
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     try {
-      const res = await credentialLogin(data);
-      if (res.error) {
-        toast.error(res.error.message || "Login failed. Please try again.");
-      } else {
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        toast.error('Email or password is wrong!!');
+      } else if (res?.ok) {
+        toast.success("Login successful!");
         router.push("/");
-        toast.success("Login Success");
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Email or password not match.");
+    } catch (error) {
+      console.error("Unexpected error during login:", error);
+      toast.error("Unexpected error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -58,8 +62,8 @@ const LoginForm = () => {
           type="email"
           placeholder="Your Email"
           className={commonInputClassName}
-          required
         />
+        {errors.email && <span className="text-red-500">{errors.email.message}</span>}
       </div>
 
       {/* Password */}
@@ -79,12 +83,13 @@ const LoginForm = () => {
             {isPassShow ? <FiEye /> : <GoEyeClosed />}
           </span>
         </div>
+        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
       </div>
 
       {/* Submit Button */}
       <div>
         <Button customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
-          {isLoading ? "Login..." : "Login"}
+          {isLoading ? "Logging in..." : "Login"}
         </Button>
       </div>
     </form>

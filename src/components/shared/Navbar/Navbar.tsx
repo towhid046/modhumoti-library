@@ -10,12 +10,12 @@ import SearchBook from "./SearchBook/SearchBook";
 import NavLinks from "./NavLinks/NavLinks";
 import { usePathname } from "next/navigation";
 import LoggedUser from "./LoggedUser/LoggedUser";
-interface NavbarProps {
-  session: object | null;
-}
-const Navbar = ({ session }: NavbarProps) => {
+import { useSession } from "next-auth/react";
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const path = usePathname();
+  const session = useSession();
+
   return (
     <nav
       className={`${["/login", "/registration"].includes(path) && "hidden"}`}
@@ -36,9 +36,8 @@ const Navbar = ({ session }: NavbarProps) => {
             <div className="w-full md:flex hidden">
               <SearchBook />
             </div>
-
-            {session?.user ? (
-              <LoggedUser session={session} />
+            {session?.data?.user ? (
+              <LoggedUser />
             ) : (
               <div>
                 <Link href={"/login"}>

@@ -14,22 +14,30 @@ export const {
   },
   providers: [
     CredentialsProvider({
+      name: "Credentials",
       async authorize(credentials) {
-        if (credentials === null) return null;
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Missing credentials");
+        }
         try {
-          const user = getUserByEmail(credentials?.email);
-          if (user) {
-            const isMatch = user?.password === credentials?.password;
-            if (isMatch) {
-              return user;
-            } else {
-              throw new Error("Password not match");
-            }
-          } else {
+          const user = getUserByEmail(credentials.email);
+
+          if (!user) {
             throw new Error("User not found");
           }
+
+          // Compare password
+          const isMatch = user.password === credentials.password;
+
+          if (!isMatch) {
+            throw new Error("Incorrect password");
+          }
+
+          // Return user object if authentication is successful
+          return user;
         } catch (err) {
-          throw new Error(err);
+          console.error("Login error:", err);
+          throw new Error(err.message || "Login failed");
         }
       },
     }),
@@ -37,7 +45,6 @@ export const {
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
-
       authorization: {
         params: {
           prompt: "consent",
