@@ -10,7 +10,7 @@ const OurServices = () => {
         {services?.map((service) => (
           <div
             key={service}
-            className="hover:shadow-lg transition duration-500 rounded-xl space-y-7 p-5 bg-base-100 shadow-sm "
+            className="hover:shadow-lg transition duration-500 rounded-md space-y-7 p-5 bg-base-100 shadow-sm "
           >
             <figure>
               <Image
