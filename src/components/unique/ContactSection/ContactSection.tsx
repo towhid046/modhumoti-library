@@ -34,8 +34,8 @@ const ContactSection = () => {
         <SectionHeader
           url="/"
           title="Get To"
-          actionText="Contract"
-          urlLabel="Contract Now"
+          actionText="Contact"
+          urlLabel="Contact Now"
         />
 
         <div className="flex flex-col lg:flex-row justify-between lg:gap-10 gap-5">

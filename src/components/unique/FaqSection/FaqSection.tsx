@@ -11,7 +11,7 @@ const FaqSection = () => {
           <Image
             width={undefined}
             height={undefined}
-            className="max-w-96 rounded-xl object-cover"
+            className=" max-w-96 rounded-xl object-cover"
             src={faqImg}
             alt="Faq img"
           />
@@ -23,11 +23,11 @@ const FaqSection = () => {
               className="collapse collapse-arrow shadow-md rounded-md"
             >
               <input type="radio" name="my-accordion-2" />
-              <div className="collapse-title text-md font-bold text-custom-black ">
+              <div className="collapse-title font-bold text-custom-black ">
                 {faq.question}
               </div>
               <div className="collapse-content">
-                <p className="text-custom-gray text-base font-normal">
+                <p className="text-custom-gray font-normal">
                   {faq.answer}
                 </p>
               </div>
