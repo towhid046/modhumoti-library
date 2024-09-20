@@ -1,7 +1,4 @@
 import React from "react";
-interface SearchFormProps {
-  handleSearchProducts: React.ChangeEventHandler<HTMLInputElement>;
-}
 
 const SearchBook = () => {
   return (
@@ -10,12 +7,11 @@ const SearchBook = () => {
         className={`border px-6 py-2 rounded-full flex items-center gap-2  focus-within:border-primary-color focus-within:border-opacity-50`}
       >
         <input
-        //   onChange={handleSearchProducts}
           type="text"
           className="w-full focus:outline-none text-gray-500"
           placeholder="Search by book name or author name"
         />
-        <svg
+      <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
           fill="currentColor"
