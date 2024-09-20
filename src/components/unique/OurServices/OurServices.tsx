@@ -5,14 +5,19 @@ const services = [1, 2, 3, 4, 5, 6];
 const OurServices = () => {
   return (
     <section className="container mx-auto px-4 mb-32">
-      <SectionHeader title="Our" actionText='Services' url="/books" urlLabel="View Books"/>
+      <SectionHeader
+        title="Our"
+        actionText="Services"
+        url="/books"
+        urlLabel="View Books"
+      />
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 ">
         {services?.map((service) => (
           <div
             key={service}
             className="hover:shadow-lg transition duration-500 rounded-md space-y-7 p-5 bg-base-100 shadow-sm "
           >
-            <figure>
+            <figure className="flex justify-center">
               <Image
                 width={100}
                 height={100}
@@ -21,13 +26,13 @@ const OurServices = () => {
                 className="object-cover"
               />
             </figure>
-            <div className="space-y-3">
+            <div className="space-y-3 text-center">
               <h3 className="lg:text-3xl text-gray-700 text-2xl font-semibold">
                 Research Binding
               </h3>
-              <p className="text-gray-500 text-justify">
-                Replace this text with some meaningful text in later. Replace this
-                text with some meaningful text in later{" "}
+              <p className="text-gray-500">
+                Replace this text with some meaningful text in later. Replace
+                this text with some meaningful text in later{" "}
               </p>
             </div>
           </div>

@@ -31,7 +31,7 @@ const BookCard = ({ book }: BookCardProps) => {
           <p className="text-xl font-bold text-primary-color mt-2">160 BDT</p>
         </div>
       </div>
-      <div className="bg-blue-200 transition duration-500 py-3 flex w-full justify-center items-center rounded-b-md cursor-pointer group-hover:bg-primary-color group-hover:text-white">
+      <div className="bg-blue-200 transition duration-500 lg:py-3 py-2 flex w-full justify-center items-center rounded-b-md cursor-pointer group-hover:bg-primary-color group-hover:text-white">
         <u className="text-[15px]">See Details</u>
       </div>
     </div>
