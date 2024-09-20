@@ -6,7 +6,7 @@ import { IoLibraryOutline } from "react-icons/io5";
 const Hero: React.FC = () => {
   return (
 <section className='container mx-auto'>
-<div className="flex flex-col md:flex-row max-w-5xl mx-auto min-h-[85vh] px-4 items-center gap-5 py-8 ">
+<div className="flex flex-col md:flex-row max-w-5xl mx-auto min-h-[95vh] px-4 items-center gap-5 py-8 ">
       <div className="flex-1 md:text-left text-center">
         <div className="max-w-xl">
           <p className="font-semibold italic text-gray- 400 text-xl">

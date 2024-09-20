@@ -1,19 +1,16 @@
-import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
+import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import Image from "next/image";
 const services = [1, 2, 3, 4, 5, 6];
 
 const OurServices = () => {
   return (
-    <section className="container mx-auto px-4 mb-24">
-      <SectionHeading
-        title="Our Services"
-        description="See all our services at a glance"
-      />
+    <section className="container mx-auto px-4 mb-32">
+      <SectionHeader title="Our" actionText='Services' url="/books" urlLabel="View Books"/>
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 ">
         {services?.map((service) => (
           <div
             key={service}
-            className="hover:shadow-lg transition duration-300 space-y-7 p-6 bg-base-100 shadow-sm "
+            className="hover:shadow-lg transition duration-500 rounded-xl space-y-7 p-5 bg-base-100 shadow-sm "
           >
             <figure>
               <Image

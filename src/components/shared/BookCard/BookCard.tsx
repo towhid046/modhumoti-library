@@ -8,7 +8,7 @@ const BookCard = ({ book }:BookCardProps) => {
   return (
     <div key={book.number} className="border rounded-md">
       <div className="px-4 pt-4">
-        <figure className="relative rounded-md overflow-hidden">
+        <figure className="relative rounded-md overflow-hidden cursor-pointer">
           <div className="absolute right-2 bottom-2 bg-primary-color  py-1.5 px-2.5 text-white rounded-full text-xs z-30">
             6 Leaf
           </div>
