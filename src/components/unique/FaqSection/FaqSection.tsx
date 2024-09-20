@@ -1,6 +1,5 @@
 import faqs from "./faqData";
 import Image from "next/image";
-// import faqImg from '../../../assets/images/faq.png'
 import faqImg from '../../../assets/images/faq.jpeg'
 import SectionHeader from './../../shared/SectionHeader/SectionHeader';
 const FaqSection = () => {
