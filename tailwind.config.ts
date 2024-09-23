@@ -13,7 +13,7 @@ const config: Config = {
         "secondary-color": "#3B82F6",
       },
       fontFamily: {
-        roboto: ["Roboto Serif", "system-ui"],
+        roboto: ["Roboto", "system-ui"],
       },
     },
   },

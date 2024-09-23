@@ -1,6 +1,7 @@
 import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import Image from "next/image";
 const services = [1, 2, 3, 4, 5, 6];
+import bookLogo from "../../../assets/images/book-logo.png";
 
 const OurServices = () => {
   return (
@@ -21,7 +22,7 @@ const OurServices = () => {
               <Image
                 width={100}
                 height={100}
-                src="https://techfit-react.envytheme.com/_next/static/media/icon1.dd1e4cfd.png"
+                src={bookLogo || ""}
                 alt="Image"
                 className="object-cover"
               />
