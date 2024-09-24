@@ -1,12 +1,7 @@
+import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
 
-interface BookCardProps {
-  number: number;
-  cover: string;
-  title: string;
-}
-
-const BookCard = ({ book }: BookCardProps) => {
+const BookCard = ({ book }: Book) => {
   return (
     <div
       key={book.number}

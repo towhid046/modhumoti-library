@@ -1,9 +1,10 @@
 import SectionHeader from '@/components/shared/SectionHeader/SectionHeader'
 import ViewMoreButton from "@/components/shared/ViewMoreButton/ViewMoreButton";
 import BookCard from "../../shared/BookCard/BookCard";
+import { Book } from '@/lib/commonTypes';
 const FictionalBooks = async () => {
   const res = await fetch("https://potterapi-fedeperin.vercel.app/en/books");
-  const books = await res.json();
+  const books:Book[] = await res.json();
   
   return (
     <section className="container mx-auto px-4 mb-32">

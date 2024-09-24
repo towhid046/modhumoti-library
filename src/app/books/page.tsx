@@ -1,10 +1,10 @@
 import BookCard from "./../../components/shared/BookCard/BookCard";
 import PageHeader from "./../../components/shared/PageHeader/PageHeader";
 import Pagination from "./Pagination/Pagination";
-
+import { Book } from "@/lib/commonTypes";
 const BooksPage = async () => {
   const res = await fetch("https://potterapi-fedeperin.vercel.app/en/books");
-  const books:object[] = await res.json();
+  const books: Book[] = await res.json();
 
   return (
     <>
