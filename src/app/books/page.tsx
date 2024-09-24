@@ -1,5 +1,6 @@
 import BookCard from "./../../components/shared/BookCard/BookCard";
 import PageHeader from "./../../components/shared/PageHeader/PageHeader";
+import Pagination from "./Pagination/Pagination";
 
 const BooksPage = async () => {
   const res = await fetch("https://potterapi-fedeperin.vercel.app/en/books");
@@ -13,6 +14,7 @@ const BooksPage = async () => {
             <BookCard key={book.number} book={book} />
           ))}
         </div>
+        <Pagination />
       </section>
     </>
   );
