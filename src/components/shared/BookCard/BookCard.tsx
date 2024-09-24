@@ -1,7 +1,9 @@
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
-
-const BookCard = ({ book }: Book) => {
+interface BookCardProps {
+  book: Book;
+}
+const BookCard: React.FC<BookCardProps> = ({ book }) => {
   return (
     <div
       className="border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer"
