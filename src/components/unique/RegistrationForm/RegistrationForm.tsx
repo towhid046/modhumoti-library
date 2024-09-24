@@ -19,7 +19,7 @@ interface InputValue {
 }
 
 const RegistrationForm = () => {
-  const { register, handleSubmit, errors } = useForm<InputValue>();
+  const { register, handleSubmit } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
   const axiosPublic = useAxiosPublic();
@@ -33,9 +33,9 @@ const RegistrationForm = () => {
         toast.success("Registration Success, Please Login");
         router.push("/login");
       } else if (res?.data?.message) {
-        toast.info(res?.data?.meassage);
+        toast.info(res?.data?.message);
       }
-    } catch (error) {
+    } catch (error:any) {
       toast.error(error?.message)
     } finally {
       setIsLoading(false);
@@ -56,9 +56,6 @@ const RegistrationForm = () => {
           className={commonInputClassName}
           required
         />
-        {errors?.name && (
-          <span className="text-red-500">{errors?.name?.message}</span>
-        )}
       </div>
 
       {/* Email */}
@@ -77,9 +74,7 @@ const RegistrationForm = () => {
           className={commonInputClassName}
           required
         />
-        {errors?.email && (
-          <span className="text-red-500">{errors?.email.message}</span>
-        )}
+
       </div>
 
       {/* Password */}

@@ -7,7 +7,7 @@ const SocialLogin = () => {
   const handleGoogleLogin = async () => {
     try {
       await signIn("google", { redirect: true, redirectTo: "/" });
-    } catch (err) {
+    } catch (err:any) {
       toast.error(err.message);
     }
   };

@@ -9,44 +9,52 @@ export const {
 } = NextAuth({
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   providers: [
     CredentialsProvider({
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "text", placeholder: "email@example.com" },
+        password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
-        const { email, password } = credentials;
-        if (!email || !password) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Missing credentials");
         }
 
         try {
           const db = await connectDB();
           const usersCollection = db.collection("users");
-          const user = await usersCollection.findOne({ email });
-          if (!user) {
-            throw new Error("User not found");
+
+          // Find the user by email
+          const user = await usersCollection.findOne({ email: credentials.email });
+          if (!user || !user.password) {
+            throw new Error("User not found or password is missing");
           }
 
-          const isMatch = bcrypt.compareSync(password, user?.password);
+          // Check if password and user.password are strings
+          if (typeof credentials.password !== 'string' || typeof user.password !== 'string') {
+            throw new Error("Invalid password format");
+          }
+
+          // Check if the password matches the hashed password
+          const isMatch = bcrypt.compareSync(credentials.password, user.password);
           if (!isMatch) {
             throw new Error("Incorrect password");
           }
-          return user;
+
+          // Return user if everything is correct
+          return { id: user._id.toString(), email: user.email, name: user.name };
         } catch (err) {
           console.error("Login error:", err);
-          throw new Error(err?.message || "Login failed");
+          throw new Error("Login failed");
         }
       },
     }),
 
     GoogleProvider({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID as string,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
       authorization: {
         params: {
           prompt: "consent",
