@@ -1,11 +1,9 @@
 import SocialLogin from "@/components/unique/SocialLogin/SocialLogin";
-import useToScrollTop from "@/hooks/useToScrollTop";
 import Link from "next/link";
 import Logo from "@/components/shared/Logo/Logo";
 import RegistrationForm from "@/components/unique/RegistrationForm/RegistrationForm";
 const RegistrationPage = () => {
 
-  // useToScrollTop();
 
   return (
     <section className="flex items-center container mx-auto justify-center min-h-screen text-gray-700 p-4">
