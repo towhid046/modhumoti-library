@@ -4,7 +4,6 @@ import Image from "next/image";
 const BookCard = ({ book }: Book) => {
   return (
     <div
-      key={book.number}
       className="border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer"
     >
       <div className="px-4 pt-4">
