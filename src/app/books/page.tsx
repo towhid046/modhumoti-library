@@ -4,7 +4,8 @@ import Pagination from "./Pagination/Pagination";
 
 const BooksPage = async () => {
   const res = await fetch("https://potterapi-fedeperin.vercel.app/en/books");
-  const books = await res.json();
+  const books:object[] = await res.json();
+
   return (
     <>
       <PageHeader title="Books" url="/books" />
