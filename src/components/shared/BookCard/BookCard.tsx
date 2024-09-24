@@ -15,7 +15,7 @@ const BookCard = ({ book }: Book) => {
             width={100}
             height={100}
             src={book?.cover}
-            alt={book?.number}
+            alt={'Image'}
             className="w-full h-60 object-cover rounded-md transition duration-700 hover:scale-125"
           />
         </figure>
