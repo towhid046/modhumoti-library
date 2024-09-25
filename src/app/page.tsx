@@ -6,7 +6,7 @@ import StationeriesSection from "@/components/unique/StationeriesSection/Station
 import NonFictionalBooks from "@/components/unique/NonFictionalBooks/NonFictionalBooks";
 import FictionalBooks from "@/components/unique/FictionalBooks/FictionalBooks";
 import FaqSection from "@/components/unique/FaqSection/FaqSection";
-// import ContactSection from "@/components/unique/ContactSection/ContactSection";
+import ContactSection from "@/components/unique/ContactSection/ContactSection";
 
 const Home = () => {
   return (
@@ -19,7 +19,7 @@ const Home = () => {
       <NonFictionalBooks />
       <FictionalBooks />
       <FaqSection />
-      {/* <ContactSection />  */}
+      <ContactSection /> 
     </>
   );
 };
