@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { Icon } from 'leaflet';
-import "leaflet/dist/leaflet.css"; // Importing the Leaflet CSS
+import 'leaflet/dist/leaflet.css';
 
-// Disable SSR for react-leaflet components
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
-const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
-const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
-const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
+// Dynamically load react-leaflet components to avoid SSR issues
+const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
 
 import locationIcon from "../../../../assets/images/location.png";
 
@@ -15,15 +16,21 @@ interface HeightProps {
 }
 
 const MapLeaflet: React.FC<HeightProps> = ({ height }) => {
-  if (typeof window === 'undefined') {
-    return null; // Ensure it only renders on the client
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true); // Ensure the component is mounted on the client side
+  }, []);
+
+  if (!isMounted) {
+    return null; // Return null until the component is mounted
   }
 
-  const position: [number, number] = [23.745, 90.375]; // Tuple for position
+  const position: [number, number] = [23.745, 90.375];
 
   const customIcon = new Icon({
-    iconUrl: locationIcon.src, // Ensure the image path works with Next.js
-    iconSize: [47, 60], // Icon size as tuple
+    iconUrl: locationIcon.src,
+    iconSize: [47, 60],
   });
 
   return (
@@ -32,7 +39,7 @@ const MapLeaflet: React.FC<HeightProps> = ({ height }) => {
       center={position}
       zoom={13}
       scrollWheelZoom={true}
-      style={{ height }} // Inline height styling for the map
+      style={{ height }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'
