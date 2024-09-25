@@ -1,11 +1,12 @@
-// Import dynamic from next/dynamic
 import dynamic from 'next/dynamic';
-import { Icon } from "leaflet";
-import { Marker, Popup, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { Icon } from 'leaflet';
+import "leaflet/dist/leaflet.css"; // Importing the Leaflet CSS
 
-// Disable SSR for react-leaflet components by dynamically importing them
-const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
+// Disable SSR for react-leaflet components
+const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
 
 import locationIcon from "../../../../assets/images/location.png";
 
@@ -14,11 +15,15 @@ interface HeightProps {
 }
 
 const MapLeaflet: React.FC<HeightProps> = ({ height }) => {
-  const position: [number, number] = [23.745, 90.375]; // Type tuple
+  if (typeof window === 'undefined') {
+    return null; // Ensure it only renders on the client
+  }
+
+  const position: [number, number] = [23.745, 90.375]; // Tuple for position
 
   const customIcon = new Icon({
-    iconUrl: locationIcon.src, // Ensure the image is correctly resolved in Next.js
-    iconSize: [47, 60], // Icon dimensions as tuple
+    iconUrl: locationIcon.src, // Ensure the image path works with Next.js
+    iconSize: [47, 60], // Icon size as tuple
   });
 
   return (
@@ -27,7 +32,7 @@ const MapLeaflet: React.FC<HeightProps> = ({ height }) => {
       center={position}
       zoom={13}
       scrollWheelZoom={true}
-      style={{ height }} // Style for the container
+      style={{ height }} // Inline height styling for the map
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a>'

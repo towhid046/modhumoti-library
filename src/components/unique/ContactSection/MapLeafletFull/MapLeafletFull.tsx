@@ -1,14 +1,18 @@
-import { Dispatch, SetStateAction } from "react";
-import { RxCross2 } from "react-icons/rx";
-import MapLeaflet from "../MapLeaflet/MapLeaflet";
+import { Dispatch, SetStateAction } from 'react';
+import { RxCross2 } from 'react-icons/rx';
+import dynamic from 'next/dynamic';
+
+const MapLeaflet = dynamic(() => import('../MapLeaflet/MapLeaflet'), { ssr: false });
+
 interface FullMapProp {
   setIsMapShowFull: Dispatch<SetStateAction<boolean>>;
 }
+
 const MapLeafletFull = ({ setIsMapShowFull }: FullMapProp) => {
   return (
     <section className="fixed top-0 bg-black bg-opacity-70 min-h-screen z-50 w-full ">
       <div className="p-4 ">
-        <div className="absolute right-8 top-8 hover:text-primary-color text-red-400 transition duration-300  z-50">
+        <div className="absolute right-8 top-8 hover:text-primary-color text-red-400 transition duration-300 z-50">
           <button
             className="p-2 bg-white shadow-xl rounded-full"
             onClick={() => setIsMapShowFull(false)}
