@@ -4,26 +4,38 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "@/components/shared/Button/Button";
 import { departments } from "./sheetData";
 import { toast } from "react-toastify";
+
+// Common input styles
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
 const inputParentClassName = "flex flex-col gap-1";
 
+// Define form input type
 interface InputValue {
   name: string;
   department: string;
   year: string;
   semester: string;
+  phone: string; 
+  teacher_name_sheet_number_0?: string; // Dynamically added fields (starts with 0)
+  teacher_name_sheet_number_1?: string;
+  teacher_name_sheet_number_2?: string;
+  teacher_name_sheet_number_3?: string;
+  teacher_name_sheet_number_4?: string;
 }
 
+// Constant values
 const years = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 
 const SheetOrderForm = () => {
   const { register, handleSubmit } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [items, setItems] = useState([1, 2, 3, 4]);
+  const [items, setItems] = useState<number[]>([1, 2, 3]);
 
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     const { year, semester, department } = data;
+
+    // Basic validation
     if (department === "0") {
       toast.error("Please Select Department");
       return;
@@ -36,15 +48,20 @@ const SheetOrderForm = () => {
       toast.error("Please Select Semester");
       return;
     }
-    
+
     setIsLoading(true);
     try {
+      // Simulate submission
       console.log(data);
     } catch (error: any) {
       console.error(error?.message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAddAnotherOptions = (number: number) => {
+    setItems((prevItems) => [...prevItems, number]);
   };
 
   return (
@@ -63,6 +80,24 @@ const SheetOrderForm = () => {
           })}
           type="text"
           placeholder="Your Name"
+          className={commonInputClassName}
+          required
+        />
+      </div>
+
+      {/*Student Phone Number*/}
+      <div className={inputParentClassName}>
+        <label>
+          <span>Your Phone Number</span>
+        </label>
+        <input
+          {...register("phone", {
+            required: "Phone is required",
+            minLength: 11,
+            maxLength: 11,
+          })}
+          type="tel"
+          placeholder="Your Phone Number"
           className={commonInputClassName}
           required
         />
@@ -127,7 +162,7 @@ const SheetOrderForm = () => {
 
       {/*Teacher Name & Sheet Number*/}
       {items?.map((item, index) => (
-        <div key={item} className={inputParentClassName}>
+        <div key={item} className={`${inputParentClassName} relative`}>
           <label>
             <span>
               Teacher name & Sheet Number {index !== 0 && "(Optional)"}
@@ -142,6 +177,16 @@ const SheetOrderForm = () => {
             className={commonInputClassName}
             required={index === 0}
           />
+          {items.length - 1 === index && (
+            <div className={items.length >= 5 ? "hidden" : "relative"}>
+              <span
+                onClick={() => handleAddAnotherOptions(items.length)}
+                className="border cursor-pointer text-xs bg-blue-200 py-1 px-3 rounded-full"
+              >
+                Add Another Sheet Option
+              </span>
+            </div>
+          )}
         </div>
       ))}
 
