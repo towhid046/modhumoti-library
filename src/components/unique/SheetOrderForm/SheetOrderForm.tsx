@@ -17,20 +17,32 @@ interface InputValue {
   year: string;
   semester: string;
   phone: string; 
-  teacher_name_sheet_number_0?: string; // Dynamically added fields (starts with 0)
-  teacher_name_sheet_number_1?: string;
-  teacher_name_sheet_number_2?: string;
-  teacher_name_sheet_number_3?: string;
-  teacher_name_sheet_number_4?: string;
+  teacher_name_sheet_number_one?: string; // Dynamically added fields (starts with 0)
+  teacher_name_sheet_number_two?: string;
+  teacher_name_sheet_number_three?: string;
+  teacher_name_sheet_number_four?: string;
+  teacher_name_sheet_number_five?: string;
 }
 
 // Constant values
 const years = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
+const initialItems = [
+  {id: 1, name: 'teacher_name_sheet_number_one'},
+  {id: 2, name: 'teacher_name_sheet_number_two'},
+  {id: 3, name: 'teacher_name_sheet_number_three'},
+  {id: 4, name: 'teacher_name_sheet_number_four'},
+  {id: 5, name: 'teacher_name_sheet_number_five'},
+];
+
+interface ItemsProps {
+  id: number;
+  name: string;
+}
 
 const SheetOrderForm = () => {
   const { register, handleSubmit } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [items, setItems] = useState<number[]>([1, 2, 3]);
+  const [items, setItems] = useState<ItemsProps[]>(initialItems);
 
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     const { year, semester, department } = data;
@@ -60,8 +72,15 @@ const SheetOrderForm = () => {
     }
   };
 
-  const handleAddAnotherOptions = (number: number) => {
-    setItems((prevItems) => [...prevItems, number]);
+  const handleAddAnotherOptions = () => {
+    // Add new item with an incremented id and name
+    if (items.length < 5) {
+      const newId = items.length + 1;
+      setItems((prevItems) => [
+        ...prevItems,
+        { id: newId, name: `teacher_name_sheet_number_${newId===4 ? 'four' : 'five'}` },
+      ]);
+    }
   };
 
   return (
@@ -69,7 +88,7 @@ const SheetOrderForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="grid grid-cols-1 lg:grid-cols-2 lg:gap-5 gap-4 border rounded-md lg:p-8 md:p-5 p-4"
     >
-      {/*Student Name */}
+      {/* Student Name */}
       <div className={inputParentClassName}>
         <label>
           <span>Your Name</span>
@@ -85,7 +104,7 @@ const SheetOrderForm = () => {
         />
       </div>
 
-      {/*Student Phone Number*/}
+      {/* Student Phone Number */}
       <div className={inputParentClassName}>
         <label>
           <span>Your Phone Number</span>
@@ -160,16 +179,16 @@ const SheetOrderForm = () => {
         </select>
       </div>
 
-      {/*Teacher Name & Sheet Number*/}
+      {/* Teacher Name & Sheet Number */}
       {items?.map((item, index) => (
-        <div key={item} className={`${inputParentClassName} relative`}>
+        <div key={item.id} className={`${inputParentClassName} relative`}>
           <label>
             <span>
               Teacher name & Sheet Number {index !== 0 && "(Optional)"}
             </span>
           </label>
           <input
-            {...register(`teacher_name_sheet_number_${index}`)}
+            {...register(item.name)}
             type="text"
             placeholder={`${
               index === 0 ? "Teacher Name" : "Optional Name"
@@ -180,7 +199,7 @@ const SheetOrderForm = () => {
           {items.length - 1 === index && (
             <div className={items.length >= 5 ? "hidden" : "relative"}>
               <span
-                onClick={() => handleAddAnotherOptions(items.length)}
+                onClick={handleAddAnotherOptions}
                 className="border cursor-pointer text-xs bg-blue-200 py-1 px-3 rounded-full"
               >
                 Add Another Sheet Option
