@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 // import { MdLightMode, MdDarkMode } from "react-icons/md";
+import { RiSearchLine } from "react-icons/ri";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Button from "../Button/Button";
 import Logo from "./../Logo/Logo";
@@ -22,9 +23,9 @@ const Navbar = () => {
     <nav
       className={`${["/login", "/registration"].includes(path) && "hidden"}`}
     >
-      <div className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
+      <div className={`relative py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">
-          <div className="flex xl:flex-1 items-center xl:gap-7">
+          <div className="flex lg:flex-1 items-center xl:gap-7">
             <div className="xl:hidden text-xl mt-2 mr-2">
               <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <FaTimes /> : <FaBars />}
@@ -34,23 +35,14 @@ const Navbar = () => {
             <NavLinks />
           </div>
 
-          <div className="flex xl:flex-1 items-center gap-8 justify-between">
+          <div className="flex lg:flex-1 items-center gap-8 justify-between">
             <figure
               className="md:hidden"
               onClick={() => setIsSearchClicked(!isSearchClicked)}
             >
-              {!isSearchClicked ? <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="h-4 w-4 "
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            clipRule="evenodd"
-          />
-        </svg> : <button onClick={()=>setIsSearchClicked(false)}>X</button>}
+              <button onClick={() => setIsSearchClicked(true)}>
+                {!isSearchClicked && <RiSearchLine className="text-lg" />}
+              </button>
             </figure>
             <div className="w-full md:flex hidden">
               <SearchBook />
@@ -69,14 +61,14 @@ const Navbar = () => {
 
         {/* for responsive menu */}
         {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
-      </div>
-      {isSearchClicked && (
-        <div className="shadow-sm  md:hidden text-[15px]">
-          <div className="container  mx-auto px-4 bg-base-100 pt-1 pb-2 ">
-            <SearchBook />
+        {isSearchClicked && (
+          <div className="absolute top-2 left-0 md:hidden w-full text-[15px]">
+            <div className="container  mx-auto px-4 bg-base-100 pt-1 pb-2 ">
+              <SearchBook setIsSearchClicked={setIsSearchClicked} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 };
