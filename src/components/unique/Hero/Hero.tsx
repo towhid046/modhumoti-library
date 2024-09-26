@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
           Your trusted source for Books, Sheets, and Stationeries. Your trusted source for Books, Sheets, and Stationeries.{" "}
           </p>
           <Link href="/books">
-            <Button>Browse Books</Button>
+            <Button>Explore Books</Button>
           </Link>
         </div>
       </div>
