@@ -4,7 +4,7 @@ const SearchBook = () => {
   return (
     <form className="w-full">
       <label
-        className={`border px-6 py-2 rounded-full flex items-center gap-2  focus-within:border-primary-color focus-within:border-opacity-50`}
+        className={`border px-6 py-2 transition duration-300 rounded-full flex items-center gap-2  focus-within:border-primary-color focus-within:border-opacity-50`}
       >
         <input
           type="text"

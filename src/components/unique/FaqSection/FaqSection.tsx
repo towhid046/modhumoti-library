@@ -11,7 +11,7 @@ const FaqSection = () => {
           <Image
             width={undefined}
             height={undefined}
-            className=" max-w-96 rounded-xl object-cover"
+            className="max-w-96 rounded-xl object-cover"
             src={faqImg}
             alt="Faq img"
           />
