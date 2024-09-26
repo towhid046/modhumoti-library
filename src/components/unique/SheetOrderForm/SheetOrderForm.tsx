@@ -16,7 +16,7 @@ interface InputValue {
   department: string;
   year: string;
   semester: string;
-  phone: string; 
+  phone: string;
   teacher_name_sheet_number_one?: string; // Dynamically added fields (starts with 0)
   teacher_name_sheet_number_two?: string;
   teacher_name_sheet_number_three?: string;
@@ -27,11 +27,11 @@ interface InputValue {
 // Constant values
 const years = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 const initialItems = [
-  {id: 1, name: 'teacher_name_sheet_number_one'},
-  {id: 2, name: 'teacher_name_sheet_number_two'},
-  {id: 3, name: 'teacher_name_sheet_number_three'},
-  {id: 4, name: 'teacher_name_sheet_number_four'},
-  {id: 5, name: 'teacher_name_sheet_number_five'},
+  { id: 1, name: "teacher_name_sheet_number_one" },
+  { id: 2, name: "teacher_name_sheet_number_two" },
+  { id: 3, name: "teacher_name_sheet_number_three" },
+  { id: 4, name: "teacher_name_sheet_number_four" },
+  { id: 5, name: "teacher_name_sheet_number_five" },
 ];
 
 interface ItemsProps {
@@ -78,7 +78,10 @@ const SheetOrderForm = () => {
       const newId = items.length + 1;
       setItems((prevItems) => [
         ...prevItems,
-        { id: newId, name: `teacher_name_sheet_number_${newId===4 ? 'four' : 'five'}` },
+        {
+          id: newId,
+          name: `teacher_name_sheet_number_${newId === 4 ? "four" : "five"}`,
+        },
       ]);
     }
   };
@@ -188,7 +191,7 @@ const SheetOrderForm = () => {
             </span>
           </label>
           <input
-            {...register(item.name)}
+            {...register(item.name as keyof InputValue)}
             type="text"
             placeholder={`${
               index === 0 ? "Teacher Name" : "Optional Name"
