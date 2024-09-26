@@ -9,7 +9,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
   return (
     <form className="w-full flex items-center gap-4" onSubmit={(e) => e.preventDefault()}>
       <div
-        onClick={() => setIsSearchClicked(false)}
+        onClick={() => setIsSearchClicked && setIsSearchClicked(false)}
         className="md:hidden inline-block cursor-pointer"
       >
         <FaArrowLeft />
