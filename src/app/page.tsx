@@ -13,11 +13,13 @@ const Home = () => {
     <>
       <Hero />
       <OurServices />
-      <PopularAcademicBooks />
+      <PopularAcademicBooks category="Academic" />
       <LectureSheets />
       <StationeriesSection />
-      <NonFictionalBooks />
-      <FictionalBooks />
+      <PopularAcademicBooks category="Non-Fiction" />
+      <PopularAcademicBooks category="Fiction" />
+      {/* <NonFictionalBooks /> */}
+      {/* <FictionalBooks /> */}
       <FaqSection />
       <ContactSection /> 
     </>

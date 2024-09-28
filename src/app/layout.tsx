@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./../components/shared/Navbar/Navbar";
 import AuthProvider from "./../providers/AuthProvider";
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="winter" className="font-roboto">
       <AuthProvider>
-        <body className={inter.className}>
+        <body>
           <header className="sticky top-0 z-50">
             <Navbar />
           </header>

@@ -8,7 +8,8 @@ const OurServices = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/services`
   );
-  const services:Service[] = await res.json();
+  const data = await res.text()
+  const services:Service[] = JSON.parse(data)
 
   return (
     <section className="container mx-auto px-4 mb-32">
