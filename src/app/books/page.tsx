@@ -4,8 +4,7 @@ import Pagination from "../../components/unique/Pagination/Pagination";
 import { Book } from "@/lib/commonTypes";
 const BooksPage = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/api`);
-  const data = await res.text();
-  const books:Book[] = JSON.parse(data)
+  const books:Book[] = await res.json()
 
   return (
     <>

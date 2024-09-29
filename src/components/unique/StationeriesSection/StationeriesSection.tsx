@@ -57,7 +57,7 @@ const StationeriesSection = () => {
         urlLabel="View More"
         url="/stationeries"
       />
-      <div className="grid grid-cols-2 gap-5 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-3">
         {stationeries?.map((stationary) => (
           <div key={stationary?.id} className="flex flex-col gap-4 items-center justify-center">
             <figure className="border rounded-full  hover:border-primary-color cursor-pointer hover:shadow-lg duration-500 transition">

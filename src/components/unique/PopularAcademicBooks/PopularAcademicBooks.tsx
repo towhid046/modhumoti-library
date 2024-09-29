@@ -6,8 +6,7 @@ const PopularAcademicBooks = async ({ category }: { category: string }) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
   );
-  const data = await res.text();
-  const books: Book[] = JSON.parse(data);
+  const books: Book[] = await res.json()
 
   return (
     <section className="container mx-auto px-4 mb-32">
