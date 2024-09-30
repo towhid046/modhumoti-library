@@ -2,8 +2,19 @@ import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import ViewMoreButton from "@/components/shared/ViewMoreButton/ViewMoreButton";
 import BookCard from "../../shared/BookCard/BookCard";
 import { Book } from "@/lib/commonTypes";
-import {books} from '../../../app/books/data'
-const PopularAcademicBooks = async ({ category }: { category: string }) => {
+import { books } from "../../../app/books/data";
+
+interface BookSectionProps {
+  category?: string;
+  title: string;
+  actionText: string;
+}
+
+const BookSection = async ({
+  category,
+  title,
+  actionText,
+}: BookSectionProps) => {
   // const res = await fetch(
   //   `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
   // );
@@ -12,8 +23,8 @@ const PopularAcademicBooks = async ({ category }: { category: string }) => {
   return (
     <section className="container mx-auto px-4 mb-32">
       <SectionHeader
-        title="Popular"
-        actionText="Academic Books"
+        title={title}
+        actionText={actionText}
         urlLabel="View More"
         url="/books"
       />
@@ -26,4 +37,4 @@ const PopularAcademicBooks = async ({ category }: { category: string }) => {
     </section>
   );
 };
-export default PopularAcademicBooks;
+export default BookSection;

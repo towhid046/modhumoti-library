@@ -7,19 +7,18 @@ import NonFictionalBooks from "@/components/unique/NonFictionalBooks/NonFictiona
 import FictionalBooks from "@/components/unique/FictionalBooks/FictionalBooks";
 import FaqSection from "@/components/unique/FaqSection/FaqSection";
 import ContactSection from "@/components/unique/ContactSection/ContactSection";
+import BookSection from './../components/shared/BookSection/BookSection';
 
 const Home = () => {
   return (
     <>
       <Hero />
       <OurServices />
-      <PopularAcademicBooks category="Academic" />
+      <BookSection title="Popular" actionText="Academic Books"/>
       <LectureSheets />
       <StationeriesSection />
-      <PopularAcademicBooks category="Non-Fiction" />
-      <PopularAcademicBooks category="Fiction" />
-      {/* <NonFictionalBooks /> */}
-      {/* <FictionalBooks /> */}
+      <BookSection title="Explore" actionText="Non-Fictional Books"/>
+      <BookSection title="Explore" actionText="Fictional Books"/>
       <FaqSection />
       <ContactSection /> 
     </>

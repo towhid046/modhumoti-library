@@ -4,12 +4,18 @@ interface Service {
   description: string;
   icon: string;
 }
-import {services} from './data'
+// import { services } from "./data";
+import axios from "axios";
 const OurServices = async () => {
   // const res = await fetch(
   //   `${process.env.NEXT_PUBLIC_SERVER_URL}/api/services`
   // );
   // const services:Service[] = await res.json()
+
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/services`
+  );
+  const services = res?.data;
 
   return (
     <section className="container mx-auto px-4 mb-32">
@@ -20,12 +26,14 @@ const OurServices = async () => {
         urlLabel="View Books"
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5 ">
-        {services?.map((service,index) => (
+        {services?.map((service, index) => (
           <div
             key={index}
             className="hover:shadow-lg transition duration-500 rounded-md space-y-7 p-5 bg-base-100 shadow-sm "
           >
-            <figure className="flex justify-center text-4xl">{service.icon}</figure>
+            <figure className="flex justify-center text-4xl">
+              {service.icon}
+            </figure>
             <div className="space-y-3 text-center">
               <h3 className="lg:text-3xl text-gray-700 text-2xl font-semibold">
                 {service.title}
