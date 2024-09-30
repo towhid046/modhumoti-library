@@ -2,11 +2,12 @@ import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import ViewMoreButton from "@/components/shared/ViewMoreButton/ViewMoreButton";
 import BookCard from "../../shared/BookCard/BookCard";
 import { Book } from "@/lib/commonTypes";
+import {books} from '../../../app/books/data'
 const PopularAcademicBooks = async ({ category }: { category: string }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
-  );
-  const books: Book[] = await res.json()
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
+  // );
+  // const books: Book[] = await res.json()
 
   return (
     <section className="container mx-auto px-4 mb-32">
