@@ -1,10 +1,11 @@
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
+import Link  from 'next/link';
 interface BookCardProps {
   book: Book;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
-  const {image, title, author, price, year, leftCount} = book
+  const { image, title, author, price, year, leftCount, _id } = book
   return (
     <div
       className="border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between"
@@ -29,7 +30,9 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </div>
       </div>
       <div className="bg-blue-200 transition duration-700 lg:py-3 py-2 flex w-full justify-center items-center rounded-b-md cursor-pointer group-hover:bg-primary-color group-hover:text-white">
-        <u className="text-[15px]">See Details</u>
+        <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${_id}`}>
+          <u className="text-[15px]">See Details</u>
+        </Link>
       </div>
     </div>
   );

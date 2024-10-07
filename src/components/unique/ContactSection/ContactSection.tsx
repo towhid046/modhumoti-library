@@ -1,7 +1,6 @@
 import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import ContactForm from "./ContactForm/ContactForm";
 import Image from "next/image";
-
 import customerSupportImage from "../../../assets/images/customer-support.png";
 
 const ContactSection = () => {
