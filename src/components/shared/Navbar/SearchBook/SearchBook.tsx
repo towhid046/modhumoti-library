@@ -1,13 +1,61 @@
-import React, { FC } from "react";
+'use client';
+import React, { FC, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
+import useAxiosPublic from '@/hooks/useAxios';
+import { Book } from "@/lib/commonTypes";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 interface SearchBookProps {
   setIsSearchClicked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
+  const axiosPublic = useAxiosPublic()
+  const [searchText, setSearchText] = useState<string>('')
+  const [books, setBooks] = useState<Book[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (searchText) {
+      setIsLoading(true)
+    }
+    const loadSearchBooks = setTimeout(
+      async () => {
+        try {
+          setBooks([])
+          const res = await axiosPublic(`/books/api/search_book?search=${searchText}`)
+          setBooks(res.data)
+        } catch (error) {
+          console.error(error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      , 1000)
+    return () => {
+      clearTimeout(loadSearchBooks)
+    }
+  }, [searchText])
+
+  let render: any;
+
+  if (books.length) {
+    render = <ul className="flex flex-col p-5 space-y-2">
+      {books && books?.slice(0, 7)?.map(book => (
+        <li key={book._id}>{book.title}</li>
+      ))}
+    </ul>
+  }
+  if (!books.length && searchText && !isLoading) {
+    render = <p className='text-gray-500 p-5 italic text-center'>Opps! Book Not Found</p>
+  }
+
+  if (isLoading) {
+    render = <div className="p-5"> <LoadingSpinner height="50vh" size="sm" /></div>
+  }
+
   return (
-    <form className="w-full flex items-center gap-4" onSubmit={(e) => e.preventDefault()}>
+    <form className="w-full flex items-center gap-4 relative" onSubmit={(e) => e.preventDefault()}>
       <div
         onClick={() => setIsSearchClicked && setIsSearchClicked(false)}
         className="md:hidden inline-block cursor-pointer"
@@ -21,6 +69,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
           type="text"
           className="w-full focus:outline-none text-gray-500"
           placeholder="Search by book or author name"
+          onChange={(e) => setSearchText(e.target.value)}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +84,11 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
           />
         </svg>
       </label>
+      <div className="absolute top-14 bg-white rounded-md shadow-lg w-full">
+        {render}
+      </div>
     </form>
+
   );
 };
 

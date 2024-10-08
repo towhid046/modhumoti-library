@@ -30,8 +30,8 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
   return (
     <>
       <PageHeader
-        title={`Books / ${title}`}
-        url={`${process.env.NEXT_PUBLIC_SERVER_URL}/${id}`}
+        title={`${title}`}
+        url={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`}
       />
       <section className="container mx-auto pt-16">
         <div className="flex  lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
