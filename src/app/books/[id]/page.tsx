@@ -3,6 +3,7 @@ import PageHeader from "@/components/shared/PageHeader/PageHeader";
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
 import { BsCartPlus } from "react-icons/bs";
+import BookSection from './../../../components/shared/BookSection/BookSection';
 
 const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
@@ -30,10 +31,10 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
     <>
       <PageHeader
         title={`Books / ${title}`}
-        url={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`}
+        url={`${process.env.NEXT_PUBLIC_SERVER_URL}/${id}`}
       />
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex  lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md">
+      <section className="container mx-auto pt-16">
+        <div className="flex  lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
           <figure className="lg:flex-1">
             <Image
               className="w-full h-96 object-cover rounded-md"
@@ -68,6 +69,10 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
               <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
             </div>
           </div>
+        </div>
+
+        <div className='lg:mt-14 sm:mt-10 mt-8'>
+          <BookSection title="Related" actionText={`${category} Books`} category={category} length={8} />
         </div>
       </section>
     </>

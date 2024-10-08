@@ -62,8 +62,8 @@ const Navbar = () => {
         {/* for responsive menu */}
         {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
         {isSearchClicked && (
-          <div className="absolute top-2 left-0 md:hidden w-full text-[15px]">
-            <div className="container  mx-auto px-4 bg-base-100 pt-1 pb-2 ">
+          <div className="absolute top-2 left-0 md:hidden w-full text-[15px] bg-base-100 z-40">
+            <div className="container  mx-auto px-4  pt-1 pb-2 ">
               <SearchBook setIsSearchClicked={setIsSearchClicked} />
             </div>
           </div>

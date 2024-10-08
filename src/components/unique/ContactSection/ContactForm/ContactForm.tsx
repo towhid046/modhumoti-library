@@ -6,7 +6,7 @@ const ContactForm = () => {
   return (
     <div className={`p-4 border rounded-md`}>
       <form>
-        <div className="flex flex-col xl:flex-row items-center gap-4">
+        <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row items-center gap-4">
           <div className={inputParentClassName}>
             <label>
               <strong>Your Name</strong>

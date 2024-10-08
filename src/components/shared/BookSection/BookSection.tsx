@@ -8,12 +8,14 @@ interface BookSectionProps {
   category?: string;
   title: string;
   actionText: string;
+  length?:number;
 }
 
 const BookSection = async ({
   category,
   title,
   actionText,
+  length=4,
 }: BookSectionProps) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
@@ -28,8 +30,8 @@ const BookSection = async ({
         urlLabel="View More"
         url="/books"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {books?.slice(0, 4)?.map((book, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {books?.slice(0, length)?.map((book, index) => (
           <BookCard key={index} book={book} />
         ))}
       </div>

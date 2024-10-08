@@ -2,7 +2,7 @@ import Link from "next/link";
 import { IoCartOutline } from "react-icons/io5";
 const Cart = () => {
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <Link className="inline-block" href={"/user_cart"}>
         <div className="indicator mt-2">
           <IoCartOutline className="text-2xl cursor-pointer" />

@@ -15,11 +15,11 @@ const ContactSection = () => {
         />
 
         <div className="flex flex-col lg:flex-row items-center lg:gap-10 gap-5">
-          <div className="flex-1">
+          <div className="lg:flex-1 w-full">
             <ContactForm />
           </div>
 
-          <div className="flex-1">
+          <div className="lg:flex-1 w-full">
             <div className="flex  justify-center">
               <Image
                 width={undefined}
