@@ -1,15 +1,13 @@
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
-import Link  from 'next/link';
+import Link from 'next/link';
 interface BookCardProps {
   book: Book;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const { image, title, author, price, year, leftCount, _id } = book
   return (
-    <div
-      className="border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between"
-    >
+    <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
       <div className="px-4 pt-4">
         <figure className="relative rounded-md overflow-hidden cursor-pointer">
           <div className="absolute right-2 bottom-2 bg-primary-color py-1.5 px-2.5 text-white rounded-full text-xs z-30">
@@ -30,11 +28,9 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </div>
       </div>
       <div className="bg-blue-200 transition duration-700 lg:py-3 py-2 flex w-full justify-center items-center rounded-b-md cursor-pointer group-hover:bg-primary-color group-hover:text-white">
-        <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${_id}`}>
-          <u className="text-[15px]">See Details</u>
-        </Link>
+        <u className="text-[15px]">See Details</u>
       </div>
-    </div>
+    </Link>
   );
 };
 

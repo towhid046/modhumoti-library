@@ -4,8 +4,9 @@ import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
 import { BsCartPlus } from "react-icons/bs";
 
-const BookDetailsPage = async (request) => {
-  const { id } = request?.params;
+const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params
+
   if (!id) {
     return { message: "Id is required!" };
   }
@@ -28,21 +29,21 @@ const BookDetailsPage = async (request) => {
   return (
     <>
       <PageHeader
-        title={title}
+        title={`Books / ${title}`}
         url={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`}
       />
       <section className="container mx-auto px-4 py-16">
-        <div className="flex items-center lg:gap-10 flex-col lg:flex-row gap-5">
+        <div className="flex  lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md">
           <figure className="lg:flex-1">
             <Image
-              className="w-full h-96 object-cover"
+              className="w-full h-96 object-cover rounded-md"
               width={100}
               height={100}
               src={image}
               alt={title}
             />
           </figure>
-          <div className="lg:flex-1 space-y-4 p-5 border rounded-md">
+          <div className="lg:flex-1 space-y-4 flex flex-col justify-between">
             <div className="space-y-1">
               <h2 className="text-2xl font-bold">{title}</h2>
               <p>Author: {author}</p>
@@ -58,13 +59,13 @@ const BookDetailsPage = async (request) => {
               <p>Left: {leftCount} pics</p>
             </div>
             <hr />
-            <div className="flex items-center lg:gap-6 gap-4 lg:flex-row flex-col">
-              <Button customClass="flex-1 justify-center flex items-center gap-4">
+            <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
+              <Button customClass="sm:flex-1 justify-center flex items-center gap-4 w-full">
                 Add to cart
                 <BsCartPlus />
               </Button>
 
-                <Button customClass='flex-1'>Buy Now</Button>
+              <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
             </div>
           </div>
         </div>
