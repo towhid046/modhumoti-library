@@ -9,7 +9,6 @@ export const GET = async (req: Request) => {
     // Parse the URL to extract the query parameter 'category'
     const url = new URL(req.url);
     const category = url.searchParams.get('category');  // Get the category from query params
-
     // Reference the 'books' collection
     const booksCollection = db.collection('books');
 

@@ -1,11 +1,10 @@
 import BookCard from "./../../components/shared/BookCard/BookCard";
 import PageHeader from "./../../components/shared/PageHeader/PageHeader";
 import Pagination from "../../components/unique/Pagination/Pagination";
-// import { Book } from "@/lib/commonTypes";
-import {books} from './data'
+import { Book } from "@/lib/commonTypes";
 const BooksPage = async () => {
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/api`);
-  // const books:Book[] = await res.json()
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/api`);
+  const books:Book[] = await res.json()
 
   return (
     <>
