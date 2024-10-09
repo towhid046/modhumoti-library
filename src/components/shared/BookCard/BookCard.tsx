@@ -23,7 +23,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </figure>
         <div className="py-4">
           <h2 className="text-gray-800 text-lg font-semibold">{title}</h2>
-          <p className="text-gray-500 text-[14px]">By {author}</p>
+          <p className="text-gray-500 text-[14px] italic">By {author}</p>
           <p className="text-xl font-bold text-primary-color mt-2">{price} BDT</p>
         </div>
       </div>

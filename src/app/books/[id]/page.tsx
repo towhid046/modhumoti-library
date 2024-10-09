@@ -2,8 +2,9 @@ import Button from "@/components/shared/Button/Button";
 import PageHeader from "@/components/shared/PageHeader/PageHeader";
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
-import { BsCartPlus } from "react-icons/bs";
+
 import BookSection from './../../../components/shared/BookSection/BookSection';
+import AddToCartBook from "@/components/unique/AddToCartBook/AddToCartBook";
 
 const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
@@ -61,11 +62,7 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
             </div>
             <hr />
             <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
-              <Button customClass="sm:flex-1 justify-center flex items-center gap-4 w-full">
-                Add to cart
-                <BsCartPlus />
-              </Button>
-
+             <AddToCartBook id={_id}/>
               <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
             </div>
           </div>

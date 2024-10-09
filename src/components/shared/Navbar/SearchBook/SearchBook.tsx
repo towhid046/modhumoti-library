@@ -69,7 +69,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
     </ul>
   }
   if (!books.length && searchText && !isLoading) {
-    render = <p className='text-gray-500 p-5 italic text-center'>Opps! Book Not Found</p>
+    render = <p className='text-gray-400 p-5 italic text-center'>Opps! Book Not Found</p>
   }
 
   if (isLoading) {
@@ -90,7 +90,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
         <input
           type="search"
           className="w-full focus:outline-none text-gray-500"
-          placeholder="Search by book or author name"
+          placeholder="Search by book name"
           onChange={(e) => setSearchText(e.target.value)}
         />
         {!searchText && <svg
