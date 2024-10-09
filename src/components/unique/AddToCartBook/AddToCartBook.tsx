@@ -39,7 +39,7 @@ const AddToCartBook = ({ id }: { id: string }) => {
 
     return (
         <>
-            {booksId?.includes(id) ?
+            {booksId?.includes(id as never) ?
                 <Button customClass="bg-black">
                     View Cart
                 </Button>
