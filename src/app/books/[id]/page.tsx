@@ -34,8 +34,8 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
         title={`${title}`}
         url={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`}
       />
-      <section className="container mx-auto lg:pt-8 pt-4 px-4">
-        <div className="flex  lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
+      <section className="container mx-auto lg:pt-8 pt-4">
+        <div className="flex lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
           <figure className="lg:flex-1">
             <Image
               className="w-full h-96 object-cover rounded-md"
