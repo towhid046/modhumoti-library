@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./../components/shared/Navbar/Navbar";
 import AuthProvider from "./../providers/AuthProvider";
+import BookInfoProvider from "@/providers/BookInfoProvider";
 // const inter = Inter({ subsets: ["latin"] });
 
 import { ToastContainer } from "react-toastify";
@@ -23,16 +24,18 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="winter" className="font-roboto">
       <AuthProvider>
-        <body>
-          <header className="sticky top-0 z-50">
-            <Navbar />
-          </header>
-          <main className="min-h-screen">{children}</main>
-          <footer>
-            <Footer />
-          </footer>
-          <ToastContainer />
-        </body>
+        <BookInfoProvider>
+          <body>
+            <header className="sticky top-0 z-50">
+              <Navbar />
+            </header>
+            <main className="min-h-screen">{children}</main>
+            <footer>
+              <Footer />
+            </footer>
+            <ToastContainer />
+          </body>
+        </BookInfoProvider>
       </AuthProvider>
     </html>
   );

@@ -1,11 +1,12 @@
 'use client'
 import Button from "@/components/shared/Button/Button";
-import useBookIds from "@/hooks/useBookIds";
 import { BsCartPlus } from "react-icons/bs";
-
+import { useContext, useEffect } from 'react'
+import { BookIdContext } from "@/providers/BookInfoProvider";
 const AddToCartBook = ({ id }: { id: string }) => {
+    const { bookIds, handleAddToCartBook } = useContext(BookIdContext)
+    useEffect(() => { }, [bookIds])
 
-    const { bookIds, handleAddToCartBook } = useBookIds()
     return (
         <>
             {bookIds?.includes(id as never) ?

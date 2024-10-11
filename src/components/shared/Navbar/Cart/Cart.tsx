@@ -1,8 +1,10 @@
 'use client'
-import useBookIds from "@/hooks/useBookIds";
+import { BookIdContext } from "@/providers/BookInfoProvider";
+import { useContext, useEffect } from "react";
 import { IoCartOutline } from "react-icons/io5";
 const Cart = () => {
-  const { bookIds } = useBookIds()
+  const { bookIds } = useContext(BookIdContext)
+  useEffect(() => { }, [bookIds])
 
   return (
     <div className="relative z-10">
