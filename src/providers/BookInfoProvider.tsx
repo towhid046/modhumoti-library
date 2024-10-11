@@ -1,16 +1,24 @@
 'use client';
-import { ReactNode, useState, createContext, useEffect } from "react"
+import { ReactNode, useState, createContext, useEffect, Dispatch, SetStateAction } from "react"
 import swal from 'sweetalert'
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export const BookIdContext = createContext<string[] | [] | any>([])
 
-
+interface BookInfoProps {
+    bookIds: string[],
+    setBookIds: Dispatch<SetStateAction<string[]>>,
+    handleAddToCartBook: (id: string) => void,
+    isCartShow: boolean,
+    setIsCartShow: Dispatch<SetStateAction<boolean>>,
+}
 const BookInfoProvider = ({ children }: {
     children: ReactNode;
 }) => {
     const [bookIds, setBookIds] = useState<string[] | []>([])
+    const [isCartShow, setIsCartShow] = useState<boolean>(false);
+
     useEffect(() => {
         const existedIds = localStorage.getItem('bookIds') ? JSON.parse(localStorage.getItem('bookIds') as string) : [];
         setBookIds(existedIds)
@@ -46,10 +54,13 @@ const BookInfoProvider = ({ children }: {
         }
     };
 
-    const bookInfo = {
+
+    const bookInfo: BookInfoProps = {
         bookIds,
         setBookIds,
         handleAddToCartBook,
+        isCartShow,
+        setIsCartShow,
     }
     return (
         <BookIdContext.Provider value={bookInfo}>
