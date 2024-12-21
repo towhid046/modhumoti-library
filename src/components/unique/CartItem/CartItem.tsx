@@ -12,8 +12,12 @@ const CartItem = () => {
   const loadCartProducts = async (): Promise<void> => {
     try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cart-items?ids=${bookIds.join(',')}`);
-        setCartProducts(res?.data);
-        console.log(res.data)
+      if(res.data?.length){
+          setCartProducts(res?.data);
+        }else{
+          setCartProducts([]);
+        }
+
     } catch (error) {
       console.error(error);
     } finally {
