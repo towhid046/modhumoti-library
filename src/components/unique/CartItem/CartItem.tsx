@@ -1,8 +1,8 @@
-'use client'
 import { FaTimes } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BookIdContext } from "@/providers/BookInfoProvider";
+import {ProductProps} from '@/utils/'
 
 const CartItem = () => {
     const [cartProducts, setCartProducts] = useState<ProductProps[]>([]);
