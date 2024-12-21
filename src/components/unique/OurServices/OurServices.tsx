@@ -8,15 +8,15 @@ const OurServices = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/services`
   );
-  const services:Service[] = await res.json()
+  const services: Service[] = await res.json()
 
   return (
     <section className="container mx-auto px-4 mb-32">
       <SectionHeader
         title="Our"
         actionText="Services"
-        url="/books"
-        urlLabel="View Books"
+        url=""
+        urlLabel=""
       />
       <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-5 ">
         {services?.map((service, index) => (

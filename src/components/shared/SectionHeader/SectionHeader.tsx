@@ -4,8 +4,8 @@ import { MdArrowOutward } from "react-icons/md";
 interface SectionHeadingProps {
   title: string;
   actionText: string;
-  urlLabel: string;
-  url: string;
+  urlLabel?: string;
+  url?: string;
 
   customClass?: string;
 }
@@ -13,7 +13,7 @@ const SectionHeader = ({
   title,
   actionText,
   urlLabel,
-  url='',
+  url = '',
   customClass,
 }: SectionHeadingProps) => {
   return (
@@ -23,8 +23,8 @@ const SectionHeader = ({
         <span className="text-primary-color">{actionText}</span>
       </h2>
       <Link href={url} className="md:flex hidden items-center gap-2 transition duration-500 underline text-primary-color hover:text-secondary-color">
-      <span>{urlLabel}</span>
-      <MdArrowOutward className="text-xl" />
+        <span>{urlLabel}</span>
+        {(url !== '' || urlLabel !== '') && <MdArrowOutward className="text-xl" />}
       </Link>
     </div>
   );
