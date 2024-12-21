@@ -2,7 +2,7 @@ import { FaTimes } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BookIdContext } from "@/providers/BookInfoProvider";
-import {Book} from '@/src/lib/CommonTypes'
+import {Book} from '@/lib/commonTypes'
 
 const CartItem = () => {
     const [cartProducts, setCartProducts] = useState<Book[]>([]);
