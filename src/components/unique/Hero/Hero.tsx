@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
             </p>{" "}
             <h2 className="lg:text-7xl md:text-4xl text-3xl font-bold bg-gradient-to-r from-primary-color  to-gray-300 inline-block text-transparent bg-clip-text">
               {" "}
-              Bio Poka!
+              Modhumoti Library!
             </h2>
             <p className="font-semibold text-gray-600 text-lg mt-2"> </p>
             <p className="text-gray-500 my-4">
