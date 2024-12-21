@@ -2,10 +2,10 @@ import { FaTimes } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BookIdContext } from "@/providers/BookInfoProvider";
-import {ProductProps} from '@/utils/'
+import {Book} from '@/lib/CommonTypes'
 
 const CartItem = () => {
-    const [cartProducts, setCartProducts] = useState<ProductProps[]>([]);
+    const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { bookIds, setIsCartShow } = useContext(BookIdContext);
 
@@ -23,7 +23,6 @@ const CartItem = () => {
 
   useEffect(() => {
     loadCartProducts();
-    console.log('Hi')
   }, [bookIds]);
 
   const removeIdFromCart = (id: string): void => {
@@ -67,12 +66,12 @@ const CartItem = () => {
                     <figure>
                       <img
                         src={item?.image}
-                        className="w-12 h-10 object-cover "
+                        className="w-12 h-10 object-cover rounded-lg"
                         alt="Image"
                       />
                     </figure>
                     <div>
-                      <p className="text-md text-gray-600">{item?.name}</p>
+                      <p className="text-sm text-gray-600">{item?.title}</p>
                     </div>
                   </div>
 
