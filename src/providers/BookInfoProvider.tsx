@@ -13,9 +13,7 @@ interface BookInfoProps {
     isCartShow: boolean,
     setIsCartShow: Dispatch<SetStateAction<boolean>>,
 }
-const BookInfoProvider = ({ children }: {
-    children: ReactNode;
-}) => {
+const BookInfoProvider = ({ children }: {children: ReactNode}) => {
     const [bookIds, setBookIds] = useState<string[] | []>([])
     const [isCartShow, setIsCartShow] = useState<boolean>(false);
 

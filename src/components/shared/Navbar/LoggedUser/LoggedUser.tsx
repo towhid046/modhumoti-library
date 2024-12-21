@@ -6,7 +6,7 @@ import Cart from "../Cart/Cart";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import userProfile from "../../../../assets/images/profile_image.jpeg";
+import userProfile from "@/assets/images/profile_image.jpeg";
 
 const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

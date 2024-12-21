@@ -1,20 +1,19 @@
+'use client'
 import { FaTimes } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BookIdContext } from "@/providers/BookInfoProvider";
 
 const CartItem = () => {
-  //   const [cartProducts, setCartProducts] = useState<ProductProps[]>([]);
+    const [cartProducts, setCartProducts] = useState<ProductProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { bookIds, setIsCartShow } = useContext(BookIdContext);
 
   const loadCartProducts = async (): Promise<void> => {
     try {
-      const res = await axios.post(
-        // `${import.meta.env.VITE_SERVER_URL}/cart-items`,
-        bookIds
-      );
-      //   setCartProducts(res?.data);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cart-items?ids=${bookIds.join(',')}`);
+        setCartProducts(res?.data);
+        console.log(res.data)
     } catch (error) {
       console.error(error);
     } finally {
@@ -23,12 +22,13 @@ const CartItem = () => {
   };
 
   useEffect(() => {
-    // loadCartProducts();
+    loadCartProducts();
+    console.log('Hi')
   }, [bookIds]);
 
   const removeIdFromCart = (id: string): void => {
     // handleRemoveProduct(id);
-    // loadCartProducts();
+    loadCartProducts();
   };
 
   return (
@@ -51,35 +51,33 @@ const CartItem = () => {
             </button>
           </div>
 
-          {/* {isLoading && (
+          {isLoading && (
             <div className=" flex justify-center items-center min-h-[80vh]">
               <span className="loading loading-spinner loading-sm"></span>
             </div>
-          )} */}
+          )}
 
           <div className="space-y-3">
-            {[1,2,3,4,5,6].map((item: any) => (
+            {cartProducts?.map((item: any) => (
                 <li
-                  key={item}
+                  key={item._id}
                   className="flex justify-between items-center"
                 >
                   <div className="flex items-center gap-2">
                     <figure>
-                      {/* <img
+                      <img
                         src={item?.image}
                         className="w-12 h-10 object-cover "
                         alt="Image"
-                      /> */}
+                      />
                     </figure>
                     <div>
-                      {/* <p className="text-md text-gray-600">{item?.name}</p> */}
-                      <p className="text-md text-gray-600">Item</p>
+                      <p className="text-md text-gray-600">{item?.name}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    {/* <strong>${item?.price}</strong> */}
-                    <strong>$120</strong>
+                    <strong>${item?.price}</strong>
                     <button
                       //   onClick={() => removeIdFromCart(item?._id)}
                       className="btn btn-sm btn-outline"
