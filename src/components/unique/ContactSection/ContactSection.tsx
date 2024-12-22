@@ -8,10 +8,10 @@ const ContactSection = () => {
     <>
       <section className="container mx-auto px-4 mb-32">
         <SectionHeader
-          url="/"
+          url=""
           title="Get In"
           actionText="Touch"
-          urlLabel="Contact Now"
+          urlLabel=""
         />
 
         <div className="flex flex-col lg:flex-row items-center lg:gap-10 gap-5">
