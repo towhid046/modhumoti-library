@@ -3,9 +3,9 @@ import DashboardNavbar from '@/components/unique/DashboardNavbar/DashboardNavbar
 
 const page = () => {
   return (
-    <div className='container'>
+    <div className='container mx-auto px-4 flex'>
       <DashboardNavbar />
-      Dashboard
+        Dashboard
     </div>
   )
 }
