@@ -1,17 +1,17 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 // import { MdLightMode, MdDarkMode } from "react-icons/md";
-import { RiSearchLine } from "react-icons/ri";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { RiSearchLine } from "react-icons/ri";
 import Button from "../Button/Button";
 import Logo from "./../Logo/Logo";
+import LoggedUser from "./LoggedUser/LoggedUser";
+import NavLinks from "./NavLinks/NavLinks";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
-import NavLinks from "./NavLinks/NavLinks";
-import { usePathname } from "next/navigation";
-import LoggedUser from "./LoggedUser/LoggedUser";
-import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${["/login", "/registration","/dashboard"].includes(path) && "hidden"}`}
+      className={`${["/login", "/registration", "/dashboard"].includes(path) && "hidden"}`}
     >
       <div className={`relative py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">
@@ -37,7 +37,7 @@ const Navbar = () => {
 
           <div className="flex lg:flex-1 items-center gap-8 justify-between">
             <figure
-              className="md:hidden"
+              className="md:hidden flex items-center justify-center"
               onClick={() => setIsSearchClicked(!isSearchClicked)}
             >
               <button onClick={() => setIsSearchClicked(true)}>
