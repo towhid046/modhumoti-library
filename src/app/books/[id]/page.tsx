@@ -34,36 +34,38 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
         title={`${title}`}
         url={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`}
       />
-      <section className="container mx-auto lg:pt-8 pt-4">
-        <div className="flex lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
-          <figure className="lg:flex-1">
-            <Image
-              className="w-full h-96 object-cover rounded-md"
-              width={100}
-              height={100}
-              src={image}
-              alt={title}
-            />
-          </figure>
-          <div className="lg:flex-1 space-y-4 flex flex-col justify-between">
-            <div className="space-y-1">
-              <h2 className="text-2xl font-bold">{title}</h2>
-              <p>Author: {author}</p>
-              <p>Category: {category}</p>
-            </div>
-            <hr />
-            <div className="space-y-1">
-              <p>Publish: {publisher}</p>
-              <p>Publish Year: {year}</p>
-              <p className="text-xl font-bold text-primary-color">
-                Price: {price}{" "}
-              </p>
-              <p>Left: {leftCount} pics</p>
-            </div>
-            <hr />
-            <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
-             <AddToCartBook id={_id}/>
-              <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
+      <section className="container mx-auto lg:pt-8 pt-4 ">
+        <div className="px-4">
+          <div className="flex lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
+            <figure className="lg:flex-1">
+              <Image
+                className="w-full h-96 object-cover rounded-md"
+                width={100}
+                height={100}
+                src={image}
+                alt={title}
+              />
+            </figure>
+            <div className="lg:flex-1 space-y-4 flex flex-col justify-between">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-bold">{title}</h2>
+                <p>Author: {author}</p>
+                <p>Category: {category}</p>
+              </div>
+              <hr />
+              <div className="space-y-1">
+                <p>Publish: {publisher}</p>
+                <p>Publish Year: {year}</p>
+                <p className="text-xl font-bold text-primary-color">
+                  Price: {price}{" "}
+                </p>
+                <p>Left: {leftCount} pics</p>
+              </div>
+              <hr />
+              <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
+                <AddToCartBook id={_id} />
+                <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
+              </div>
             </div>
           </div>
         </div>
