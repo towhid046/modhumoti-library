@@ -23,7 +23,7 @@ mongoose
     .catch((err) => console.error("MongoDB connection error:", err));
 
 app.get("/", (req, res) => {
-    res.send("Express + TypeScript Server");
+    res.send("Modhumoti Library server is running...");
 });
 
 app.listen(PORT, () => {
