@@ -24,8 +24,10 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
       async () => {
         try {
           setBooks([])
-          const res = await axiosPublic(`/books/api/search_book?search=${searchText}`)
+         if(searchText.trim().length){
+          const res = await axiosPublic(`/books?search=${searchText}`)
           setBooks(res.data)
+         }
         } catch (error) {
           console.error(error)
         } finally {
@@ -45,7 +47,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
       {books && books?.slice(0, 5)?.map((book, index) => (
         <li onClick={() => setSearchText('')} key={book._id} className={`${index !== books.length - 1 && 'border-b'} `}>
           <Link
-            href={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${book._id}`}
+            href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/books/${book._id}`}
             className='pb-3 px-5 flex items-center w-full gap-4 justify-between hover:text-primary-color transition duration-300'
           >
             <figure>

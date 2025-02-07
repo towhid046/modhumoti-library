@@ -11,13 +11,13 @@ const Home = () => {
     <>
       <Hero />
       <OurServices />
-      <BookSection title="Popular" actionText="Academic Books" category="Academic"/>
+      <BookSection title="Popular" actionText="Academic Books" category="Academic" />
       <LectureSheets />
       <StationeriesSection />
-      <BookSection title="Explore" actionText="Non-Fictional Books" category="Non-Fiction"/>
-      <BookSection title="Explore" actionText="Fictional Books" category="Fiction"/>
+      <BookSection title="Explore" actionText="Non-Fictional Books" category="Non-Fiction" />
+      <BookSection title="Explore" actionText="Fictional Books" category="Fiction" />
       <FaqSection />
-      <ContactSection /> 
+      <ContactSection />
     </>
   );
 };

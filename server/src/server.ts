@@ -9,17 +9,25 @@ const PORT = process.env.PORT || 5000;
 
 import userRoutes from "./routes/user.router";
 import bookRouter from "./routes/book.router";
+import serviceRouter from "./routes/service.router";
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cookieParser())
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+    credentials: true // Important for authentication and cookies
+}));
+
 
 // Routes
-app.use("/users", userRoutes);
-app.use("/books", bookRouter);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/books", bookRouter);
+app.use("/api/v1/services", serviceRouter);
 
 // Connect to MongoDB
 connectDB()

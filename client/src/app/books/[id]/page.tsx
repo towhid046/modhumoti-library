@@ -3,7 +3,7 @@ import PageHeader from "@/components/shared/PageHeader/PageHeader";
 import { Book } from "@/lib/commonTypes";
 import Image from "next/image";
 
-import BookSection from './../../../components/shared/BookSection/BookSection';
+import BookSection from '@/components/shared/BookSection/BookSection';
 import AddToCartBook from "@/components/unique/AddToCartBook/AddToCartBook";
 
 const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
@@ -14,7 +14,7 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api/${id}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/books/${id}`
   );
   const book: Book = await res.json();
   const {
