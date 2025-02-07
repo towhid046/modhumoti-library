@@ -1,15 +1,23 @@
-import { Request, Response } from "express"
-import { Book } from "../models/Book.model"
-import { bookZodSchema } from "../schemas/Book.schema"
+import { Request, Response } from "express";
+import { Book } from "../models/Book.model";
+import { bookZodSchema } from "../schemas/Book.schema";
 
 export const getAllBookHandler = async (req: Request, res: Response) => {
-    const { limit, skip, category } = req.query
-
+    const { limit, skip, category, search } = req.query;
     try {
-        const books = await Book.find({ category }).limit(Number(limit)).skip(Number(skip))
-        res.status(200).json(books)
+        // Construct query object dynamically
+        const query: any = {};
+        if (category) {
+            query.category = category;
+        }
+        if (search) {
+            query.title = new RegExp(search as string, 'i');
+        }
+
+        const books = await Book.find(query).limit(Number(limit)).skip(Number(skip));
+        res.status(200).json(books);
     } catch (error: any) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: error.message });
     }
 }
 
