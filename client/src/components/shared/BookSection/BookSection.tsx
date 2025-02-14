@@ -1,24 +1,23 @@
 import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import ViewMoreButton from "@/components/shared/ViewMoreButton/ViewMoreButton";
-import BookCard from "../../shared/BookCard/BookCard";
+import BookCard from "@/components/shared/BookCard/BookCard";
 import { Book } from "@/lib/commonTypes";
-// import { books } from "../../../app/books/data";
 
 interface BookSectionProps {
   category?: string;
   title: string;
   actionText: string;
-  length?:number;
+  length?: number;
 }
 
 const BookSection = async ({
   category,
   title,
   actionText,
-  length=4,
+  length = 4,
 }: BookSectionProps) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/books/api?category=${category}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/books?category=${category}&limit=${length}`
   );
   const books: Book[] = await res.json()
 
@@ -31,7 +30,7 @@ const BookSection = async ({
         url="/books"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {books?.slice(0, length)?.map((book, index) => (
+        {books?.map((book, index) => (
           <BookCard key={index} book={book} />
         ))}
       </div>

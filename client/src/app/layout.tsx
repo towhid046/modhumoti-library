@@ -9,6 +9,7 @@ import BookInfoProvider from "@/providers/BookInfoProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/shared/Footer/Footer";
+import Home from './page';
 
 export const metadata: Metadata = {
   title: "Modhumoti Library",
@@ -29,7 +30,9 @@ export default async function RootLayout({
             <header className="sticky top-0 z-50">
               <Navbar />
             </header>
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-screen">
+              {children}
+            </main>
             <footer>
               <Footer />
             </footer>

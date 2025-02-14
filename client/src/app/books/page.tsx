@@ -3,7 +3,7 @@ import PageHeader from "@/components/shared/PageHeader/PageHeader";
 import Pagination from "@/components/unique/Pagination/Pagination";
 import { Book } from "@/lib/commonTypes";
 const BooksPage = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/api`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books`);
   const books: Book[] = await res.json()
 
   return (
