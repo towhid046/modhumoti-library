@@ -7,7 +7,7 @@ interface BookCardProps {
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const { image, title, author, price, year, leftCount, _id } = book
   return (
-    <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
+    <Link href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
       <div className="px-4 pt-4">
         <figure className="relative rounded-md overflow-hidden cursor-pointer">
           <div className="absolute right-2 bottom-2 bg-primary-color py-1.5 px-2.5 text-white rounded-full text-xs z-30">
