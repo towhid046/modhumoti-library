@@ -1,11 +1,12 @@
 import Button from "@/components/shared/Button/Button";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useToGetImageUrl from "@/hooks/useToGetImgUrl";
+import { bookZodSchema } from "@/schemas/BookSchema";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
 import swal from "sweetalert";
-
+import { z } from "zod";
 const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
 interface AddBookFormValues {
@@ -31,27 +32,41 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
     const getImageUrl = useToGetImageUrl();
     const axiosSecure = useAxiosSecure();
 
-
     const handleAddBookForm: SubmitHandler<AddBookFormValues> = async (data) => {
         setIsLoading(true);
         try {
-            const imgUrl = await getImageUrl(data.image)
-            data.image = imgUrl
+            const imgUrl = await getImageUrl(data.image);
+            data.image = imgUrl;
+
             const sendableData = {
                 ...data,
                 leftCount: Number(data.leftCount),
                 price: Number(data.price),
-                year: Number(data.year)
-            }
-            const res = await axiosSecure.post("/books", sendableData);
+                year: Number(data.year),
+            };
 
-            if (res?.status === 200) {
-                swal("Added", "Book added successfully", "success");
-                setIsAddBookModalOpen(false);
-                refetch();
+            try {
+                // Validate the data using Zod
+                const validatedData = bookZodSchema.parse(sendableData);
+                const res = await axiosSecure.post("/books", validatedData);
+
+                if (res?.status === 200) {
+                    swal("Added", "Book added successfully", "success");
+                    setIsAddBookModalOpen(false);
+                    refetch();
+                }
+            } catch (validationError) {
+                if (validationError instanceof z.ZodError) {
+                    validationError.errors.forEach((err) => {
+                        swal("Validation Error", `${err.message}`, "error");
+                    });
+                } else {
+                    throw validationError;
+                }
             }
         } catch (error: any) {
-            swal("Oops! Error", error.message, "error");
+            console.log(error.message);
+            swal("Oops! Error", error.message || "Something went wrong", "error");
         } finally {
             setIsLoading(false);
         }
