@@ -64,7 +64,7 @@ export const {
       },
     }),
   ],
-  secret:process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {},
   pages: {
     signIn: "/login",

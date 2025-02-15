@@ -8,6 +8,7 @@ import { GoEyeClosed } from "react-icons/go";
 import useAxiosPublic from "@/hooks/useAxios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import axios from 'axios';
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
 const inputParentClassName = "flex flex-col gap-1 mb-3";
@@ -28,14 +29,14 @@ const RegistrationForm = () => {
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     try {
-      const res = await axiosPublic.post("/registration/api", data);
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/registration/api`, data);
       if (res?.data?.insertedId) {
         toast.success("Registration Success, Please Login");
         router.push("/login");
       } else if (res?.data?.message) {
         toast.info(res?.data?.message);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error?.message)
     } finally {
       setIsLoading(false);

@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-// import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
