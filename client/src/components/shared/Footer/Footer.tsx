@@ -34,7 +34,7 @@ const quickLinks = [
 
 const Footer = () => {
   const path = usePathname();
-  const isHidden = ["/login", "/registration","/dashboard"].includes(path);
+  const isHidden = ["/login", "/registration", "/dashboard"].includes(path);
 
   return (
     <footer className={`bg-neutral ${isHidden ? "hidden" : ""}`}>
@@ -118,7 +118,7 @@ const Footer = () => {
       {/* Footer Bottom */}
       <div className="bg-neutral">
         <div className="container md:flex-row flex-col flex justify-between mx-auto px-4 items-center py-4 text-neutral-content text-[13px] gap-3">
-          <p>Copyright &copy; 2024 - All rights reserved</p>
+          <p>Copyright &copy; {new Date().getFullYear()} - All rights reserved</p>
           <ul className="flex gap-3">
             <li className="link link-hover hover:text-primary-color transition duration-300 ease-in-out">
               Terms of use
