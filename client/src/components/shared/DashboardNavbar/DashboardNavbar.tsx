@@ -1,50 +1,25 @@
+import Link from "next/link";
 import React from "react";
 import {
-  FaUserGraduate,
-  FaChalkboardTeacher,
   FaHome,
+  FaUserGraduate
 } from "react-icons/fa";
 import {
-  MdOutlineSms,
-  MdPayment,
-  MdOutlineSpaceDashboard,
+  MdOutlineSpaceDashboard
 } from "react-icons/md";
-import { RiMoneyDollarBoxLine } from "react-icons/ri";
-import Link from "next/link";
-import Logo from "../../../components/shared/Logo/Logo";
-import { TfiBag } from "react-icons/tfi";
-import { IoMdPhotos } from "react-icons/io";
+import Logo from "../Logo/Logo";
 
 const navLinks = [
   {
-    path: "/dashboard/books",
+    path: "/dashboard/manage-books",
     label: "Manage Books",
     icon: MdOutlineSpaceDashboard,
   },
   {
-    path: "/dashboard/stationaries",
-    label: "Manage Stationaris",
+    path: "/dashboard/manage-stationers",
+    label: "Manage Stationers",
     icon: FaUserGraduate,
   },
-  // {
-  //   path: "/dashboard/teachers",
-  //   label: "Manage Teachers",
-  //   icon: FaChalkboardTeacher,
-  // },
-  // {
-  //   path: "/dashboard/teachers-payment",
-  //   label: "Teacher Payment",
-  //   icon: MdPayment,
-  // },
-  // {
-  //   path: "/dashboard/student-fees",
-  //   label: "Student Fees",
-  //   icon: RiMoneyDollarBoxLine,
-  // },
-  // { path: "/dashboard/send-sms", label: //"Send Sms", icon: MdOutlineSms },
-  // { path: "/dashboard/others", label: //"Others Trans", icon: TfiBag },
-  //
-  // { path: "/dashboard/gallery-photo", label: "Gallery Photo", icon: IoMdPhotos },
 ];
 
 const mainNavLinks = [
@@ -53,8 +28,8 @@ const mainNavLinks = [
 
 const DashboardNavbar: React.FC = () => {
   return (
-    <nav className="w-60 bg-base-200 min-h-screen py-12 ">
-      <div className="fixed w-60 h-full">
+    <nav className="w-60 sticky top-0 bg-base-200 min-h-screen py-12 z-50">
+      <div className=" w-60 h-full">
         <div className="text-center mb-8 px-4 italic">
           <Logo />
         </div>
