@@ -1,24 +1,38 @@
 'use client';
-import React, { useEffect, useState } from 'react'
-import { Book } from "@/lib/commonTypes";
-import BookHeader from '@/components/unique/Dashboard/Book/BookHeader';
-import useAxiosPublic from '@/hooks/useAxios';
-import BookTable from '@/components/unique/Dashboard/Book/BookTable';
 import ErrorElement from '@/components/shared/ErrorElement/ErrorElement';
 import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
+import AddBookModal from '@/components/unique/Dashboard/Book/AddBookModal';
+import BookHeader from '@/components/unique/Dashboard/Book/BookHeader';
+import BookTable from '@/components/unique/Dashboard/Book/BookTable';
+import useAxiosPublic from '@/hooks/useAxios';
+import { Book } from "@/lib/commonTypes";
+import { useEffect, useState } from 'react';
 
 const ManageBooks = () => {
-  const [searchValue, setSearchValue]= useState<string>('')
-  const [isLoading, setIsLoading]= useState<boolean>(true)
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [books, setBooks] = useState<Book[]>([]);
   const axiosPublic = useAxiosPublic()
+  const [isAddBookModalOpen, setIsAddBookModalOpen] = useState<boolean>(false);
+
+
+  const loadBooks = async () => {
+    try {
+      const res = await axiosPublic(`/books?search=${searchValue}`)
+      setBooks(res.data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     if (searchValue) {
       setIsLoading(true)
     }
 
-    if(searchValue.trim().length){
+    if (searchValue.trim().length) {
       const loadSearchBooks = setTimeout(
         async () => {
           try {
@@ -35,47 +49,43 @@ const ManageBooks = () => {
       return () => {
         clearTimeout(loadSearchBooks)
       }
-    }else{
-      const loadBooks = async () => {
-        try {
-          const res = await axiosPublic(`/books?search=${searchValue}`)
-          setBooks(res.data)
-        } catch (error) {
-          console.error(error)
-        } finally {
-          setIsLoading(false)
-        }
-      }
+    } else {
       loadBooks()
     }
   }, [searchValue])
 
   let render = null;
-  
+
   if (!books?.length) {
     render = (
-      <ErrorElement text='No Book is found!!'/>
+      <ErrorElement text='No Book is found!!' />
     );
   }
 
   if (isLoading) {
     render = (
-      <div className='flex items-center justify-center h-[80vh]'><LoadingSpinner size='lg'/></div>
+      <div className='flex items-center justify-center h-[80vh]'><LoadingSpinner size='lg' /></div>
     );
   }
-  
+
   if (books?.length) {
     render = (
-     <BookTable books={books} />
+      <BookTable books={books} />
     );
   }
 
   return (
     <>
-      <BookHeader bookLength={books.length} setSearchValue={setSearchValue} />
+      <BookHeader setIsAddBookModalOpen={setIsAddBookModalOpen} bookLength={books.length} setSearchValue={setSearchValue} searchValue={searchValue} />
       <main>
         {render}
       </main>
+      {isAddBookModalOpen && (
+        <AddBookModal
+          setIsAddBookModalOpen={setIsAddBookModalOpen}
+          refetch={() => { loadBooks() }}
+        />
+      )}
     </>
   )
 }

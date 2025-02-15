@@ -26,7 +26,7 @@ const BookTable: React.FC<BookTableProps> = ({ books}) => {
         </tr>
       </thead>
       <tbody>
-        {books?.map((book, index) => (   
+        {[...books]?.reverse()?.map((book, index) => (   
           <tr key={book._id} className="text-center">
           <th>{index + 1}</th>
           <th className="flex justify-center ">

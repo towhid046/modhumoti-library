@@ -7,7 +7,7 @@ interface DashboardLayoutProps {
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({children}) => {
     return (
-        <div className='flex mx-auto px-2'>
+        <div className='flex mx-auto px-2 '>
             <div className='w-72'>
                 <DashboardNavbar/>
             </div>

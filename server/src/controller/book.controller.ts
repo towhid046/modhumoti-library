@@ -38,6 +38,7 @@ export const getSingleBookHandler = async (req: Request, res: Response) => {
 
 export const createBookHandler = async (req: Request, res: Response) => {
     try {
+        console.log(req.body)
         // validate book
         const validateBook = bookZodSchema.parse(req.body)
         const isBookNameExist = await Book.findOne({ title: new RegExp(req.body.title, 'i') })
