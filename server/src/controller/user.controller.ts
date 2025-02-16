@@ -15,8 +15,10 @@ export const postUserHandler = async (req: express.Request, res: express.Respons
 
 export const getUserHandler = async (req: express.Request, res: express.Response) => {
     try {
-        res.status(200).send({ name: "Towhid Morol", Id: "19PAD046" })
+        const users = await User.find()
+        res.status(200).send(users)
     } catch (error) {
         res.status(500).json({ error: "Error creating user" });
     }
 }
+

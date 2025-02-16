@@ -1,24 +1,29 @@
+'use client';
+
 import Link from "next/link";
 import React from "react";
-import {
-  FaHome,
-  FaUserGraduate
-} from "react-icons/fa";
-import {
-  MdOutlineSpaceDashboard
-} from "react-icons/md";
+import { IoLibraryOutline, IoCartOutline } from "react-icons/io5";
+import { GrMultiple } from "react-icons/gr";
+import { FaHome } from "react-icons/fa";
+
 import Logo from "../Logo/Logo";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   {
+    path: "/dashboard/manage-orders",
+    label: "Manage Order",
+    icon: IoCartOutline,
+  },
+  {
     path: "/dashboard/manage-books",
     label: "Manage Books",
-    icon: MdOutlineSpaceDashboard,
+    icon: IoLibraryOutline,
   },
   {
     path: "/dashboard/manage-stationers",
     label: "Manage Stationers",
-    icon: FaUserGraduate,
+    icon: GrMultiple,
   },
 ];
 
@@ -27,9 +32,11 @@ const mainNavLinks = [
 ];
 
 const DashboardNavbar: React.FC = () => {
+  const pathName = usePathname();
+
   return (
-    <nav className="w-60 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-50">
-      <div className=" w-60">
+    <nav className="w-72 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-50">
+      <div className="w-full">
         <div className="text-center mb-8 px-4 italic">
           <Logo />
         </div>
@@ -37,7 +44,10 @@ const DashboardNavbar: React.FC = () => {
           <ul className="flex flex-col gap-1.5">
             {navLinks.map((link) => (
               <Link key={link.path} href={link.path} passHref>
-                <div className="flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-2 duration-300 transition hover:bg-blue-100 border-base-200 hover:border-primary-color">
+                <div className={`flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-[3px] duration-300 transition ${pathName === link.path ?
+                  "bg-blue-100 border-primary-color " :
+                  "hover:border-blue-100 hover:bg-blue-100 border-base-200"
+                  }`}>
                   <li className="flex items-center gap-2">
                     <span>
                       <link.icon />
@@ -56,7 +66,7 @@ const DashboardNavbar: React.FC = () => {
             <ul className="flex flex-col gap-1.5">
               {mainNavLinks.map((link) => (
                 <Link key={link.path} href={link.path} passHref>
-                  <div className="flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-2 duration-300 transition hover:bg-blue-100 border-base-200 hover:border-primary-color">
+                  <div className="flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-2 duration-300 transition hover:bg-blue-100 border-base-200 hover:border-blue-100">
                     <li className="flex items-center gap-2">
                       <span>
                         <link.icon />
