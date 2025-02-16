@@ -28,7 +28,7 @@ const mainNavLinks = [
 
 const DashboardNavbar: React.FC = () => {
   return (
-    <nav className="w-60 sticky top-0 bg-base-200 min-h-screen py-12 z-50">
+    <nav className="w-60 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-50">
       <div className=" w-60">
         <div className="text-center mb-8 px-4 italic">
           <Logo />

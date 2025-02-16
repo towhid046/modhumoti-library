@@ -2,17 +2,19 @@ import Button from "@/components/shared/Button/Button";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useToGetImageUrl from "@/hooks/useToGetImgUrl";
 import { bookZodSchema } from "@/schemas/BookSchema";
+import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
+import { toast } from 'react-toastify';
 import swal from "sweetalert";
 import { z } from "zod";
-import { toast } from 'react-toastify';
+
 const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
 interface AddBookFormValues {
     title: string;
-    image: FileList | File[];
+    image: string;
     author: string;
     leftCount: number;
     price: number;
@@ -28,16 +30,67 @@ interface AddBookProps {
 }
 
 const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
-    const { register, handleSubmit } = useForm<AddBookFormValues>();
+    const { register, handleSubmit, setValue } = useForm<AddBookFormValues>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
     const getImageUrl = useToGetImageUrl();
     const axiosSecure = useAxiosSecure();
+    const [imageFile, setImageFile] = useState<FileList | null>(null);
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+
+            // Validate file type
+            const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+            if (!allowedTypes.includes(file.type)) {
+                toast.error("Only JPG, PNG, or JPEG files are allowed.", {
+                    autoClose: 2000,
+                });
+                return;
+            }
+
+            // Validate file size (should be <= 32MB)
+            const fileSizeInMB = file.size / (1024 * 1024); // Convert bytes to MB
+            if (fileSizeInMB > 15) {
+                toast.error("File size must be less than 15MB!", {
+                    autoClose: 2000,
+                });
+                return;
+            }
+
+            setImageFile(files);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
+    const handleRemoveImage = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault(); // Prevent default behavior
+        event.stopPropagation(); // Stop event propagation
+        setPreviewImage(null);
+        setValue("image", ""); // Clear the file input
+    };
 
     const handleAddBookForm: SubmitHandler<AddBookFormValues> = async (data) => {
+        if (!imageFile) {
+            toast.error('Please select an Image', {
+                autoClose: 2000
+            })
+            return;
+        }
         setIsLoading(true);
         try {
-            const imgUrl = await getImageUrl(data.image);
-            data.image = imgUrl;
+            if (!imageFile) {
+                throw new Error("No image file selected");
+            }
+            const imgUrl = await getImageUrl(imageFile);
+            data.image = imgUrl || "";
 
             const sendableData = {
                 ...data,
@@ -47,13 +100,11 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
             };
 
             try {
-                // Validate the data using Zod
                 const validatedData = bookZodSchema.parse(sendableData);
                 const res = await axiosSecure.post("/books", validatedData);
-
                 if (res?.status === 200) {
                     toast.success("Book Added", {
-                        autoClose:2000
+                        autoClose: 2000,
                     });
                     setIsAddBookModalOpen(false);
                     refetch();
@@ -68,8 +119,8 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                 }
             }
         } catch (error: any) {
-            toast.error(error.message || "Something went wrong", {
-                autoClose:2000
+            toast.error(error?.response?.data?.error || error.message || "Something went wrong", {
+                autoClose: 2000,
             });
         } finally {
             setIsLoading(false);
@@ -96,13 +147,34 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                         <label>
                             <strong>Image</strong>
                         </label>
-                        <input
-                            type="file"
-                            {...register("image")}
-                            placeholder="Choose Book Image"
-                            className={`${commonInputClass} !py-1`}
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type="file"
+                                onChange={handleImageChange}
+                                className="hidden"
+                                id="image-upload"
+                                accept=".jpg, .jpeg, .png" // Restrict file types
+                                required
+                            />
+                            <label htmlFor="image-upload" className="cursor-pointer">
+                                <div className="border-2 border-dashed border-gray-300 p-3 rounded-md text-center">
+                                    {previewImage ? (
+                                        <div className="relative flex justify-center">
+                                            <Image width={0} height={0} src={previewImage} alt="Preview" className="w-40 h-24 object-cover rounded-md border" />
+                                            <button
+                                                type="button"
+                                                onClick={handleRemoveImage}
+                                                className="absolute top-0 right-0 bg-white rounded-full p-1 shadow-lg"
+                                            >
+                                                <TiDelete className="text-red-500 text-2xl" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <span className="text-gray-500">Choose an image (jpg, png & jpeg)</span>
+                                    )}
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
                     <div className="space-y-1">

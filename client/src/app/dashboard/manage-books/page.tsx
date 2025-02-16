@@ -67,21 +67,21 @@ const ManageBooks = () => {
   }
 
   if (books?.length) {
-    render = (<BookTable 
-                books={books} 
-                refetch={()=>{loadBooks()}} 
-                setIsUpdateBookModalOpen={setIsUpdateBookModalOpen} 
-                setBookId={setBookId}
-              />);
+    render = (<BookTable
+      books={books}
+      refetch={() => { loadBooks() }}
+      setIsUpdateBookModalOpen={setIsUpdateBookModalOpen}
+      setBookId={setBookId}
+    />);
   }
 
   return (
     <>
-      <BookHeader 
-        setIsAddBookModalOpen={setIsAddBookModalOpen} 
-        bookLength={books.length} 
-        setSearchValue={setSearchValue} 
-        searchValue={searchValue} 
+      <BookHeader
+        setIsAddBookModalOpen={setIsAddBookModalOpen}
+        bookLength={books.length}
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
       />
 
       <main>

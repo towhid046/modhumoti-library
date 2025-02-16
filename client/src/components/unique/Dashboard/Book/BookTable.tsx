@@ -70,7 +70,7 @@ const handleRemoveBook = async (id: string) => {
             <tr key={book._id} className="text-center">
               <th>{index + 1}</th>
               <th className="flex justify-center ">
-                <Image width={100} height={100} src={book.image} className="w-9 h-9 rounded object-cover" alt={book.title} />
+                <Image placeholder="blur" blurDataURL='https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?auto=compress&cs=tinysrgb&w=600' width={100} height={100} src={book.image} className="w-9 h-9 rounded object-cover" alt={book.title} />
               </th>
               <td>{book.title}</td>
               <td>{book.author}</td>
