@@ -42,7 +42,7 @@ export const createBookHandler = async (req: Request, res: Response) => {
         const validateBook = bookZodSchema.parse(req.body)
         const isBookNameExist = await Book.findOne({ title: new RegExp(req.body.title, 'i') })
         if (isBookNameExist) {
-            throw new Error("Book is already exist!")
+          throw new Error("Book Name is already exist!!")
         }
         const book = new Book(validateBook)
         const response = await book.save()
