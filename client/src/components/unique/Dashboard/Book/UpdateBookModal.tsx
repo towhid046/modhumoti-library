@@ -1,13 +1,16 @@
+'use client';
+
 import Button from "@/components/shared/Button/Button";
+import LoadingSpinner from "@/components/shared/LoadingSpinner/LoadingSpinner";
+import useAxiosPublic from "@/hooks/useAxios";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useToGetImageUrl from "@/hooks/useToGetImgUrl";
 import { bookZodSchema } from "@/schemas/BookSchema";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
 import swal from "sweetalert";
 import { z } from "zod";
-import { toast } from 'react-toastify';
 const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
 interface AddBookFormValues {
@@ -23,17 +26,42 @@ interface AddBookFormValues {
 }
 
 interface AddBookProps {
-    setIsAddBookModalOpen: Dispatch<SetStateAction<boolean>>;
+    setIsUpdateBookModalOpen: Dispatch<SetStateAction<boolean>>;
     refetch: () => void;
+    bookId:string
 }
 
-const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
-    const { register, handleSubmit } = useForm<AddBookFormValues>();
+const UpdateBookModal = ({ setIsUpdateBookModalOpen, refetch, bookId }: AddBookProps) => {
+    const { register, handleSubmit, setValue } = useForm<AddBookFormValues>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading2, setIsLoading2] = useState<boolean>(true);
     const getImageUrl = useToGetImageUrl();
     const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic()
 
-    const handleAddBookForm: SubmitHandler<AddBookFormValues> = async (data) => {
+    useEffect(()=>{
+        const fetchBook = async () => {
+            try {
+                const res = await axiosPublic.get(`/books/${bookId}`);
+                const book = res.data;
+                setValue("title", book.title);
+                setValue("author", book.author);
+                setValue("leftCount", book.leftCount);
+                setValue("price", book.price);
+                setValue("publisher", book.publisher);
+                setValue("year", book.year);
+                setValue("isbn", book.isbn);
+                setValue("category", book.category);
+            } catch (error) {
+                console.log(error);
+            }finally{
+                setIsLoading2(false)
+            }
+        };  
+        fetchBook();
+    },[])
+    
+    const handleUpdateBookForm: SubmitHandler<AddBookFormValues> = async (data) => {
         setIsLoading(true);
         try {
             const imgUrl = await getImageUrl(data.image);
@@ -49,13 +77,11 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
             try {
                 // Validate the data using Zod
                 const validatedData = bookZodSchema.parse(sendableData);
-                const res = await axiosSecure.post("/books", validatedData);
+                const res = await axiosSecure.put(`/books/${bookId}`, validatedData);
 
                 if (res?.status === 200) {
-                    toast.success("Book Added", {
-                        autoClose:2000
-                    });
-                    setIsAddBookModalOpen(false);
+                    swal("Updated", "Book updated successfully", "success");
+                    setIsUpdateBookModalOpen(false);
                     refetch();
                 }
             } catch (validationError) {
@@ -68,9 +94,8 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                 }
             }
         } catch (error: any) {
-            toast.error(error.message || "Something went wrong", {
-                autoClose:2000
-            });
+            console.log(error.message);
+            swal("Oops! Error", error.message || "Something went wrong", "error");
         } finally {
             setIsLoading(false);
         }
@@ -82,14 +107,18 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                 onClick={(e) => e.stopPropagation()}
                 className="max-w-xl mx-auto bg-white p-6 border border-gray-200 rounded"
             >
-                <div className="text-center relative mb-4">
-                    <h2 className="text-2xl font-bold ">Add Book</h2>
-                    <button className="absolute -top-3 -right-3" onClick={() => setIsAddBookModalOpen(false)}>
+                {isLoading2 ?
+                    <LoadingSpinner/>
+                    :
+                <>
+                    <div className="text-center relative mb-4">
+                    <h2 className="text-2xl font-bold ">Update Book</h2>
+                    <button className="absolute -top-3 -right-3" onClick={() => setIsUpdateBookModalOpen(false)}>
                         <TiDelete className="text-3xl text-red-400" />
                     </button>
-                </div>
-                <form
-                    onSubmit={handleSubmit(handleAddBookForm)}
+                    </div>
+                    <form
+                    onSubmit={handleSubmit(handleUpdateBookForm)}
                     className="grid lg:grid-cols-2 gap-3 grid-cols-1"
                 >
                     <div className="space-y-1 col-span-2">
@@ -152,6 +181,8 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                             {...register("price")}
                             placeholder="Enter book price"
                             className={commonInputClass}
+                            step="0.01" 
+                            min="0" 
                             required
                         />
                     </div>
@@ -215,13 +246,14 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
 
                     <div className="form-control pt-1 w-full col-span-2">
                         <Button isDisabled={isLoading}>
-                            {isLoading ? "Adding..." : "Add Book"}
+                            {isLoading ? "Updating..." : "Update Book"}
                         </Button>
                     </div>
-                </form>
+                    </form>
+                </>}
             </div>
         </div>
     );
 };
 
-export default AddBookModal;
+export default UpdateBookModal;

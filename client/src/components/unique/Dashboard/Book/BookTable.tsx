@@ -1,15 +1,55 @@
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { Book } from "@/lib/commonTypes";
 import Image from 'next/image';
+import { Dispatch, SetStateAction } from "react";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { TiPencil } from 'react-icons/ti';
+import {toast}  from 'react-toastify';
+import swal  from 'sweetalert';
 
 interface BookTableProps {
   books: Book[];
+  refetch: () => void;
+  setIsUpdateBookModalOpen: Dispatch<SetStateAction<boolean>>;
+  setBookId:Dispatch<SetStateAction<string>>;
 }
 
-const BookTable: React.FC<BookTableProps> = ({ books }) => {
-  return (
+const BookTable: React.FC<BookTableProps> = ({ books, refetch, setIsUpdateBookModalOpen, setBookId }) => {
+const axiosSecure = useAxiosSecure()
 
+const handleRemoveBook = async (id: string) => {
+  const result = await swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this book!",
+    icon: "warning",
+    buttons: ["Cancel", "Delete"],
+    dangerMode: true,
+  });
+
+  if (result) {
+    try {
+      const res =  await axiosSecure.delete(`/books/${id}`);
+      if(res.status === 200){
+          refetch();
+          toast.success('Book Deleted!', {
+            autoClose:2000
+          });
+      }
+    } catch (error) {
+      toast.error('Failed to delete book',{
+        autoClose:2000
+      });
+    }
+  }
+}
+
+
+  const handleUpdateBook = (id: string) => {
+    setIsUpdateBookModalOpen(true);
+    setBookId(id)
+  }
+
+  return (
     <div className="overflow-x-auto z-40 ">
       <table className="table">
         {/* head */}
@@ -39,14 +79,14 @@ const BookTable: React.FC<BookTableProps> = ({ books }) => {
               <td>{book.category}</td>
               <td className="flex gap-5 justify-center">
                 <button
-                  // onClick={() => handleUpdateStudent(_id)}
+                  onClick={() => handleUpdateBook(book._id)}
                   className="btn bg-base-200 border btn-sm tooltip"
                   data-tip="Edit"
                 >
                   <TiPencil className="text-lg text-success" />
                 </button>
                 <button
-                  // onClick={() => handleRemoveStudent(_id)}
+                  onClick={() => handleRemoveBook(book._id)}
                   className="btn bg-base-200 border btn-sm tooltip"
                   data-tip="Delete"
                 >
