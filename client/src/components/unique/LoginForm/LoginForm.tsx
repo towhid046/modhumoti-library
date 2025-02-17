@@ -7,6 +7,7 @@ import { GoEyeClosed } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
+import useAxiosPublic from '@/hooks/useAxios';
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
@@ -26,6 +27,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
   const router = useRouter();
+  const axiosPublic = useAxiosPublic()
 
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
@@ -42,6 +44,8 @@ const LoginForm = () => {
       } else if (res?.ok) {
         toast.success("Login successful!");
         router.push("/");
+        const res = await axiosPublic.post('/users', { email })
+        console.log(res)
       }
     } catch (error) {
       console.error("Unexpected error during login:", error);
@@ -97,7 +101,7 @@ const LoginForm = () => {
 
       {/* Submit Button */}
       <div>
-        <Button customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
+        <Button isDisabled={isLoading} customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
           {isLoading ? "Logging in..." : "Login"}
         </Button>
       </div>

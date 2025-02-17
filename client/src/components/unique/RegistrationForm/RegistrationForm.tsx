@@ -100,7 +100,7 @@ const RegistrationForm = () => {
 
       {/* Submit Button */}
       <div>
-        <Button customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
+        <Button isDisabled={isLoading} customClass="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-300">
           {isLoading ? "Registering..." : "Register"}
         </Button>
       </div>

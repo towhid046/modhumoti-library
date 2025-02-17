@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const useAxiosSecure = () => {
-  const axiosPublic = axios.create({
+  const axiosSecure = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
     withCredentials: true,
   });
-  return axiosPublic;
+  return axiosSecure;
 };
 
 export default useAxiosSecure;
