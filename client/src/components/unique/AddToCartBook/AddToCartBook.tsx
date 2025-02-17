@@ -4,13 +4,13 @@ import { BsCartPlus } from "react-icons/bs";
 import { useContext, useEffect } from 'react'
 import { BookIdContext } from "@/providers/BookInfoProvider";
 const AddToCartBook = ({ id }: { id: string }) => {
-    const { bookIds, handleAddToCartBook } = useContext(BookIdContext)
+    const { bookIds, handleAddToCartBook, setIsCartShow } = useContext(BookIdContext)
     useEffect(() => { }, [bookIds])
 
     return (
         <>
             {bookIds?.includes(id as never) ?
-                <Button customClass="bg-black sm:flex-1">
+                <Button clickHandler={() => setIsCartShow(true)} customClass="bg-black sm:flex-1">
                     View Cart
                 </Button>
                 :

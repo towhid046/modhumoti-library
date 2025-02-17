@@ -84,7 +84,7 @@ const ManageBooks = () => {
         searchValue={searchValue}
       />
 
-      <main>
+      <main className='m-2'>
         {render}
       </main>
 

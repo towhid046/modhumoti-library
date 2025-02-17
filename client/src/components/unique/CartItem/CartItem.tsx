@@ -12,7 +12,7 @@ const CartItem = () => {
 
   const loadCartProducts = async (): Promise<void> => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cart-items?ids=${bookIds.join(',')}`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/cart-item?ids=${bookIds.join(',')}`);
       if (res.data?.length) {
         setCartProducts(res?.data);
       } else {
@@ -70,6 +70,8 @@ const CartItem = () => {
                 <div className="flex items-center gap-2">
                   <figure>
                     <Image
+                      width={100}
+                      height={100}
                       src={item?.image}
                       className="w-12 h-10 object-cover rounded-lg"
                       alt="Image"

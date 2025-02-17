@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import BookSection from '@/components/shared/BookSection/BookSection';
 import AddToCartBook from "@/components/unique/AddToCartBook/AddToCartBook";
+import BuyNowButton from "@/components/unique/BuyNowButton/BuyNowButton";
 
 const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
@@ -64,7 +65,7 @@ const BookDetailsPage = async ({ params }: { params: { id: string } }) => {
               <hr />
               <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
                 <AddToCartBook id={_id} />
-                <Button customClass='sm:flex-1 w-full'>Buy Now</Button>
+                <BuyNowButton id={_id} />
               </div>
             </div>
           </div>

@@ -4,44 +4,44 @@ import Image from 'next/image';
 import { Dispatch, SetStateAction } from "react";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { TiPencil } from 'react-icons/ti';
-import {toast}  from 'react-toastify';
-import swal  from 'sweetalert';
+import { toast } from 'react-toastify';
+import swal from 'sweetalert';
 
 interface BookTableProps {
   books: Book[];
   refetch: () => void;
   setIsUpdateBookModalOpen: Dispatch<SetStateAction<boolean>>;
-  setBookId:Dispatch<SetStateAction<string>>;
+  setBookId: Dispatch<SetStateAction<string>>;
 }
 
 const BookTable: React.FC<BookTableProps> = ({ books, refetch, setIsUpdateBookModalOpen, setBookId }) => {
-const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure()
 
-const handleRemoveBook = async (id: string) => {
-  const result = await swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this book!",
-    icon: "warning",
-    buttons: ["Cancel", "Delete"],
-    dangerMode: true,
-  });
+  const handleRemoveBook = async (id: string) => {
+    const result = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this book!",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+      dangerMode: true,
+    });
 
-  if (result) {
-    try {
-      const res =  await axiosSecure.delete(`/books/${id}`);
-      if(res.status === 200){
+    if (result) {
+      try {
+        const res = await axiosSecure.delete(`/books/${id}`);
+        if (res.status === 200) {
           refetch();
           toast.success('Book Deleted!', {
-            autoClose:2000
+            autoClose: 2000
           });
+        }
+      } catch (error) {
+        toast.error('Failed to delete book', {
+          autoClose: 2000
+        });
       }
-    } catch (error) {
-      toast.error('Failed to delete book',{
-        autoClose:2000
-      });
     }
   }
-}
 
 
   const handleUpdateBook = (id: string) => {
@@ -83,7 +83,7 @@ const handleRemoveBook = async (id: string) => {
                   className="btn bg-base-200 border btn-sm tooltip"
                   data-tip="Edit"
                 >
-                  <TiPencil className="text-lg text-success" />
+                  <TiPencil className="text-lg text-primary-color text-opacity-80" />
                 </button>
                 <button
                   onClick={() => handleRemoveBook(book._id)}

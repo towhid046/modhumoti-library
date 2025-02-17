@@ -2,7 +2,6 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
-import Cart from "../Cart/Cart";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -23,11 +22,10 @@ const LoggedUser = () => {
     }
   };
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner height="!5vh" />;
 
   return (
     <div className="flex items-center gap-4">
-      <Cart />
       <button className="h-10 w-10" onClick={() => setIsOpen(true)}>
         <Image
           height={45}
