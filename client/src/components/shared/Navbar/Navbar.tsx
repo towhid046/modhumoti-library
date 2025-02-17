@@ -11,6 +11,7 @@ import LoggedUser from "./LoggedUser/LoggedUser";
 import NavLinks from "./NavLinks/NavLinks";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
+import Cart from "./Cart/Cart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -45,6 +46,9 @@ const Navbar = () => {
             </figure>
             <div className="w-full md:flex hidden">
               <SearchBook />
+            </div>
+            <div>
+              <Cart />
             </div>
             {session?.data?.user ? (
               <LoggedUser />
