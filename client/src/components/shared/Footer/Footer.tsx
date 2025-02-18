@@ -5,9 +5,8 @@ import { FiMapPin } from "react-icons/fi";
 import { LuPhone } from "react-icons/lu";
 import { IoMailOutline } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Logo from "@/components/shared/Logo/Logo";
+import Logo from "../Logo/Logo";
+import { Link } from "react-router-dom";
 
 const socialIcons = [
   { component: FaFacebook, url: "https://facebook.com" },
@@ -33,7 +32,7 @@ const quickLinks = [
 ];
 
 const Footer = () => {
-  const path = usePathname();
+  const path = '/lg';
   const isHidden = ["/login", "/registration", "/404"].includes(path) || path.split('/').includes('dashboard');
 
   return (
@@ -55,7 +54,7 @@ const Footer = () => {
                   key={index}
                   className="cursor-pointer hover:text-base-300 transition duration-500 ease-in-out text-xl"
                 >
-                  <Link href={icon.url}>
+                  <Link to={icon.url}>
                     <icon.component />
                   </Link>
                 </li>
@@ -68,7 +67,7 @@ const Footer = () => {
             <h6 className="footer-title text-lg">Quick Links</h6>
             {quickLinks.map((link, index) => (
               <Link
-                href={link.path}
+                to={link.path}
                 key={index}
                 className="link link-hover flex items-center gap-1 hover:text-primary-color transition duration-300 ease-in-out"
               >

@@ -1,11 +1,11 @@
 'use client';
 import React, { FC, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import useAxiosPublic from '@/hooks/useAxios';
-import { Book } from "@/lib/commonTypes";
+// import useAxiosPublic from '@/hooks/useAxios';
+// import { Book } from "@/lib/commonTypes";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
-import Link from 'next/link'
-import Image from "next/image";
+import { Link } from "react-router-dom";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 interface SearchBookProps {
   setIsSearchClicked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -13,7 +13,7 @@ interface SearchBookProps {
 const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
   const axiosPublic = useAxiosPublic()
   const [searchText, setSearchText] = useState<string>('')
-  const [books, setBooks] = useState<Book[]>([])
+  const [books, setBooks] = useState([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {

@@ -1,7 +1,6 @@
-import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import ContactForm from "./ContactForm/ContactForm";
-import Image from "next/image";
 import customerSupportImage from "../../../assets/images/customer-support.png";
+import SectionHeader from "../../shared/SectionHeader/SectionHeader";
 
 const ContactSection = () => {
   return (
@@ -21,7 +20,7 @@ const ContactSection = () => {
 
           <div className="lg:flex-1 w-full">
             <div className="flex  justify-center">
-              <Image
+              <img
                 width={undefined}
                 height={undefined}
                 src={customerSupportImage}

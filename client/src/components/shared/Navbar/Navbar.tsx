@@ -1,8 +1,6 @@
 "use client";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiSearchLine } from "react-icons/ri";
 import Button from "../Button/Button";
@@ -16,8 +14,12 @@ import Cart from "./Cart/Cart";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchClicked, setIsSearchClicked] = useState<boolean>(false);
-  const path = usePathname();
-  const session = useSession();
+  const path = '/hi'
+  const session = {
+    data: {
+      user: false
+    }
+  }
 
   return (
     <nav
@@ -54,7 +56,7 @@ const Navbar = () => {
               <LoggedUser />
             ) : (
               <div>
-                <Link href={"/login"}>
+                <Link to={"/login"}>
                   <Button>Login</Button>
                 </Link>
               </div>

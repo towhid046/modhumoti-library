@@ -1,7 +1,10 @@
-import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
-import ViewMoreButton from "@/components/shared/ViewMoreButton/ViewMoreButton";
-import BookCard from "@/components/shared/BookCard/BookCard";
-import { Book } from "@/lib/commonTypes";
+import useToGetPublicData from "../../../hooks/useToGetPublicData";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import ErrorElement from "../ErrorElement/ErrorElement";
+import SectionHeader from './../SectionHeader/SectionHeader';
+import ViewMoreButton from './../ViewMoreButton/ViewMoreButton';
+import BookCard from './../BookCard/BookCard';
+import { Book } from './../../../lib/commonTypes';
 
 interface BookSectionProps {
   category?: string;
@@ -10,16 +13,17 @@ interface BookSectionProps {
   length?: number;
 }
 
-const BookSection = async ({
+const BookSection = ({
   category,
   title,
   actionText,
   length = 4,
 }: BookSectionProps) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/books?category=${category}&limit=${length}`
-  );
-  const books: Book[] = await res.json()
+
+  const { data: books, isLoading, error } = useToGetPublicData<Book[]>(`/books?limit=${length}&category=${category}`);
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorElement text="Error Fetching Data" />;
 
   return (
     <section className="container mx-auto px-4 mb-32">

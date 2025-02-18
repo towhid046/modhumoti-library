@@ -1,7 +1,7 @@
 import React from "react";
-import Button from "@/components/shared/Button/Button";
-import Link from "next/link";
 import { IoLibraryOutline } from "react-icons/io5";
+import Button from "../../shared/Button/Button";
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
               Your trusted source for Books, Sheets, and Stationeries. Your
               trusted source for Books, Sheets, and Stationeries.{" "}
             </p>
-            <Link href="/books">
+            <Link to="/books">
               <Button>Explore Books</Button>
             </Link>
           </div>

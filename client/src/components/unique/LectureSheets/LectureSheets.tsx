@@ -1,7 +1,7 @@
-import Button from "@/components/shared/Button/Button";
-import YouTubeEmbed from "@/components/shared/YouTubeEmbed/YouTubeEmbed";
-import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
-import Link  from "next/link";
+import Button from './../../shared/Button/Button';
+import YouTubeEmbed from './../../shared/YouTubeEmbed/YouTubeEmbed';
+import { Link } from 'react-router-dom';
+import SectionHeader from './../../shared/SectionHeader/SectionHeader';
 
 const LectureSheets = () => {
   return (

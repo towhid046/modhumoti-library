@@ -1,21 +1,22 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import { useState } from "react";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import userProfile from "@/assets/images/profile_image.jpeg";
+// import userProfile from "@/assets/images/profile_image.jpeg";
 
 const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const session = useSession();
-  const router = useRouter();
+  const session = {
+    data: {
+      user: false
+    }
+  }
+  // const router = useRouter();
   const handleLogout = () => {
     setIsLoading(true);
-    signOut({ redirect: false });
-    router?.push("/");
+    // signOut({ redirect: false });
+    // router?.push("/");
     toast.success("Logout success!");
     if (!session) {
       setIsLoading(false);
@@ -27,12 +28,12 @@ const LoggedUser = () => {
   return (
     <div className="flex items-center gap-4">
       <button className="h-10 w-10" onClick={() => setIsOpen(true)}>
-        <Image
+        <img
           height={45}
           width={45}
-          src={session?.data?.user?.image || userProfile}
+          // src={session?.data?.user?.image || userProfile}
           className="object-cover w-10 h-10 rounded-full border-2 hover:border-blue-200 transition duration-300"
-          alt={session?.data?.user?.name || "User Image"}
+          alt={"User Image"}
         />
       </button>
       {isOpen && (
@@ -45,7 +46,7 @@ const LoggedUser = () => {
               onClick={(e) => e.stopPropagation()}
               className="bg-white shadow-md px-8 py-4 space-y-3 z-50  text-[17px] absolute right-4 top-16"
             >
-              <li>Hi, {session?.data?.user?.name}</li>
+              <li>Hi, {session?.data?.user}</li>
               <li>
                 <button
                   onClick={handleLogout}

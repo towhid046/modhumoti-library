@@ -1,14 +1,13 @@
 import { FaTimes } from "react-icons/fa";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { BookIdContext } from "@/providers/BookInfoProvider";
-import { Book } from '@/lib/commonTypes'
-import Image from "next/image";
+// import { BookIdContext } from "@/providers/BookInfoProvider";
+// import { Book } from '@/lib/commonTypes'
 
 const CartItem = () => {
   const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { bookIds, setIsCartShow } = useContext(BookIdContext);
+  // const { bookIds, setIsCartShow } = useContext(BookIdContext);1
 
   const loadCartProducts = async (): Promise<void> => {
     try {
@@ -28,7 +27,7 @@ const CartItem = () => {
 
   useEffect(() => {
     loadCartProducts();
-  }, [bookIds]);
+  }, []);
 
   const removeIdFromCart = (id: string): void => {
     // handleRemoveProduct(id);
@@ -40,7 +39,7 @@ const CartItem = () => {
       className="fixed top-0 left-0 w-full min-h-screen z-50">
       <div className="w-full md:grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
         <div
-          onClick={() => setIsCartShow(false)}
+          // onClick={() => setIsCartShow(false)}
           className="cursor-pointer md:min-h-screen bg-black bg-opacity-80 xl:col-span-3 lg:col-span-2 md:col-span-1"
         ></div>
         <ul
@@ -49,7 +48,7 @@ const CartItem = () => {
           <div className="flex justify-between items-center mb-7">
             <h2 className="text-2xl font-semibold text-gray-600">Cart</h2>
             <button
-              onClick={() => setIsCartShow(false)}
+            // onClick={() => setIsCartShow(false)}
             >
               <FaTimes className="text-xl text-gray-600 hover:text-red-400 transition duration-300" />
             </button>
@@ -69,7 +68,7 @@ const CartItem = () => {
               >
                 <div className="flex items-center gap-2">
                   <figure>
-                    <Image
+                    <img
                       width={100}
                       height={100}
                       src={item?.image}
@@ -94,7 +93,7 @@ const CartItem = () => {
               </li>
             ))}
           </div>
-          {!bookIds.length && (
+          {![1, 2, 3, 45].length && (
             <p className="text-center text-xl font-semibold italic flex justify-center items-center min-h-[80vh]">
               No product Added Yet!
             </p>
