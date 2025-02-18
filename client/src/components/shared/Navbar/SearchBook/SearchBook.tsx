@@ -24,10 +24,10 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
       async () => {
         try {
           setBooks([])
-         if(searchText.trim().length){
-          const res = await axiosPublic(`/books?search=${searchText}`)
-          setBooks(res.data)
-         }
+          if (searchText.trim().length) {
+            const res = await axiosPublic(`/books?search=${searchText}`)
+            setBooks(res.data)
+          }
         } catch (error) {
           console.error(error)
         } finally {

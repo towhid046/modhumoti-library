@@ -34,6 +34,8 @@ const LoginForm = () => {
     setIsLoading(true);
     const { email, password } = data;
     try {
+      await axiosPublic.post('/users', { email })
+
       const res = await signIn("credentials", {
         email,
         password,
@@ -44,8 +46,6 @@ const LoginForm = () => {
       } else if (res?.ok) {
         toast.success("Login successful!");
         router.push("/");
-        const res = await axiosPublic.post('/users', { email })
-        console.log(res)
       }
     } catch (error) {
       console.error("Unexpected error during login:", error);

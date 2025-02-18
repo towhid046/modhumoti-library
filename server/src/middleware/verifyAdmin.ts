@@ -26,7 +26,6 @@ const verifyAdmin = async (
       res.status(403).json({ message: "Authorization Failed!" });
       return;
     }
-    
     next();
   } catch (error) {
     next('"Invalid or expired token"')

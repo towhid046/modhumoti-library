@@ -1,11 +1,12 @@
 import express from "express";
-import { getUserHandler, postUserHandler } from "../controller/user.controller";
+import { getUserHandler, postUserHandler, checkAdmin } from "../controller/user.controller";
 import verifyAdmin from "../middleware/verifyAdmin";
 
 const userRouter = express.Router();
 
 userRouter.post("/", postUserHandler);
 userRouter.get("/", verifyAdmin, getUserHandler);
+userRouter.get("/check-admin", checkAdmin);
 
 
 export default userRouter;

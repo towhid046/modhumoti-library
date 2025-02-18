@@ -34,7 +34,7 @@ const quickLinks = [
 
 const Footer = () => {
   const path = usePathname();
-  const isHidden = ["/login", "/registration"].includes(path) || path.split('/').includes('dashboard');
+  const isHidden = ["/login", "/registration", "/404"].includes(path) || path.split('/').includes('dashboard');
 
   return (
     <footer className={`bg-neutral ${isHidden ? "hidden" : ""}`}>
