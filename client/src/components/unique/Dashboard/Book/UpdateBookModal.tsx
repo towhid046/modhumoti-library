@@ -149,8 +149,7 @@ const UpdateBookModal = ({ setIsUpdateBookModalOpen, refetch, bookId }: AddBookP
                 }
             }
         } catch (error: any) {
-            console.log(error)
-            toast.error(error?.response?.data?.error || error.message || "Something went wrong", {
+            toast.error(error?.response?.data?.message || error.message || "Something went wrong", {
                 autoClose: 2000,
             });
         } finally {

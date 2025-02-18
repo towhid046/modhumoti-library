@@ -21,7 +21,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${(["/login", "/registration"].includes(path) || path.split('/').includes('dashboard')) && "hidden"}`}
+      className={`${(["/login", "/registration", "/404"].includes(path) || path.split('/').includes('dashboard')) && "hidden"}`}
     >
       <div className={`relative py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">

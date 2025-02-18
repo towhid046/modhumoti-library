@@ -1,10 +1,12 @@
 import express from "express";
-import { getUserHandler } from "../controller/user.controller";
+import { getUserHandler, postUserHandler, checkAdmin } from "../controller/user.controller";
+import verifyAdmin from "../middleware/verifyAdmin";
 
 const userRouter = express.Router();
 
-// Create a new user
-userRouter.get("/", getUserHandler);
+userRouter.post("/", postUserHandler);
+userRouter.get("/", verifyAdmin, getUserHandler);
+userRouter.get("/check-admin", checkAdmin);
 
 
 export default userRouter;
