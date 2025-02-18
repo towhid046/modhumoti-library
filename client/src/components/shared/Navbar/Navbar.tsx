@@ -23,9 +23,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${(["/login", "/registration", "/404"].includes(path) || path.split('/').includes('dashboard')) && "hidden"}`}
+      className={`${(["/login", "/registration", "/404"].includes(path) || path.split('/').includes('dashboard')) && "hidden"} sticky top-0 z-50`}
     >
-      <div className={`relative py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
+      <div className={`py-3.5 shadow-sm bg-white z-50 text-[15px]`}>
         <div className="container flex justify-between mx-auto px-4 items-center">
           <div className="flex lg:flex-1 items-center xl:gap-7">
             <div className="xl:hidden text-xl mt-2 mr-2">

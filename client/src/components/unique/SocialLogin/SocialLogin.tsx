@@ -1,13 +1,13 @@
 "use client";
 import { FaGoogle } from "react-icons/fa";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 
 const SocialLogin = () => {
   const handleGoogleLogin = async () => {
     try {
-      await signIn("google", { redirect: true, redirectTo: "/" });
-    } catch (err:any) {
+      // await signIn("google", { redirect: true, redirectTo: "/" });
+    } catch (err: any) {
       toast.error(err.message);
     }
   };

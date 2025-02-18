@@ -1,13 +1,13 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import Button from "@/components/shared/Button/Button";
 import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { signIn } from "next-auth/react";
-import useAxiosPublic from '@/hooks/useAxios';
+import Button from './../../shared/Button/Button';
+import useAxiosPublic from './../../../hooks/useAxiosPublic';
+// import { useNavigate } from "react-router-dom";
+
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
@@ -26,7 +26,7 @@ const LoginForm = () => {
   } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  const router = useRouter();
+  // const router = useNavigate();
   const axiosPublic = useAxiosPublic()
 
   // Handle form submission
@@ -36,17 +36,17 @@ const LoginForm = () => {
     try {
       await axiosPublic.post('/users', { email })
 
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      if (res?.error) {
-        toast.error("Email or password is wrong!!");
-      } else if (res?.ok) {
-        toast.success("Login successful!");
-        router.push("/");
-      }
+      // const res = await signIn("credentials", {
+      //   email,
+      //   password,
+      //   redirect: false,
+      // });
+      // if (res?.error) {
+      //   toast.error("Email or password is wrong!!");
+      // } else if (res?.ok) {
+      //   toast.success("Login successful!");
+      //   router("/");
+      // }
     } catch (error) {
       console.error("Unexpected error during login:", error);
       toast.error("Unexpected error occurred");
@@ -88,7 +88,7 @@ const LoginForm = () => {
         />
         <div className="absolute top-10 right-4">
           <span
-            className="cursor-pointer"
+            className="cursor-pointer text-gray-600"
             onClick={() => setIsPassShow(!isPassShow)}
           >
             {isPassShow ? <FiEye /> : <GoEyeClosed />}

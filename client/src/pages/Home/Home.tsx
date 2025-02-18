@@ -5,8 +5,11 @@ import LectureSheets from '../../components/unique/LectureSheets/LectureSheets'
 import StationeriesSection from '../../components/unique/StationeriesSection/StationeriesSection'
 import FaqSection from '../../components/unique/FaqSection/FaqSection'
 import ContactSection from '../../components/unique/ContactSection/ContactSection'
+import useScrollToTop from '../../hooks/useScrollToTop'
 
 const Home = () => {
+    useScrollToTop()
+
     return (
         <>
             <Hero />
