@@ -1,12 +1,16 @@
-"use client";
-import { FaGoogle } from "react-icons/fa";
-// import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
-
+import googleIcon from '../../../assets/images/google-icon.png'
+import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 const SocialLogin = () => {
+  const { loginWithGoogle } = useAuth()
+  const navigate = useNavigate()
+
   const handleGoogleLogin = async () => {
     try {
-      // await signIn("google", { redirect: true, redirectTo: "/" });
+      await loginWithGoogle()
+      toast.success("Login success!")
+      navigate('/')
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -24,10 +28,10 @@ const SocialLogin = () => {
       {/* Google Login Button */}
       <button
         type="submit"
-        className="w-full flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white py-2 rounded transition duration-300"
+        className="w-full flex items-center gap-4 justify-center bg-gray-800 hover:bg-gray-900 text-white py-2 rounded transition duration-300"
         onClick={handleGoogleLogin}
       >
-        <FaGoogle className="mr-2 " />
+        <img src={googleIcon} alt="Google icon" className="w-6 h-auto" />
         Continue with Google
       </button>
     </div>

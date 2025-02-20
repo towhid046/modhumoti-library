@@ -1,38 +1,44 @@
 "use client";
-import { useState } from "react";
-import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
+import userProfile from "@/assets/images/profile_image.jpeg";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import userProfile from "@/assets/images/profile_image.jpeg";
+import useAuth from "../../../../hooks/useAuth";
+import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
 
 const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const session = {
-    data: {
-      user: false
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+  const [profilePic, setProfilePic] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user?.photoURL) {
+      setProfilePic(user.photoURL);
     }
-  }
+  }, [user?.photoURL]);
+
   // const router = useRouter();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setIsLoading(true);
-    // signOut({ redirect: false });
-    // router?.push("/");
+    await logout()
+    navigate("/");
     toast.success("Logout success!");
-    if (!session) {
+    if (!user) {
       setIsLoading(false);
     }
   };
 
   if (isLoading) return <LoadingSpinner height="!5vh" />;
-
   return (
     <div className="flex items-center gap-4">
       <button className="h-10 w-10" onClick={() => setIsOpen(true)}>
         <img
           height={45}
           width={45}
-          // src={session?.data?.user?.image || userProfile}
-          className="object-cover w-10 h-10 rounded-full border-2 hover:border-blue-200 transition duration-300"
+          src={profilePic || userProfile}
+          className="object-cover w-[38px] h-[38px] rounded-full border-2 hover:border-blue-200 transition duration-300"
           alt={"User Image"}
         />
       </button>
@@ -46,7 +52,7 @@ const LoggedUser = () => {
               onClick={(e) => e.stopPropagation()}
               className="bg-white shadow-md px-8 py-4 space-y-3 z-50  text-[17px] absolute right-4 top-16"
             >
-              <li>Hi, {session?.data?.user}</li>
+              <li>Hi, {user?.displayName}</li>
               <li>
                 <button
                   onClick={handleLogout}

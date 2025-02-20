@@ -13,7 +13,7 @@ const OurServices = () => {
   const { data: services, isLoading, error } = useToGetPublicData<Service[]>("/services");
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <ErrorElement text="Error Fetching Data" />;
+  if (error) return <ErrorElement text={error.message} />;
 
   return (
     <section className="container mx-auto px-4 mb-32">

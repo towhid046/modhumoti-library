@@ -3,9 +3,13 @@ import { useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
 import { toast } from "react-toastify";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import Button from "../../shared/Button/Button";
+import useAuth from "../../../hooks/useAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userZodSchema } from "../../../schemas/UserSchema";
+
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
 const inputParentClassName = "flex flex-col gap-1 mb-3";
@@ -17,22 +21,24 @@ interface InputValue {
 }
 
 const RegistrationForm = () => {
-  const { register, handleSubmit } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  const axiosPublic = useAxiosPublic();
-  const router = useNavigate();
+  // const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm<InputValue>({
+    resolver: zodResolver(userZodSchema)
+  });
+  const { signUp, updateUser } = useAuth()
+
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     try {
-      const res = await axiosPublic.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/registration/api`, data);
-      if (res?.data?.insertedId) {
-        toast.success("Registration Success, Please Login");
-        router("/login");
-      } else if (res?.data?.message) {
-        toast.info(res?.data?.message);
-      }
+      // const res = await axiosPublic.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/registration/api`, data);
+      await signUp(data.email, data.password)
+      updateUser(data.name)
+      toast.success("Registration Success");
+      navigate("/");
     } catch (error: any) {
       toast.error(error?.message)
     } finally {
@@ -54,6 +60,7 @@ const RegistrationForm = () => {
           className={commonInputClassName}
           required
         />
+        {errors.name && <small className="text-red-500">{errors.name?.message}</small>}
       </div>
 
       {/* Email */}
@@ -72,7 +79,7 @@ const RegistrationForm = () => {
           className={commonInputClassName}
           required
         />
-
+        {errors.email && <small className="text-red-500">{errors.email?.message}</small>}
       </div>
 
       {/* Password */}
@@ -80,10 +87,10 @@ const RegistrationForm = () => {
         <label>Password:</label>
         <input
           {...register("password")}
-          required
           type={isPassShow ? "text" : "password"}
           placeholder="Password"
           className={commonInputClassName}
+          required
         />
         <div className="absolute top-10 right-4">
           <span
@@ -93,6 +100,7 @@ const RegistrationForm = () => {
             {isPassShow ? <FiEye /> : <GoEyeClosed />}
           </span>
         </div>
+        {errors.password && <small className="text-red-500">{errors.password?.message}</small>}
       </div>
 
       {/* Submit Button */}

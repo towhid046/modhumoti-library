@@ -23,7 +23,7 @@ const BookSection = ({
   const { data: books, isLoading, error } = useToGetPublicData<Book[]>(`/books?limit=${length}&category=${category}`);
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <ErrorElement text="Error Fetching Data" />;
+  if (error) return <ErrorElement text={error.message} />;
 
   return (
     <section className="container mx-auto px-4 mb-32">

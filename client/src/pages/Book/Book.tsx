@@ -16,7 +16,7 @@ const Book = () => {
     const { data: book, isLoading, error } = useToGetPublicData<BookProp[]>(`/books/${id}`);
 
     if (isLoading) return <LoadingSpinner />;
-    if (error) return <ErrorElement text="Error Fetching Data" />;
+    if (error) return <ErrorElement text={error.message} />;
 
     const {
         title,

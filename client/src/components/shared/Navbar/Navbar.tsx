@@ -10,16 +10,13 @@ import NavLinks from "./NavLinks/NavLinks";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
 import Cart from "./Cart/Cart";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchClicked, setIsSearchClicked] = useState<boolean>(false);
   const path = '/hi'
-  const session = {
-    data: {
-      user: false
-    }
-  }
+  const { user } = useAuth()
 
   return (
     <nav
@@ -52,7 +49,7 @@ const Navbar = () => {
             <div>
               <Cart />
             </div>
-            {session?.data?.user ? (
+            {user ? (
               <LoggedUser />
             ) : (
               <div>

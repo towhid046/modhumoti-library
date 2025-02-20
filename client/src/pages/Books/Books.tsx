@@ -12,7 +12,7 @@ const Books = () => {
     useScrollToTop()
 
     if (isLoading) return <LoadingSpinner />;
-    if (error) return <ErrorElement text="Error Fetching Data" />;
+    if (error) return <ErrorElement text={error.message} />;
 
     return (
         <>
