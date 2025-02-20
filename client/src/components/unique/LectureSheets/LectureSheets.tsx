@@ -26,7 +26,7 @@ const LectureSheets = () => {
               your order and they will ready your sheets. That simple..
             </p>
           </div>
-          <Link href="/sheets" className='inline-block'>
+          <Link to="/sheets" className='inline-block'>
             <Button>Order Now</Button>
           </Link>
         </div>

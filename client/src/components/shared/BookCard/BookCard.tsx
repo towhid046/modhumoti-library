@@ -4,7 +4,7 @@ interface BookCardProps {
   book: Book;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
-  const { image, title, author, price, year, leftCount, _id } = book
+  const { image, title, author, price, leftCount, _id } = book
   return (
     <Link to={`${import.meta.env.VITE_CLIENT_URL}/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
       <div className="px-4 pt-4">

@@ -1,13 +1,16 @@
 import { FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Book } from "../../../lib/commonTypes";
 // import { BookIdContext } from "@/providers/BookInfoProvider";
 // import { Book } from '@/lib/commonTypes'
+const bookIds = [1, 2, 3, 4]
 
 const CartItem = () => {
   const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const { bookIds, setIsCartShow } = useContext(BookIdContext);1
+  // const { bookIds, setIsCartShow } = useContext(BookIdContext);
+
 
   const loadCartProducts = async (): Promise<void> => {
     try {
@@ -29,10 +32,10 @@ const CartItem = () => {
     loadCartProducts();
   }, []);
 
-  const removeIdFromCart = (id: string): void => {
-    // handleRemoveProduct(id);
-    loadCartProducts();
-  };
+  // const removeIdFromCart = (id: string): void => {
+  //   // handleRemoveProduct(id);
+  //   loadCartProducts();
+  // };
 
   return (
     <div

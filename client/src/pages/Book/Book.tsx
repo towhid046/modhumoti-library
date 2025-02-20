@@ -13,10 +13,11 @@ const Book = () => {
     const { id } = useParams();
     useScrollToTop(id)
 
-    const { data: book, isLoading, error } = useToGetPublicData<BookProp[]>(`/books/${id}`);
+    const { data: book, isLoading, error } = useToGetPublicData<BookProp>(`/books/${id}`);
 
     if (isLoading) return <LoadingSpinner />;
     if (error) return <ErrorElement text={error.message} />;
+    if (!book) return <ErrorElement text="Book not found" />;
 
     const {
         title,

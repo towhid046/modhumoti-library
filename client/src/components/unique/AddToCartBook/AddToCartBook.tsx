@@ -1,7 +1,7 @@
-import Button from "@/components/shared/Button/Button";
 import { BsCartPlus } from "react-icons/bs";
-import { useContext, useEffect } from 'react'
 // import { BookIdContext } from "@/providers/BookInfoProvider";
+import Button from './../../shared/Button/Button';
+
 const AddToCartBook = ({ id }: { id: string }) => {
     // const { bookIds, handleAddToCartBook, setIsCartShow } = useContext(BookIdContext)
     // useEffect(() => { }, [bookIds])

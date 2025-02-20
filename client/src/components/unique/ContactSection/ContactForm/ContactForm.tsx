@@ -1,7 +1,7 @@
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
 const inputParentClassName = "flex flex-col gap-1 mb-3 w-full ";
-import Button from "@/components/shared/Button/Button";
+import Button from "../../../shared/Button/Button";
 const ContactForm = () => {
   return (
     <div className={`p-4 border rounded-md`}>

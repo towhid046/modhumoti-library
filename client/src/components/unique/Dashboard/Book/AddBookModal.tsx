@@ -1,14 +1,13 @@
-import Button from "@/components/shared/Button/Button";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import useToGetImageUrl from "@/hooks/useToGetImgUrl";
-import { bookZodSchema } from "@/schemas/BookSchema";
-import Image from "next/image";
+import useToGetImageUrl from "./../../../../hooks/useToGetImgUrl";
+import { bookZodSchema } from "../../../../schemas/BookSchema";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
 import { toast } from 'react-toastify';
 import swal from "sweetalert";
 import { z } from "zod";
+import Button from './../../../shared/Button/Button';
+import useAxiosSecure from './../../../../hooks/useAxiosSecure';
 
 const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
@@ -160,7 +159,7 @@ const AddBookModal = ({ setIsAddBookModalOpen, refetch }: AddBookProps) => {
                                 <div className="border-2 border-dashed border-gray-300 p-3 rounded-md text-center">
                                     {previewImage ? (
                                         <div className="relative flex justify-center">
-                                            <Image width={0} height={0} src={previewImage} alt="Preview" className="w-40 h-24 object-cover rounded-md border" />
+                                            <img width={0} height={0} src={previewImage} alt="Preview" className="w-40 h-24 object-cover rounded-md border" />
                                             <button
                                                 type="button"
                                                 onClick={handleRemoveImage}
