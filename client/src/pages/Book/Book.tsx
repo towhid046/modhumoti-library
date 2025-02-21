@@ -12,7 +12,6 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 const Book = () => {
     const { id } = useParams();
     useScrollToTop(id)
-
     const { data: book, isLoading, error } = useToGetPublicData<BookProp>(`/books/${id}`);
 
     if (isLoading) return <LoadingSpinner />;

@@ -2,19 +2,16 @@ import { FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Book } from "../../../lib/commonTypes";
-// import { BookIdContext } from "@/providers/BookInfoProvider";
-// import { Book } from '@/lib/commonTypes'
-const bookIds = [1, 2, 3, 4]
+import useCart from "../../../hooks/useCart";
 
 const CartItem = () => {
   const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const { bookIds, setIsCartShow } = useContext(BookIdContext);
-
+  const { bookIds, setIsCartShow } = useCart()
 
   const loadCartProducts = async (): Promise<void> => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/cart-item?ids=${bookIds.join(',')}`);
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/books/cart-items?ids=${bookIds}`);
       if (res.data?.length) {
         setCartProducts(res?.data);
       } else {
@@ -32,17 +29,17 @@ const CartItem = () => {
     loadCartProducts();
   }, []);
 
-  // const removeIdFromCart = (id: string): void => {
-  //   // handleRemoveProduct(id);
-  //   loadCartProducts();
-  // };
+  const removeIdFromCart = (id: string): void => {
+    // handleRemoveProduct(id);
+    loadCartProducts();
+  };
 
   return (
     <div
       className="fixed top-0 left-0 w-full min-h-screen z-50">
       <div className="w-full md:grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
         <div
-          // onClick={() => setIsCartShow(false)}
+          onClick={() => setIsCartShow(false)}
           className="cursor-pointer md:min-h-screen bg-black bg-opacity-80 xl:col-span-3 lg:col-span-2 md:col-span-1"
         ></div>
         <ul
@@ -51,7 +48,7 @@ const CartItem = () => {
           <div className="flex justify-between items-center mb-7">
             <h2 className="text-2xl font-semibold text-gray-600">Cart</h2>
             <button
-            // onClick={() => setIsCartShow(false)}
+              onClick={() => setIsCartShow(false)}
             >
               <FaTimes className="text-xl text-gray-600 hover:text-red-400 transition duration-300" />
             </button>
@@ -87,7 +84,7 @@ const CartItem = () => {
                 <div className="flex items-center gap-2">
                   <strong>${item?.price}</strong>
                   <button
-                    //   onClick={() => removeIdFromCart(item?._id)}
+                    onClick={() => removeIdFromCart(item?._id)}
                     className="btn btn-sm btn-outline"
                   >
                     <FaTimes />

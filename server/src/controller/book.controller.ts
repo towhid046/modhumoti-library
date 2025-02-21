@@ -3,7 +3,7 @@ import { Book } from "../models/Book.model";
 import { bookZodSchema } from "../schemas/Book.schema";
 
 export const getAllBookHandler = async (req: Request, res: Response) => {
-    const { limit, skip, category, search } = req.query;
+    const { limit, skip, category, search} = req.query;
     try {
         // Construct query object dynamically
         const query: any = {};
@@ -82,3 +82,30 @@ export const deleteBookHandler = async (req: Request, res: Response) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+export const getCartItems = async (req: Request, res: Response) => {
+  try {
+    const {ids} = req.query;
+    if (typeof ids !== 'string' || !ids.length) {
+      res.status(400).json({ message: "Invalid request. No book IDs provided." });
+      return;
+    }
+
+    const bookIds = ids.split(',')
+
+    // Fetch books from the database using the provided IDs
+    const books = await Book.find({ _id: { $in: bookIds } });
+    
+    if (books.length === 0) {
+      res.status(404).json({ message: "No books found in the cart." });
+      return;
+    }
+
+     res.status(200).json(books);
+     return;
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+    res.status(500).json({ message: "Internal server error." });
+    return;
+  }
+};

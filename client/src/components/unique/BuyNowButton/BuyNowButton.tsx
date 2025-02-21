@@ -1,26 +1,26 @@
-
-// import { BookIdContext } from "@/providers/BookInfoProvider";
+import { useEffect } from 'react';
+import useCart from '../../../hooks/useCart';
 import Button from './../../shared/Button/Button';
 
 const BuyNowButton = ({ id }: { id: string }) => {
-    // const { bookIds, handleAddToCartBook, setIsCartShow } = useContext(BookIdContext)
+    const { bookIds, handleAddToCartBook, setIsCartShow } = useCart()
+    useEffect(() => { }, [bookIds])
 
-    // useEffect(() => { }, [bookIds])
-    // const handleBuyNow = () => {
-    //     handleAddToCartBook(id, true)
-    //     setIsCartShow(true)
-    // }
+    const handleBuyNow = () => {
+        handleAddToCartBook(id, true)
+        setIsCartShow(true)
+    }
     return (
         <>
-            {[234.23, 234234]?.includes(id as never) ?
+            {bookIds?.includes(id as never) ?
                 <Button
-                    // clickHandler={() => setIsCartShow(true)} 
+                    clickHandler={() => setIsCartShow(true)}
                     customClass="!bg-black sm:flex-1">
                     Buy Now
                 </Button>
                 :
                 <Button
-                    // clickHandler={handleBuyNow}
+                    clickHandler={handleBuyNow}
                     customClass='!bg-black sm:flex-1 w-full'>Buy Now</Button>
             }
         </>

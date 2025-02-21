@@ -1,4 +1,3 @@
-"use client";
 import userProfile from "@/assets/images/profile_image.jpeg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +28,7 @@ const LoggedUser = () => {
       setIsLoading(false);
     }
   };
+
 
   if (isLoading) return <LoadingSpinner height="!5vh" />;
   return (
