@@ -1,10 +1,10 @@
-import Hero from '../../components/unique/Hero/Hero'
-import OurServices from '../../components/unique/OurServices/OurServices'
 import BookSection from '../../components/shared/BookSection/BookSection'
-import LectureSheets from '../../components/unique/LectureSheets/LectureSheets'
-import StationeriesSection from '../../components/unique/StationeriesSection/StationeriesSection'
-import FaqSection from '../../components/unique/FaqSection/FaqSection'
 import ContactSection from '../../components/unique/ContactSection/ContactSection'
+import FaqSection from '../../components/unique/FaqSection/FaqSection'
+import Hero from '../../components/unique/Hero/Hero'
+import LectureSheets from '../../components/unique/LectureSheets/LectureSheets'
+import OurServices from '../../components/unique/OurServices/OurServices'
+import StationeriesSection from '../../components/unique/StationeriesSection/StationeriesSection'
 import useScrollToTop from '../../hooks/useScrollToTop'
 
 const Home = () => {

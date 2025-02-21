@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthProvider from "./providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import CartInfoProvider from "./providers/CartInfoProvider";
+import { register } from './serviceWorkerRegistration.ts'
 
 // Create a React Query Client
 const queryClient = new QueryClient();
@@ -25,3 +26,5 @@ createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </StrictMode>
 );
+
+register()

@@ -6,6 +6,7 @@ interface CartInfoProps {
     bookIds: string[],
     setBookIds: Dispatch<SetStateAction<string[]>>,
     handleAddToCartBook: (id: string, isBuyNow?: boolean) => void,
+    handleRemoveFromCart: (id: string) => void,
     isCartShow: boolean,
     setIsCartShow: Dispatch<SetStateAction<boolean>>,
 }
@@ -19,7 +20,6 @@ const CartInfoProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     const handleAddToCartBook = async (id: string, isBuyNow: boolean = false) => {
-
         const existedIds = localStorage.getItem('bookIds') ? JSON.parse(localStorage.getItem('bookIds') as string) : [];
         if (!existedIds.includes(id)) {
             localStorage.setItem('bookIds', JSON.stringify([...bookIds, id]));
@@ -33,12 +33,29 @@ const CartInfoProvider = ({ children }: { children: ReactNode }) => {
             toast.info('Already Existed!')
         }
     };
+    const handleRemoveFromCart = (id: string) => {
+        const existedIds = localStorage.getItem('bookIds') ? JSON.parse(localStorage.getItem('bookIds') as string) : [];
+
+        if (existedIds.includes(id)) {
+            const updatedIds = existedIds.filter((bookId: string) => bookId !== id);
+            localStorage.setItem('bookIds', JSON.stringify(updatedIds));
+            setBookIds(updatedIds);
+            toast.success('Item removed!', {
+                autoClose: 2000,
+                position: "top-left"
+            });
+        } else {
+            toast.info('Item not found in cart!');
+        }
+    };
+
 
     return (
         <BookIdContext.Provider value={{
             bookIds,
             setBookIds,
             handleAddToCartBook,
+            handleRemoveFromCart,
             isCartShow,
             setIsCartShow
         }}>

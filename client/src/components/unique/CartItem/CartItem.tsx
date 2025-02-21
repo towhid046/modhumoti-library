@@ -7,17 +7,16 @@ import useCart from "../../../hooks/useCart";
 const CartItem = () => {
   const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { bookIds, setIsCartShow } = useCart()
+  const { bookIds, setIsCartShow, handleRemoveFromCart } = useCart()
 
   const loadCartProducts = async (): Promise<void> => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/books/cart-items?ids=${bookIds}`);
-      if (res.data?.length) {
+      if (bookIds.length) {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/books/cart-items?ids=${bookIds}`);
         setCartProducts(res?.data);
       } else {
-        setCartProducts([]);
+        setCartProducts([])
       }
-
     } catch (error) {
       console.error(error);
     } finally {
@@ -27,12 +26,9 @@ const CartItem = () => {
 
   useEffect(() => {
     loadCartProducts();
-  }, []);
+  }, [bookIds]);
 
-  const removeIdFromCart = (id: string): void => {
-    // handleRemoveProduct(id);
-    loadCartProducts();
-  };
+  console.log(cartProducts)
 
   return (
     <div
@@ -61,7 +57,7 @@ const CartItem = () => {
           )}
 
           <div className="space-y-3">
-            {cartProducts?.map((item: any) => (
+            {cartProducts?.map((item: Book) => (
               <li
                 key={item._id}
                 className="flex justify-between items-center"
@@ -84,7 +80,7 @@ const CartItem = () => {
                 <div className="flex items-center gap-2">
                   <strong>${item?.price}</strong>
                   <button
-                    onClick={() => removeIdFromCart(item?._id)}
+                    onClick={() => handleRemoveFromCart(item?._id)}
                     className="btn btn-sm btn-outline"
                   >
                     <FaTimes />
@@ -93,7 +89,7 @@ const CartItem = () => {
               </li>
             ))}
           </div>
-          {![1, 2, 3, 45].length && (
+          {!cartProducts.length && (
             <p className="text-center text-xl font-semibold italic flex justify-center items-center min-h-[80vh]">
               No product Added Yet!
             </p>
