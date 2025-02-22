@@ -3,12 +3,12 @@ import { useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
 import { toast } from "react-toastify";
-// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 import Button from "../../shared/Button/Button";
 import useAuth from "../../../hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userZodSchema } from "../../../schemas/UserSchema";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
@@ -23,7 +23,7 @@ interface InputValue {
 const RegistrationForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  // const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<InputValue>({
     resolver: zodResolver(userZodSchema)
@@ -34,11 +34,13 @@ const RegistrationForm = () => {
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     try {
-      // const res = await axiosPublic.post(`${process.env.NEXT_PUBLIC_CLIENT_URL}/registration/api`, data);
-      await signUp(data.email, data.password)
-      updateUser(data.name)
-      toast.success("Registration Success");
-      navigate("/");
+      const res = await axiosPublic.post(`${process.env.VITE_SERVER_URL}/users`, data);
+      if (res.status === 200) {
+        await signUp(data.email, data.password)
+        updateUser(data.name)
+        toast.success("Registration Success");
+        navigate("/");
+      }
     } catch (error: any) {
       toast.error(error?.message)
     } finally {

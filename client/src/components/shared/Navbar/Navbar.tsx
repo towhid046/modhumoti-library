@@ -4,6 +4,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { RiSearchLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useCart from "../../../hooks/useCart";
+import CartItem from "../../unique/CartItem/CartItem";
 import Button from "../Button/Button";
 import Logo from "./../Logo/Logo";
 import Cart from "./Cart/Cart";
@@ -16,65 +18,73 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSearchClicked, setIsSearchClicked] = useState<boolean>(false);
   const { user } = useAuth()
+  const { isCartShow } = useCart()
 
   return (
-    <nav
-      className={`bg-white sticky top-0 z-50`}
-    >
-      <div className={`py-3.5 shadow-sm text-[15px]`}>
-        <div className="container flex justify-between mx-auto gap-3 px-4 items-center">
-          <div className="flex lg:flex-1 items-center xl:gap-7">
-            <div className="xl:hidden text-xl mt-2 mr-2">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {isMenuOpen ? <FaTimes /> : <FaBars />}
-              </button>
-            </div>
-            <Logo />
-            <NavLinks />
-          </div>
-
-          <div className="flex lg:flex-1 items-center md:gap-8 gap-5 justify-between">
-            <figure
-              className="md:hidden flex items-center justify-center"
-              onClick={() => setIsSearchClicked(!isSearchClicked)}
-            >
-              <button onClick={() => setIsSearchClicked(true)}>
-                {!isSearchClicked && <RiSearchLine className="text-lg" />}
-              </button>
-            </figure>
-
-            <div className="w-full md:flex hidden">
-              <SearchBook />
-            </div>
-
-            <div>
-              <Cart />
-            </div>
-
-            {user ? (
-              <LoggedUser />
-            ) : (
-              <div>
-                <Link to={"/login"}>
-                  <Button>Login</Button>
-                </Link>
+    <>
+      <nav
+        className={`bg-white sticky top-0 z-50`}
+      >
+        <div className={`py-3.5 shadow-sm text-[15px]`}>
+          <div className="container flex justify-between mx-auto gap-3 px-4 items-center">
+            <div className="flex lg:flex-1 items-center xl:gap-7">
+              <div className="xl:hidden text-xl mt-2 mr-2">
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  {isMenuOpen ? <FaTimes /> : <FaBars />}
+                </button>
               </div>
-            )}
-          </div>
-        </div>
+              <Logo />
+              <NavLinks />
+            </div>
 
-        {/* for responsive menu */}
-        {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
-        {isSearchClicked && (
-          <div className="absolute top-2 left-0 md:hidden w-full text-[15px] bg-base-100 z-40">
-            <div className="container  mx-auto px-4  pt-1 pb-2 ">
-              <SearchBook setIsSearchClicked={setIsSearchClicked} />
+            <div className="flex lg:flex-1 items-center md:gap-8 gap-5 justify-between">
+              <figure
+                className="md:hidden flex items-center justify-center"
+                onClick={() => setIsSearchClicked(!isSearchClicked)}
+              >
+                <button onClick={() => setIsSearchClicked(true)}>
+                  {!isSearchClicked && <RiSearchLine className="text-lg" />}
+                </button>
+              </figure>
+
+              <div className="w-full md:flex hidden">
+                <SearchBook />
+              </div>
+
+              <div>
+                <Cart />
+              </div>
+
+              {user ? (
+                <LoggedUser />
+              ) : (
+                <div>
+                  <Link to={"/login"}>
+                    <Button>Login</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
-        )}
 
+          {/* for responsive menu */}
+          {isMenuOpen && <ResponsiveMenu setIsMenuOpen={setIsMenuOpen} />}
+          {isSearchClicked && (
+            <div className="absolute top-2 left-0 md:hidden w-full text-[15px] bg-base-100 z-40">
+              <div className="container  mx-auto px-4  pt-1 pb-2 ">
+                <SearchBook setIsSearchClicked={setIsSearchClicked} />
+              </div>
+            </div>
+          )}
+
+        </div>
+      </nav>
+
+      {/* Show  */}
+      <div className={`duration-500 transition-transform fixed top-0 w-full min-h-full z-50 right-0 ${isCartShow ? 'translate-x-0 cart-sidebar' : 'translate-x-full'} `}>
+        <CartItem />
       </div>
-    </nav>
+    </>
   );
 };
 

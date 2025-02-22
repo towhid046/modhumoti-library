@@ -5,31 +5,43 @@ import { User } from '../models/User.model';
 
 export const postUserHandler = async (req: express.Request, res: express.Response) => {
     try {
-        const { email } = req.body;
-        
-        // Check if user exists, if not create new user
-        let user = await User.findOne({ email });
-        if (!user) {
-            user = await User.create({ email });
+        const { email, password } = req.body;
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            res.status(400).json({ message: 'User already exists!' });
+            return;
         }
 
-        // Generate JWT token with email
-        const token = jwt.sign({ email }, process.env.JWT_SECRET as string, {
-            expiresIn: '7d'
-        });
+        // Create a new user (password is already hashed via middleware)
+        const newUser = await User.create({ email, password });
 
-        // Set cookie with JWT token
+        // Generate JWT token
+        const token = jwt.sign(
+            { email: newUser.email, id: newUser._id }, 
+            process.env.JWT_SECRET as string, 
+            { expiresIn: '7d' }
+        );
+
+        // Set HTTP-only cookie with the token
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'none',
+            secure: process.env.NODE_ENV === 'production', // Ensure secure in production
+            sameSite: 'none', // Adjust if needed for cross-origin requests
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
-        res.status(200).json({ message:'Token created successfully!' });
+
+        // Send response
+        res.status(200).json({message: 'User registered successfully!'});
+        return;
     } catch (error) {
-        res.status(500).json({ error: "Error processing user" });
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: 'Error processing user' });
+        return;
     }
 };
+
 
 
 export const getUserHandler = async (req: express.Request, res: express.Response) => {

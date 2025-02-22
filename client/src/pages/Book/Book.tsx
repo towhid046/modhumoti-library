@@ -1,17 +1,18 @@
 import { useParams } from "react-router-dom";
+import BookSection from "../../components/shared/BookSection/BookSection";
+import ErrorElement from "../../components/shared/ErrorElement/ErrorElement";
+import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
+import PageHeader from "../../components/shared/PageHeader/PageHeader";
+import BuyNowButton from "../../components/unique/AddToCartBook/AddToCartButton";
+import useScrollToTop from "../../hooks/useScrollToTop";
 import useToGetPublicData from "../../hooks/useToGetPublicData";
 import { Book as BookProp } from './../../lib/commonTypes';
-import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
-import ErrorElement from "../../components/shared/ErrorElement/ErrorElement";
-import PageHeader from "../../components/shared/PageHeader/PageHeader";
-import AddToCartBook from "../../components/unique/AddToCartBook/AddToCartBook";
-import BuyNowButton from "../../components/unique/BuyNowButton/BuyNowButton";
-import BookSection from "../../components/shared/BookSection/BookSection";
-import useScrollToTop from "../../hooks/useScrollToTop";
+import useCart from "../../hooks/useCart";
 
 const Book = () => {
     const { id } = useParams();
     useScrollToTop(id)
+    const { incrementCount, decrementCount, bookIds } = useCart()
     const { data: book, isLoading, error } = useToGetPublicData<BookProp>(`/books/${id}`);
 
     if (isLoading) return <LoadingSpinner />;
@@ -29,6 +30,8 @@ const Book = () => {
         publisher,
         year,
     } = book;
+
+    const itemCount = bookIds.find(item => item.id === _id)
 
     return (
         <>
@@ -66,8 +69,30 @@ const Book = () => {
                             </div>
                             <hr />
                             <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
-                                <AddToCartBook id={_id} />
-                                <BuyNowButton id={_id} />
+                                {/* Quantity Selector */}
+                                <div className="flex-1 w-full flex items-center border border-gray-300 px-4 py-[5px] rounded-md justify-between">
+                                    <button
+                                        className="w-7 h-7 flex items-center justify-center disabled:cursor-not-allowed border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                                        aria-label="Decrease quantity"
+                                        onClick={() => decrementCount(_id)}
+                                        disabled={bookIds.map(item => item.id).includes(_id) === false}
+                                    >
+                                        -
+                                    </button>
+                                    <div className="mx-4 text-lg font-semibold">{itemCount?.count || 0}</div>
+                                    <button
+                                        className="w-7 h-7 flex items-center justify-center disabled:cursor-not-allowed border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                                        aria-label="Increase quantity"
+                                        onClick={() => incrementCount(_id)}
+                                        disabled={itemCount?.count === leftCount}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                {/* Buy Now Button */}
+                                <div className="w-full flex-1">
+                                    <BuyNowButton id={_id} />
+                                </div>
                             </div>
                         </div>
                     </div>
