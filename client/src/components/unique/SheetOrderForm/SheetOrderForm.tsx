@@ -1,9 +1,8 @@
-"use client";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Button from "@/components/shared/Button/Button";
 import { departments } from "./sheetData";
 import { toast } from "react-toastify";
+import Button from './../../shared/Button/Button';
 
 // Common input styles
 const commonInputClassName =
@@ -193,9 +192,8 @@ const SheetOrderForm = () => {
           <input
             {...register(item.name as keyof InputValue)}
             type="text"
-            placeholder={`${
-              index === 0 ? "Teacher Name" : "Optional Name"
-            }: 1,2,3`}
+            placeholder={`${index === 0 ? "Teacher Name" : "Optional Name"
+              }: 1,2,3`}
             className={commonInputClassName}
             required={index === 0}
           />

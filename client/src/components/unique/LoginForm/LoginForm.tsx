@@ -1,13 +1,12 @@
-"use client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import Button from "@/components/shared/Button/Button";
 import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { signIn } from "next-auth/react";
-import useAxiosPublic from '@/hooks/useAxios';
+import Button from './../../shared/Button/Button';
+// import useAxiosPublic from './../../../hooks/useAxiosPublic';
+import { useNavigate } from "react-router-dom";
+import useAuth from './../../../hooks/useAuth';
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
@@ -24,32 +23,25 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<InputValue>();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
-  const router = useRouter();
-  const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate();
+  const { login } = useAuth()
+  // const axiosPublic = useAxiosPublic()
 
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     const { email, password } = data;
     try {
-      await axiosPublic.post('/users', { email })
-
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      if (res?.error) {
-        toast.error("Email or password is wrong!!");
-      } else if (res?.ok) {
-        toast.success("Login successful!");
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Unexpected error during login:", error);
-      toast.error("Unexpected error occurred");
+      // await axiosPublic.post('/users', { email })
+      await login(email, password)
+      toast.success('Login success!')
+      navigate('/')
+    } catch (err) {
+      toast.error('Something went wrong!');
+      console.log(err)
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +65,7 @@ const LoginForm = () => {
           className={commonInputClassName}
         />
         {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
+          <small className="text-red-500">{errors.email.message}</small>
         )}
       </div>
 
@@ -88,14 +80,14 @@ const LoginForm = () => {
         />
         <div className="absolute top-10 right-4">
           <span
-            className="cursor-pointer"
+            className="cursor-pointer text-gray-600"
             onClick={() => setIsPassShow(!isPassShow)}
           >
             {isPassShow ? <FiEye /> : <GoEyeClosed />}
           </span>
         </div>
         {errors.password && (
-          <span className="text-red-500">{errors.password.message}</span>
+          <small className="text-red-500">{errors.password.message}</small>
         )}
       </div>
 

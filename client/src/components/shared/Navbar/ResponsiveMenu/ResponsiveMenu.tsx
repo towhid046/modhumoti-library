@@ -1,7 +1,5 @@
-import Link from "next/link";
 import React from "react";
-import { BiSolidDownArrow } from "react-icons/bi";
-import { usePathname } from "next/navigation";
+import { Link } from 'react-router-dom';
 
 const navLinks = [
   { path: "/", label: "Home" },
@@ -15,7 +13,7 @@ interface ResponsiveMenuProps {
 }
 
 const ResponsiveMenu = ({ setIsMenuOpen }: ResponsiveMenuProps) => {
-  const pathName = usePathname();
+  const pathName = '/hi'
 
   return (
     <nav
@@ -27,12 +25,12 @@ const ResponsiveMenu = ({ setIsMenuOpen }: ResponsiveMenuProps) => {
           onClick={(e) => e.stopPropagation()}
           className=" bg-base-100 text-gray-600 max-w-max absolute shadow-lg left-4 top-16 py-5"
         >
-          
+
           {navLinks?.map((link) => (
             <li onClick={() => setIsMenuOpen(false)} key={link.path}>
               <Link
                 className={`inline-block px-12 w-full  py-2 hover:bg-base-200  transition duration-300 ${pathName === link.path && 'text-primary-color'}`}
-                href={link.path}
+                to={link.path}
               >
                 {link.label}
               </Link>

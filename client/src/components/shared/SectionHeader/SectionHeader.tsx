@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
-
+import { Link } from "react-router-dom";
 interface SectionHeadingProps {
   title: string;
   actionText: string;
@@ -22,7 +21,7 @@ const SectionHeader = ({
         {title}{' '}
         <span className="text-primary-color">{actionText}</span>
       </h2>
-      <Link href={url} className="md:flex hidden items-center gap-2 transition duration-500 underline text-primary-color hover:text-secondary-color">
+      <Link to={url} className="md:flex hidden items-center gap-2 transition duration-500 underline text-primary-color hover:text-secondary-color">
         <span>{urlLabel}</span>
         {(url !== '' || urlLabel !== '') && <MdArrowOutward className="text-xl" />}
       </Link>

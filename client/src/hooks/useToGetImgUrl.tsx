@@ -1,6 +1,5 @@
-"use client";
 import axios from "axios";
-const imgbb_api_key = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+const imgbb_api_key = import.meta.env.VITE_PUBLIC_IMGBB_API_KEY;
 const imgbb_api_url = `https://api.imgbb.com/1/upload?key=${imgbb_api_key}`;
 
 const useToGetImgUrl = () => {

@@ -1,19 +1,18 @@
-import { Book } from "@/lib/commonTypes";
-import Image from "next/image";
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
+import { Book } from './../../../lib/commonTypes';
 interface BookCardProps {
   book: Book;
 }
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
-  const { image, title, author, price, year, leftCount, _id } = book
+  const { image, title, author, price, leftCount, _id } = book
   return (
-    <Link href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
+    <Link to={`/books/${_id}`} className='border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
       <div className="px-4 pt-4">
         <figure className="relative rounded-md overflow-hidden cursor-pointer">
           <div className="absolute right-2 bottom-2 bg-primary-color py-1.5 px-2.5 text-white rounded-full text-xs z-30">
             {leftCount} Leaf
           </div>
-          <Image
+          <img
             width={100}
             height={100}
             src={image}

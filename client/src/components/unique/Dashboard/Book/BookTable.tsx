@@ -1,11 +1,10 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { Book } from "@/lib/commonTypes";
-import Image from 'next/image';
 import { Dispatch, SetStateAction } from "react";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { TiPencil } from 'react-icons/ti';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert';
+import useAxiosSecure from './../../../../hooks/useAxiosSecure';
+import { Book } from './../../../../lib/commonTypes';
 
 interface BookTableProps {
   books: Book[];
@@ -35,7 +34,7 @@ const BookTable: React.FC<BookTableProps> = ({ books, refetch, setIsUpdateBookMo
             autoClose: 2000
           });
         }
-      } catch (error) {
+      } catch (error: any) {
         toast.error('Failed to delete book', {
           autoClose: 2000
         });
@@ -70,7 +69,7 @@ const BookTable: React.FC<BookTableProps> = ({ books, refetch, setIsUpdateBookMo
             <tr key={book._id} className="text-center">
               <th>{index + 1}</th>
               <th className="flex justify-center ">
-                <Image placeholder="blur" blurDataURL='https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?auto=compress&cs=tinysrgb&w=600' width={100} height={100} src={book.image} className="w-9 h-9 rounded object-cover" alt={book.title} />
+                <img width={100} height={100} src={book.image} className="w-9 h-9 rounded object-cover" alt={book.title} />
               </th>
               <td>{book.title}</td>
               <td>{book.author}</td>

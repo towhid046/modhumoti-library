@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide the main scrollbar when the cart is open */
+body.cart-open {
+    overflow: hidden;
+}
+
+/* Ensure the cart sidebar has its own scrollbar */
+.cart-sidebar {
+    overflow-y: auto;
+    height: 100vh;
+    /* Set a fixed height for the sidebar */
+}

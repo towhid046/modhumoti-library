@@ -1,11 +1,9 @@
-'use client';
 import React, { FC, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import useAxiosPublic from '@/hooks/useAxios';
-import { Book } from "@/lib/commonTypes";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
-import Link from 'next/link'
-import Image from "next/image";
+import { Link } from "react-router-dom";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import { Book } from "../../../../lib/commonTypes";
 interface SearchBookProps {
   setIsSearchClicked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -25,7 +23,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
         try {
           setBooks([])
           if (searchText.trim().length) {
-            const res = await axiosPublic(`/books?search=${searchText}`)
+            const res = await axiosPublic(`/books?search=${searchText.trim()}`)
             setBooks(res.data)
           }
         } catch (error) {
@@ -47,11 +45,11 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
       {books && books?.slice(0, 5)?.map((book, index) => (
         <li onClick={() => setSearchText('')} key={book._id} className={`${index !== books.length - 1 && 'border-b'} `}>
           <Link
-            href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/books/${book._id}`}
+            to={`/books/${book._id}`}
             className='pb-3 px-5 flex items-center w-full gap-4 justify-between hover:text-primary-color transition duration-300'
           >
             <figure>
-              <Image width={100} height={100} src={book?.image} alt={book?.title} className='sm:h-10 h-8 w-8 sm:w-10 rounded-md object-cover ' />
+              <img width={100} height={100} src={book?.image} alt={book?.title} className='sm:h-10 h-8 w-8 sm:w-10 rounded-md object-cover ' />
             </figure>
             <div className='flex items-center justify-between gap-4 flex-grow'>
               <div className="flex flex-col">

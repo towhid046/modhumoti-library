@@ -1,18 +1,15 @@
-'use client';
-
-import Button from "@/components/shared/Button/Button";
-import LoadingSpinner from "@/components/shared/LoadingSpinner/LoadingSpinner";
-import useAxiosPublic from "@/hooks/useAxios";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import useToGetImageUrl from "@/hooks/useToGetImgUrl";
-import { bookZodSchema } from "@/schemas/BookSchema";
-import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { z } from "zod";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import LoadingSpinner from "../../../shared/LoadingSpinner/LoadingSpinner";
+import Button from "../../../shared/Button/Button";
+import { bookZodSchema } from "../../../../schemas/BookSchema";
+import useToGetImgUrl from "../../../../hooks/useToGetImgUrl";
 const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
 interface AddBookFormValues {
@@ -39,7 +36,7 @@ const UpdateBookModal = ({ setIsUpdateBookModalOpen, refetch, bookId }: AddBookP
     const [isLoading2, setIsLoading2] = useState<boolean>(true);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<FileList | File[]>();
-    const getImageUrl = useToGetImageUrl();
+    const getImageUrl = useToGetImgUrl();
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic()
 
@@ -193,7 +190,7 @@ const UpdateBookModal = ({ setIsUpdateBookModalOpen, refetch, bookId }: AddBookP
                                         <div className="border-2 border-dashed border-gray-300 p-3 rounded-md text-center">
                                             {previewImage ? (
                                                 <div className="relative flex justify-center">
-                                                    <Image width={100} height={100} src={previewImage} alt="Preview" className="w-40 h-24 object-cover rounded-md border" />
+                                                    <img width={100} height={100} src={previewImage} alt="Preview" className="w-40 h-24 object-cover rounded-md border" />
                                                     <button
                                                         type="button"
                                                         onClick={handleRemoveImage}
