@@ -14,6 +14,7 @@ const Book = lazy(() => import("../pages/Book/Book"));
 const Sheets = lazy(() => import("../pages/Sheets/Sheets"));
 const Stationary = lazy(() => import("../pages/Stationary/Stationary"));
 const ViewCart = lazy(() => import("../pages/ViewCart/ViewCart"));
+const Checkout = lazy(() => import("./../pages/Checkout/Checkout"));
 
 // Lazy loading dashboard components
 const ManageBooks = lazy(() => import("../pages/Dashboard/ManageBooks/ManageBooks"));
@@ -34,7 +35,8 @@ const Router = () => {
                 { path: "/stationary", element: <Suspense fallback={<LoadingSpinner />}><Stationary /></Suspense> },
                 { path: "/login", element: <Suspense fallback={<LoadingSpinner />}><Login /></Suspense> },
                 { path: "/registration", element: <Suspense fallback={<LoadingSpinner />}><Registration /></Suspense> },
-                { path: "/cart", element: <Suspense fallback={<LoadingSpinner />}><ViewCart /></Suspense> }
+                { path: "/cart", element: <Suspense fallback={<LoadingSpinner />}><ViewCart /></Suspense> },
+                { path: "/checkout", element: <Suspense fallback={<LoadingSpinner />}><Checkout /></Suspense> }
             ],
         },
         {

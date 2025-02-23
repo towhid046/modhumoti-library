@@ -5,7 +5,6 @@ import { RiSearchLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCart from "../../../hooks/useCart";
-import CartItem from "../../unique/CartSidebar/CartSidebar";
 import Button from "../Button/Button";
 import Logo from "./../Logo/Logo";
 import Cart from "./Cart/Cart";
@@ -13,6 +12,7 @@ import LoggedUser from "./LoggedUser/LoggedUser";
 import NavLinks from "./NavLinks/NavLinks";
 import ResponsiveMenu from "./ResponsiveMenu/ResponsiveMenu";
 import SearchBook from "./SearchBook/SearchBook";
+import CartSidebar from "../../unique/CartSidebar/CartSidebar";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -80,9 +80,11 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Show  */}
-      <div className={`duration-500 transition-transform fixed top-0 w-full min-h-full z-50 right-0 ${isCartShow ? 'translate-x-0 cart-sidebar' : 'translate-x-full'} `}>
-        <CartItem />
+      {/* CartSidebar */}
+      <div className={`${isCartShow && 'bg-black bg-opacity-40 fixed w-full min-h-screen top-0 z-50'}`}>
+        <div className={`duration-500 transition-transform fixed top-0 w-full min-h-full z-50 right-0 ${isCartShow ? 'translate-x-0 cart-sidebar ' : 'translate-x-full'} `}>
+          <CartSidebar />
+        </div>
       </div>
     </>
   );

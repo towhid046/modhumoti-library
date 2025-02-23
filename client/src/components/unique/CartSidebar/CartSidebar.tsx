@@ -55,7 +55,7 @@ const CartSidebar = () => {
       <div className="w-full md:grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
         <div
           onClick={() => setIsCartShow(false)}
-          className="cursor-pointer md:min-h-screen bg-black bg-opacity-60 xl:col-span-3 lg:col-span-2 md:col-span-1"
+          className="cursor-pointer md:min-h-screen xl:col-span-3 lg:col-span-2 md:col-span-1"
         ></div>
         <ul
           onClick={(e) => e.stopPropagation()}
@@ -64,7 +64,7 @@ const CartSidebar = () => {
           <div className="flex justify-between items-center mb-7">
             <h2 className="text-2xl font-semibold text-gray-600">Cart</h2>
             <button onClick={() => setIsCartShow(false)}>
-              <FaTimes className="text-xl text-gray-600 hover:text-red-400 transition duration-300" />
+              <FaTimes className="text-xl text-gray-600 hover:text-black transition duration-300" />
             </button>
           </div>
 
@@ -80,10 +80,8 @@ const CartSidebar = () => {
                 <Link onClick={() => setIsCartShow(false)} to={`/books/${item._id}`} className="flex items-center gap-2">
                   <figure>
                     <img
-                      width={100}
-                      height={100}
                       src={item?.image}
-                      className="w-12 h-10 object-cover rounded-lg"
+                      className="w-12 h-10 object-cover rounded-md"
                       alt="Image"
                     />
                   </figure>
@@ -96,7 +94,7 @@ const CartSidebar = () => {
                 </Link>
 
                 <div className="flex items-center gap-3">
-                  <strong>${item?.price * getItemCount(item._id)}</strong>
+                  <strong>${(item?.price * getItemCount(item._id)).toFixed(2)}</strong>
                   <button
                     onClick={() => removeFromCartHandler(item?._id)}
                     className="duration-300 text-red-300 hover:text-red-500 text-2xl"
