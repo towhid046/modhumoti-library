@@ -45,7 +45,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
       {books && books?.slice(0, 5)?.map((book, index) => (
         <li onClick={() => setSearchText('')} key={book._id} className={`${index !== books.length - 1 && 'border-b'} `}>
           <Link
-            to={`${import.meta.env.VITE_CLIENT_URL}/books/${book._id}`}
+            to={`/books/${book._id}`}
             className='pb-3 px-5 flex items-center w-full gap-4 justify-between hover:text-primary-color transition duration-300'
           >
             <figure>

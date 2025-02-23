@@ -1,20 +1,22 @@
 import { FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Book } from "../../../lib/commonTypes";
 import useCart from "../../../hooks/useCart";
 import Button from "../../shared/Button/Button";
-import { MdDeleteOutline } from "react-icons/md";
+import { TiDeleteOutline } from "react-icons/ti";
+import { Link } from "react-router-dom";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
-const CartItem = () => {
+const CartSidebar = () => {
   const [cartProducts, setCartProducts] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { bookIds, setIsCartShow, removeFromCartHandler, isCartShow } = useCart();
+  const axiosPublic = useAxiosPublic()
 
   const loadCartProducts = async (): Promise<void> => {
     try {
       if (bookIds?.length) {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/books/cart-items?ids=${bookIds?.map(item => item.id)}`);
+        const res = await axiosPublic.get(`${import.meta.env.VITE_SERVER_URL}/books/cart-items?ids=${bookIds?.map(item => item.id)}`);
         setCartProducts(res?.data);
       } else {
         setCartProducts([]);
@@ -75,7 +77,7 @@ const CartItem = () => {
           <div className="space-y-3">
             {cartProducts?.map((item: Book) => (
               <li key={item._id} className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
+                <Link onClick={() => setIsCartShow(false)} to={`/books/${item._id}`} className="flex items-center gap-2">
                   <figure>
                     <img
                       width={100}
@@ -91,15 +93,15 @@ const CartItem = () => {
                       {getItemCount(item._id)} {/* Display the count here */}
                     </p>
                   </div>
-                </div>
+                </Link>
 
-                <div className="flex items-center gap-2">
-                  <strong>${item?.price}</strong>
+                <div className="flex items-center gap-3">
+                  <strong>${item?.price * getItemCount(item._id)}</strong>
                   <button
                     onClick={() => removeFromCartHandler(item?._id)}
-                    className="text-red-400 text-xl"
+                    className="duration-300 text-red-300 hover:text-red-500 text-2xl"
                   >
-                    <MdDeleteOutline />
+                    <TiDeleteOutline />
                   </button>
                 </div>
               </li>
@@ -107,8 +109,12 @@ const CartItem = () => {
 
             {cartProducts.length ? (
               <div className="flex flex-col gap-2 pt-4 border-t-2">
-                <Button>View Cart</Button>
-                <Button customClass="!bg-gray-900 hover:!bg-black">Checkout</Button>
+                <Link onClick={() => setIsCartShow(false)} to={`/cart`}>
+                  <Button customClass="!w-full">View Cart</Button>
+                </Link>
+                <Link onClick={() => setIsCartShow(false)} to={`/checkout`}>
+                  <Button customClass="!bg-gray-900 hover:!bg-black !w-full">Checkout</Button>
+                </Link>
               </div>
             ) : (
               ""
@@ -125,4 +131,4 @@ const CartItem = () => {
   );
 };
 
-export default CartItem;
+export default CartSidebar;

@@ -7,12 +7,11 @@ import BuyNowButton from "../../components/unique/AddToCartBook/AddToCartButton"
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useToGetPublicData from "../../hooks/useToGetPublicData";
 import { Book as BookProp } from './../../lib/commonTypes';
-import useCart from "../../hooks/useCart";
+import ProductCounter from "../../components/shared/ProductCounter/ProductCounter";
 
 const Book = () => {
     const { id } = useParams();
     useScrollToTop(id)
-    const { incrementCount, decrementCount, bookIds } = useCart()
     const { data: book, isLoading, error } = useToGetPublicData<BookProp>(`/books/${id}`);
 
     if (isLoading) return <LoadingSpinner />;
@@ -31,15 +30,13 @@ const Book = () => {
         year,
     } = book;
 
-    const itemCount = bookIds.find(item => item.id === _id)
 
     return (
         <>
             <PageHeader
                 title={`${title}`}
-                url={`${import.meta.env.VITE_CLIENT_URL}/books/${id}`}
+                url={`/books/${id}`}
             />
-
             <section className="container mx-auto lg:pt-8 pt-4">
                 <div className="px-4">
                     <div className="flex lg:gap-10 flex-col lg:flex-row gap-5 border p-5 rounded-md px-4">
@@ -70,25 +67,7 @@ const Book = () => {
                             <hr />
                             <div className="flex items-center lg:gap-6 gap-4 sm:flex-row flex-col">
                                 {/* Quantity Selector */}
-                                <div className="flex-1 w-full flex items-center border border-gray-300 px-4 py-[5px] rounded-md justify-between">
-                                    <button
-                                        className="w-7 h-7 flex items-center justify-center disabled:cursor-not-allowed border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200"
-                                        aria-label="Decrease quantity"
-                                        onClick={() => decrementCount(_id)}
-                                        disabled={bookIds.map(item => item.id).includes(_id) === false}
-                                    >
-                                        -
-                                    </button>
-                                    <div className="mx-4 text-lg font-semibold">{itemCount?.count || 0}</div>
-                                    <button
-                                        className="w-7 h-7 flex items-center justify-center disabled:cursor-not-allowed border border-gray-300 rounded-full hover:bg-gray-100 transition-colors duration-200"
-                                        aria-label="Increase quantity"
-                                        onClick={() => incrementCount(_id)}
-                                        disabled={itemCount?.count === leftCount}
-                                    >
-                                        +
-                                    </button>
-                                </div>
+                                <ProductCounter book={book} />
                                 {/* Buy Now Button */}
                                 <div className="w-full flex-1">
                                     <BuyNowButton id={_id} />

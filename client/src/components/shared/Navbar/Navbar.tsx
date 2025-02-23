@@ -5,7 +5,7 @@ import { RiSearchLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useCart from "../../../hooks/useCart";
-import CartItem from "../../unique/CartItem/CartItem";
+import CartItem from "../../unique/CartSidebar/CartSidebar";
 import Button from "../Button/Button";
 import Logo from "./../Logo/Logo";
 import Cart from "./Cart/Cart";

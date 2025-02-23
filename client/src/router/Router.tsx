@@ -6,13 +6,14 @@ import NotFound from "../pages/NotFound/NotFound";
 import DashboardLayout from "../layouts/DashboardLayout";
 
 // Lazy loading components
+const Registration = lazy(() => import("../pages/Registration/Registration"));
+const Login = lazy(() => import("../pages/Login/Login"));
 const Home = lazy(() => import("../pages/Home/Home"));
 const Books = lazy(() => import("../pages/Books/Books"));
 const Book = lazy(() => import("../pages/Book/Book"));
 const Sheets = lazy(() => import("../pages/Sheets/Sheets"));
 const Stationary = lazy(() => import("../pages/Stationary/Stationary"));
-const Login = lazy(() => import("../pages/Login/Login"));
-const Registration = lazy(() => import("../pages/Registration/Registration"));
+const ViewCart = lazy(() => import("../pages/ViewCart/ViewCart"));
 
 // Lazy loading dashboard components
 const ManageBooks = lazy(() => import("../pages/Dashboard/ManageBooks/ManageBooks"));
@@ -32,7 +33,8 @@ const Router = () => {
                 { path: "/sheets", element: <Suspense fallback={<LoadingSpinner />}><Sheets /></Suspense> },
                 { path: "/stationary", element: <Suspense fallback={<LoadingSpinner />}><Stationary /></Suspense> },
                 { path: "/login", element: <Suspense fallback={<LoadingSpinner />}><Login /></Suspense> },
-                { path: "/registration", element: <Suspense fallback={<LoadingSpinner />}><Registration /></Suspense> }
+                { path: "/registration", element: <Suspense fallback={<LoadingSpinner />}><Registration /></Suspense> },
+                { path: "/cart", element: <Suspense fallback={<LoadingSpinner />}><ViewCart /></Suspense> }
             ],
         },
         {

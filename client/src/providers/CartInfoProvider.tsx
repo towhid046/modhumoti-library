@@ -116,7 +116,7 @@ const CartInfoProvider = ({ children }: { children: ReactNode }) => {
                 });
             } else {
                 // If count is 1, remove the item entirely
-                removeFromCartHandler(id);
+                // removeFromCartHandler(id);
             }
         } else {
             toast.info('Item not found in cart!', {
