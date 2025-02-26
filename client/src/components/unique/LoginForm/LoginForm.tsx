@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from './../../../hooks/useAuth';
 
 const commonInputClassName =
-  "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color";
+  "w-full px-3 py-2 border rounded focus:outline-none duration-300 transition focus:border-primary-color transaction duration-300 focus:border-opacity-70";
 const inputParentClassName = "flex flex-col gap-1 mb-3 ";
 
 interface InputValue {

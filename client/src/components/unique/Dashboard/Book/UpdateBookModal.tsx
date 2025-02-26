@@ -10,7 +10,7 @@ import LoadingSpinner from "../../../shared/LoadingSpinner/LoadingSpinner";
 import Button from "../../../shared/Button/Button";
 import { bookZodSchema } from "../../../../schemas/BookSchema";
 import useToGetImgUrl from "../../../../hooks/useToGetImgUrl";
-const commonInputClass = "focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
+const commonInputClass = "transaction duration-300 focus:border-opacity-70 focus:outline-none focus:border focus:border-primary-color bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 
 interface AddBookFormValues {
     title: string;
