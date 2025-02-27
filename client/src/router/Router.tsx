@@ -20,6 +20,9 @@ const Checkout = lazy(() => import("./../pages/Checkout/Checkout"));
 const ManageBooks = lazy(() => import("../pages/Dashboard/ManageBooks/ManageBooks"));
 const ManageOrders = lazy(() => import("../pages/Dashboard/ManageOrders/ManageOrders"));
 const ManageStationers = lazy(() => import("../pages/Dashboard/ManageStationers/ManageStationers"));
+const OrderedBooks = lazy(() => import("../pages/Dashboard/ManageOrders/OrderedBooks/OrderedBooks"));
+const OrderedSheets = lazy(() => import("../pages/Dashboard/ManageOrders/OrderedSheets/OrderedSheets"));
+
 
 const Router = () => {
     const routes = createBrowserRouter([
@@ -44,9 +47,16 @@ const Router = () => {
             element: <DashboardLayout />,
             errorElement: <NotFound isAdmin={true} />,
             children: [
-                { path: '/dashboard/manage-orders', element: <Suspense fallback={<LoadingSpinner />}><ManageOrders /></Suspense> },
                 { path: '/dashboard/manage-books', element: <Suspense fallback={<LoadingSpinner />}><ManageBooks /></Suspense> },
                 { path: '/dashboard/manage-stationers', element: <Suspense fallback={<LoadingSpinner />}><ManageStationers /></Suspense> },
+                {
+                    path: '/dashboard/manage-orders',
+                    element: <Suspense fallback={<LoadingSpinner />}><ManageOrders /></Suspense>,
+                    children: [
+                        { path: "/dashboard/manage-orders", element: <Suspense fallback={<LoadingSpinner />}><OrderedBooks /></Suspense> },
+                        { path: "/dashboard/manage-orders/ordered-sheets", element: <Suspense fallback={<LoadingSpinner />}><OrderedSheets /></Suspense> }
+                    ]
+                },
             ]
         }
     ]);
