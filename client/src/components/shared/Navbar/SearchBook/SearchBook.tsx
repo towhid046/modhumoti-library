@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import { Book } from "../../../../lib/commonTypes";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 interface SearchBookProps {
   setIsSearchClicked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -85,7 +85,7 @@ const SearchBook: FC<SearchBookProps> = ({ setIsSearchClicked }) => {
         <FaArrowLeft />
       </div>
       <label
-        className="md:border border-2 flex-grow px-6 py-2 transition duration-300 rounded-full flex items-center gap-2 focus-within:border-primary-color focus-within:border-opacity-50"
+        className="md:border border-2 flex-grow px-6 py-2 hover:border-primary-color hover:border-opacity-60 transition duration-300 rounded-full flex items-center gap-2 focus-within:border-primary-color focus-within:border-opacity-60"
       >
         <input
           type="search"

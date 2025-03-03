@@ -34,7 +34,7 @@ const RegistrationForm = () => {
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     try {
-      const res = await axiosPublic.post(`${process.env.VITE_SERVER_URL}/users`, data);
+      const res = await axiosPublic.post(`${import.meta.env.VITE_SERVER_URL}/users`, data);
       if (res.status === 200) {
         await signUp(data.email, data.password)
         updateUser(data.name)
@@ -42,7 +42,7 @@ const RegistrationForm = () => {
         navigate("/");
       }
     } catch (error: any) {
-      toast.error(error?.message)
+      toast.error(error?.message || "Registration Failed");
     } finally {
       setIsLoading(false);
     }
