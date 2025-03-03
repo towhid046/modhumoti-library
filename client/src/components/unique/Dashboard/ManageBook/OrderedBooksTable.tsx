@@ -1,12 +1,9 @@
 // import { Dispatch, SetStateAction } from "react";
-import { toast } from 'react-toastify';
-import swal from 'sweetalert';
-import useAxiosSecure from '../../../../hooks/useAxiosSecure';
-import { BookOrderProps } from '../../../../lib/commonTypes';
+import { useState } from 'react';
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { LuEye } from "react-icons/lu";
+import { BookOrderProps } from '../../../../lib/commonTypes';
 import BookOrderDetails from './BookOrderDetails';
-import { useState } from 'react';
 
 interface BookTableProps {
     orders: BookOrderProps[];
@@ -16,7 +13,6 @@ interface BookTableProps {
 }
 
 const OrderedBooksTable: React.FC<BookTableProps> = ({ orders }) => {
-    const axiosSecure = useAxiosSecure()
     const [isPreviewModalOpen, setIsPreviewModalOpen] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>('');
 
@@ -64,6 +60,7 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders }) => {
                             <th>Phone</th>
                             <th>Location</th>
                             <th>Delivery Option</th>
+                            <th>Order Date</th>
                             <th>Price</th>
                             <th>Actions</th>
                         </tr>
@@ -76,7 +73,8 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders }) => {
                                 <td>{item.phoneNumber}</td>
                                 <td>{item.area}</td>
                                 <td>{item.deliveryOption}</td>
-                                <td>{item.totalPrice} ৳ / {item.bookIds.length} {item.bookIds.length > 1 ? 'books' : 'book'}</td>
+                                <td>{item.createdAt.toString().split('T')[0]}</td>
+                                <td>{item.totalPrice} ৳ / {item.bookIds.reduce((acc, val) => acc += val.count, 0)} {item.bookIds.length > 1 ? 'books' : 'book'}</td>
                                 <td className="flex gap-5 justify-center">
                                     <button
                                         onClick={() => {
@@ -101,7 +99,7 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders }) => {
                     </tbody>
                 </table>
             </div>
-            {isPreviewModalOpen && <BookOrderDetails orderId={orderId} />}
+            {isPreviewModalOpen && <BookOrderDetails orderId={orderId} setIsPreviewModalOpen={setIsPreviewModalOpen} />}
         </>
     )
 }
