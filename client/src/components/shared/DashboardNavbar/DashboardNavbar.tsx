@@ -27,7 +27,7 @@ const mainNavLinks = [{ path: "/", label: "Home", icon: FaHome }];
 
 const DashboardNavbar: React.FC = () => {
   return (
-    <nav className="w-72 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-50">
+    <nav className="w-72 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-40">
       <div className="w-full">
         <div className="text-center mb-8 px-4 italic">
           <Logo />
