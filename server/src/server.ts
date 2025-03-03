@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5173", "https://modhumotilibrary-computer.web.app", "http://192.168.0.118:5173"],
+    origin: ["http://localhost:3000", "http://localhost:5173", "https://modhumotilibrary-computer.web.app", "http://192.168.0.101:5173"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Content-Type, Authorization",
     credentials: true // Important for authentication and cookies
