@@ -94,7 +94,7 @@ const CartSidebar = () => {
                 </Link>
 
                 <div className="flex items-center gap-3">
-                  <strong>${(item?.price * getItemCount(item._id)).toFixed(2)}</strong>
+                  <strong>{(item?.price * getItemCount(item._id)).toFixed(2)}৳</strong>
                   <button
                     onClick={() => removeFromCartHandler(item?._id)}
                     className="duration-300 text-red-300 hover:text-red-500 text-2xl"

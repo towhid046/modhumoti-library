@@ -1,15 +1,16 @@
 // dependencies
-import express from "express";
-import dotenv from "dotenv";
+import cookieParser from 'cookie-parser';
 import cors from "cors";
-import cookieParser from 'cookie-parser'
+import dotenv from "dotenv";
+import express from "express";
 import { connectDB } from "./config/connectDB";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
-import userRoutes from "./routes/user.router";
 import bookRouter from "./routes/book.router";
 import serviceRouter from "./routes/service.router";
+import userRoutes from "./routes/user.router";
+import bookOrderRouter from './routes/bookOrder.router';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(cors({
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/books", bookRouter);
 app.use("/api/v1/services", serviceRouter);
+app.use("/api/v1/checkout-book", bookOrderRouter);
 
 // Connect to MongoDB
 connectDB()

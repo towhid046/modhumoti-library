@@ -5,7 +5,7 @@ const navLinks = [
   { path: "/", label: "Home" },
   { path: "/books", label: "Books" },
   { path: "/sheets", label: "Sheets" },
-  { path: "/stationeries", label: "Stationary" },
+  { path: "/stationary", label: "Stationary" },
 ];
 
 interface ResponsiveMenuProps {
@@ -29,7 +29,7 @@ const ResponsiveMenu = ({ setIsMenuOpen }: ResponsiveMenuProps) => {
           {navLinks?.map((link) => (
             <li onClick={() => setIsMenuOpen(false)} key={link.path}>
               <Link
-                className={`inline-block px-12 w-full  py-2 hover:bg-base-200  transition duration-300 ${pathName === link.path && 'text-primary-color'}`}
+                className={`inline-block px-12 w-full  py-2 hover:bg-blue-100  transition duration-300 ${pathName === link.path && 'text-primary-color'}`}
                 to={link.path}
               >
                 {link.label}

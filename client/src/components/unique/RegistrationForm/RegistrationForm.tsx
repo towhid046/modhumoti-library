@@ -11,7 +11,7 @@ import { userZodSchema } from "../../../schemas/UserSchema";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const commonInputClassName =
-  "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color";
+  "w-full px-3 py-2 border rounded focus:outline-none  transition duration-300 focus:border-primary-color transaction duration-300 focus:border-opacity-70";
 const inputParentClassName = "flex flex-col gap-1 mb-3";
 
 interface InputValue {
