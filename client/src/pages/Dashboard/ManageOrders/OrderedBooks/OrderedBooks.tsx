@@ -8,8 +8,6 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 const OrderedBooks = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [orders, setOrders] = useState<BookOrderProps[]>([]);
-    // const [isUpdateBookModalOpen, setIsUpdateBookModalOpen] = useState<boolean>(false);
-
 
     const axiosSecure = useAxiosSecure()
 
@@ -41,7 +39,6 @@ const OrderedBooks = () => {
         render = (<OrderedBooksTable
             orders={orders}
             refetch={loadBooks}
-        // setIsUpdateBookModalOpen={setIsUpdateBookModalOpen}
         />);
     }
 

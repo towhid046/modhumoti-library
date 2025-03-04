@@ -20,7 +20,6 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders, refetch }) => {
     const [isPreviewModalOpen, setIsPreviewModalOpen] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>('');
     const axiosSecure = useAxiosSecure()
-    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     // const handleRemoveBook = async (id: string) => {
     //     const result = await swal({
@@ -67,7 +66,6 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders, refetch }) => {
             console.log(error);
         }
     }
-
 
     return (
         <>
