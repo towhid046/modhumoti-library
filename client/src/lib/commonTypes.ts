@@ -20,6 +20,7 @@ export interface BookOrderProps {
   phoneNumber: string;
   orderNotes?: string;
   deliveryOption: string;
+  status: string;
   bookIds: {
     id:Book;
     count: number;

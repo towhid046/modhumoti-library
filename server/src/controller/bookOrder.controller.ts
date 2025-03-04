@@ -132,3 +132,29 @@ export const getBookOrderByIdController = async (req: Request, res: Response) =>
         res.status(400).send({ message: "Failed to fetch order", error });
     }
 };
+
+export const putBookOrderByIdController = async (req: Request, res: Response) => {
+    try {
+        const orderId = req.params.id;
+        if (!orderId) {
+            res.status(400).send({ message: "Order ID is required" });
+            return;
+        }
+
+        const order = await BookOrder.findById(orderId);
+        if (!order) {
+            res.status(404).send({ message: "Order not found" });
+            return;
+        }
+
+        const updatedOrder = await BookOrder.findByIdAndUpdate(orderId, req.body, {
+            new: true,
+            runValidators: true,
+        });
+
+        res.status(200).send(updatedOrder);
+    } catch (error) {
+        console.error("Error updating order by ID:", error); // Log the error for debugging
+        res.status(400).send({ message: "Failed to update order", error });
+    }
+}

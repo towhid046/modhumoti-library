@@ -13,17 +13,17 @@ const OrderedBooks = () => {
 
     const axiosSecure = useAxiosSecure()
 
-    useEffect(() => {
-        const loadBooks = async () => {
-            try {
-                const res = await axiosSecure(`/checkout-book`)
-                setOrders(res.data)
-            } catch (error) {
-                console.error(error)
-            } finally {
-                setIsLoading(false)
-            }
+    const loadBooks = async () => {
+        try {
+            const res = await axiosSecure(`/checkout-book`)
+            setOrders(res.data)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
+    }
+    useEffect(() => {
         loadBooks()
     }, [])
 
@@ -40,7 +40,7 @@ const OrderedBooks = () => {
     if (orders?.length) {
         render = (<OrderedBooksTable
             orders={orders}
-        // refetch={() => { }}
+            refetch={loadBooks}
         // setIsUpdateBookModalOpen={setIsUpdateBookModalOpen}
         />);
     }

@@ -18,8 +18,8 @@ const BookOrderDetails: React.FC<BookOrderDetailsProps> = ({ orderId, setIsPrevi
     if (error) return <ErrorElement text={error.message || 'Something went wrong!'} />;
 
     return (
-        <div className='bg-black bg-opacity-30 fixed z-50 inset-0 w-full min-h-full flex items-center justify-center overflow-y-auto'>
-            <div className='bg-white p-8 rounded-lg shadow-lg w-[90%] max-w-xl'>
+        <div onClick={() => setIsPreviewModalOpen(false)} className='bg-black bg-opacity-30 fixed z-50 inset-0 w-full min-h-full flex items-center justify-center overflow-y-auto'>
+            <div onClick={(e) => e.stopPropagation()} className='bg-white p-8 rounded-lg shadow-lg w-[90%] max-w-xl'>
                 <div className='text-center relative mb-6'>
                     <h2 className='text-2xl font-bold text-gray-800'>Order Details</h2>
                     <button className='absolute top-0 right-0' onClick={() => setIsPreviewModalOpen(false)}>
@@ -29,7 +29,7 @@ const BookOrderDetails: React.FC<BookOrderDetailsProps> = ({ orderId, setIsPrevi
                 <div className='space-y-2 text-gray-700'>
                     <p><strong>Order ID:</strong> {book?._id}</p>
                     <p><strong>Order Date:</strong> {formateDateAndTimeByIsoString(book?.createdAt as string)}</p>
-                    <p><strong>Customer:</strong> {book?.name} ({book?.email})</p>
+                    <p><strong>Customer:</strong> {book?.name} {book?.email && (book?.email)}</p>
                     <p><strong>Phone:</strong> {book?.phoneNumber}</p>
                     <p><strong>Delivery Address:</strong> {book?.streetAddress}, {book?.area}</p>
                     <p><strong>Delivery Option:</strong> {book?.deliveryOption}</p>
