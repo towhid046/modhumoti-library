@@ -15,7 +15,8 @@ const bookOrderSchema = new Schema({
             count: { type: Number, required: true, min: 1 },
         },
     ],
-    totalPrice: {type: Number,require:true}
-}, { timestamps: true });
+    totalPrice: {type: Number,require:true},
+    createdAt: { type: Number, default: Date.now() },
+});
 
 export const BookOrder = model("BookOrder", bookOrderSchema);

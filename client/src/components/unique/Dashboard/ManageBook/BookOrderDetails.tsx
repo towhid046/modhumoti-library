@@ -2,7 +2,7 @@ import React from 'react';
 import { TiDelete } from 'react-icons/ti';
 import useToGetPublicData from '../../../../hooks/useToGetPublicData';
 import { BookOrderProps } from '../../../../lib/commonTypes';
-import { formateDateAndTimeByIsoString } from '../../../../lib/formateDateAndTimeByIsoString';
+import { formatDateAndTimeByTimestamp } from '../../../../lib/formatDateAndTimeByTimestamp';
 import ErrorElement from '../../../shared/ErrorElement/ErrorElement';
 import LoadingSpinner from '../../../shared/LoadingSpinner/LoadingSpinner';
 
@@ -28,7 +28,7 @@ const BookOrderDetails: React.FC<BookOrderDetailsProps> = ({ orderId, setIsPrevi
                 </div>
                 <div className='space-y-2 text-gray-700'>
                     <p><strong>Order ID:</strong> {book?._id}</p>
-                    <p><strong>Order Date:</strong> {formateDateAndTimeByIsoString(book?.createdAt as string)}</p>
+                    <p><strong>Order Date:</strong> {formatDateAndTimeByTimestamp(book?.createdAt || Date.now())}</p>
                     <p><strong>Customer:</strong> {book?.name} {book?.email && (book?.email)}</p>
                     <p><strong>Phone:</strong> {book?.phoneNumber}</p>
                     <p><strong>Delivery Address:</strong> {book?.streetAddress}, {book?.area}</p>

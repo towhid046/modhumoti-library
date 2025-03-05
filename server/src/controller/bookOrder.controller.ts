@@ -5,6 +5,10 @@ import { BookOrder } from "../models/BookOrder.model";
 import { zodBookOrderSchema } from "../schemas/BookOrder.schema";
 import { User } from "../models/User.model";
 
+interface QueryProp {
+    limit?: number;
+    skip?: number;
+}
 // ✅ Define the TypeScript type for book order request
 type BookOrderRequest = z.infer<typeof zodBookOrderSchema>;
 
@@ -25,14 +29,16 @@ export const postBookOrderController = async (req: Request, res: Response) => {
             return;
         }
 
-        // ✅ Calculate the total price
+        // ✅ Calculate the total price and update book leftCount
         let totalPrice = 0;
-        validatedData.bookIds.forEach((orderBook) => {
+        for (const orderBook of validatedData.bookIds) {
             const book = books.find((b) => b._id.toString() === orderBook.id);
             if (book) {
                 totalPrice += book.price * orderBook.count;
+                book.leftCount -= orderBook.count; // Decrease the leftCount
+                await book.save(); // Save the updated book count
             }
-        });
+        }
 
         // ✅ Create a new book order
         const newOrder = new BookOrder({
@@ -43,7 +49,7 @@ export const postBookOrderController = async (req: Request, res: Response) => {
         // ✅ Save the order in the database
         await newOrder.save();
 
-        if(validatedData.email){
+        if (validatedData.email) {
             // ✅ Update the user's order history
             const user = await User.findOne({ email: validatedData.email });
             if (user) {
@@ -60,11 +66,6 @@ export const postBookOrderController = async (req: Request, res: Response) => {
         res.status(400).json({ message: error instanceof Error ? error.message : "Invalid request" });
     }
 };
-
-interface QueryProp {
-    limit?: number;
-    skip?: number;
-}
 
 export const getAllBookOrderController = async (req: Request, res: Response) => {
     const query: QueryProp = {}; // Use Partial to make properties optional

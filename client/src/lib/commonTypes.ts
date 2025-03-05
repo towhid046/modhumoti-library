@@ -26,6 +26,5 @@ export interface BookOrderProps {
     count: number;
   }[];
   totalPrice: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: number;
 }
