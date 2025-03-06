@@ -7,6 +7,7 @@ const bookOrderSchema = new Schema({
     streetAddress: { type: String, required: true, trim: true },
     phoneNumber: { type: String, required: true, trim: true, match: /^\d{11}$/ },
     orderNotes: { type: String, trim: true },
+    status: { type: String, enum: ["Pending", "Processing", "Shipped", "Delivered", "Canceled"], default: "Pending" },
     deliveryOption: { type: String, enum: ["COD", "At Shop"], required: true },
     bookIds: [
         {
@@ -14,7 +15,8 @@ const bookOrderSchema = new Schema({
             count: { type: Number, required: true, min: 1 },
         },
     ],
-    totalPrice: {type: Number,require:true}
-}, { timestamps: true });
+    totalPrice: {type: Number,require:true},
+    createdAt: { type: Number, default: Date.now() },
+});
 
 export const BookOrder = model("BookOrder", bookOrderSchema);

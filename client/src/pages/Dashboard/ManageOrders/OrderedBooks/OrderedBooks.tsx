@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react';
-import { Book } from '../../../../lib/commonTypes';
-import useAxiosPublic from '../../../../hooks/useAxiosPublic';
+import { BookOrderProps } from '../../../../lib/commonTypes';
 import ErrorElement from '../../../../components/shared/ErrorElement/ErrorElement';
 import LoadingSpinner from '../../../../components/shared/LoadingSpinner/LoadingSpinner';
 import OrderedBooksTable from './../../../../components/unique/Dashboard/ManageBook/OrderedBooksTable';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const OrderedBooks = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [books, setBooks] = useState<Book[]>([]);
-    const [isUpdateBookModalOpen, setIsUpdateBookModalOpen] = useState<boolean>(false);
-    const [bookId, setBookId] = useState<string>('')
-    const axiosPublic = useAxiosPublic()
+    const [orders, setOrders] = useState<BookOrderProps[]>([]);
 
-    useEffect(() => {
-        const loadBooks = async () => {
-            try {
-                const res = await axiosPublic(`/books`)
-                setBooks(res.data)
-            } catch (error) {
-                console.error(error)
-            } finally {
-                setIsLoading(false)
-            }
+    const axiosSecure = useAxiosSecure()
+
+    const loadBooks = async () => {
+        try {
+            const res = await axiosSecure(`/checkout-book`)
+            setOrders(res.data)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
+    }
+    useEffect(() => {
         loadBooks()
     }, [])
 
     let render = null;
 
-    if (!books?.length) {
+    if (!orders?.length) {
         render = (<ErrorElement text='No Book is found!!' />);
     }
 
@@ -36,12 +35,10 @@ const OrderedBooks = () => {
         render = (<div className='flex items-center justify-center h-[80vh]'><LoadingSpinner size='lg' /></div>);
     }
 
-    if (books?.length) {
+    if (orders?.length) {
         render = (<OrderedBooksTable
-            books={books}
-            refetch={() => { }}
-            setIsUpdateBookModalOpen={setIsUpdateBookModalOpen}
-            setBookId={setBookId}
+            orders={orders}
+            refetch={loadBooks}
         />);
     }
 

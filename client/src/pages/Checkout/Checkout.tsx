@@ -15,7 +15,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
 import swal from "sweetalert";
 import ErrorElement from "../../components/shared/ErrorElement/ErrorElement";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const commonInputClass = "focus:outline-none focus:border focus:border-[#2684FF] transaction duration-300 bg-transparent py-1.5 px-3 w-full border rounded outline-none";
 

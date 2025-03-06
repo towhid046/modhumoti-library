@@ -18,7 +18,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({ bookLength, setSearchValue, sea
       </div>
       <form className="w-80 flex items-center gap-4 relative">
         <label
-          className="md:border border-2 flex-grow px-6 py-2 transition duration-300 rounded-full flex items-center gap-2 focus-within:border-primary-color focus-within:border-opacity-50"
+          className="md:border border-2 flex-grow px-6 py-2 transition duration-300 rounded-full flex items-center gap-2 hover:border-primary-color border-opacity-60 focus-within:border-primary-color focus-within:border-opacity-60"
         >
           <input
             type="search"

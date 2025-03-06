@@ -10,3 +10,21 @@ export interface Book {
   isbn: string;
   category: string;
 }
+
+export interface BookOrderProps {
+  _id: string;
+  name: string;
+  email?: string;
+  area: string;
+  streetAddress: string;
+  phoneNumber: string;
+  orderNotes?: string;
+  deliveryOption: string;
+  status: string;
+  bookIds: {
+    id:Book;
+    count: number;
+  }[];
+  totalPrice: number;
+  createdAt: number;
+}

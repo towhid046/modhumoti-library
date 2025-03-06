@@ -8,9 +8,9 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 import bookRouter from "./routes/book.router";
+import bookOrderRouter from './routes/bookOrder.router';
 import serviceRouter from "./routes/service.router";
 import userRoutes from "./routes/user.router";
-import bookOrderRouter from './routes/bookOrder.router';
 
 const app = express();
 
@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5173", "https://modhumotilibrary-computer.web.app", "http://192.168.0.118:5173"],
+    origin: ["http://localhost:3000", "http://localhost:5173", "https://modhumotilibrary-computer.web.app", "http://192.168.0.105:5173"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Content-Type, Authorization",
     credentials: true // Important for authentication and cookies
