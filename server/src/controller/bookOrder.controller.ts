@@ -159,3 +159,26 @@ export const putBookOrderByIdController = async (req: Request, res: Response) =>
         res.status(400).send({ message: "Failed to update order", error });
     }
 }
+
+export const deleteBookOrderByIdController = async (req: Request, res: Response) => {
+    try {
+        const orderId = req.params.id;
+        if (!orderId) {
+            res.status(400).send({ message: "Order ID is required" });
+            return;
+        }
+
+        const order = await BookOrder.findById(orderId);
+        if (!order) {
+            res.status(404).send({ message: "Order not found" });
+            return;
+        }
+
+        await BookOrder.findByIdAndDelete(orderId);
+
+        res.status(200).send({ message: "Order deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting order by ID:", error); // Log the error for debugging
+        res.status(400).send({ message: "Failed to delete order", error });
+    }
+};
