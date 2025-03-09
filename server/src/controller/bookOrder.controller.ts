@@ -89,7 +89,7 @@ export const getAllBookOrderController = async (req: Request, res: Response) => 
         }
 
         // Fetch orders with pagination, sorting, and population
-        const orders = await BookOrder.find()
+        const orders = await BookOrder.find({status:{$in:['Pending','Processing']}})
             .select('-__v -bookIds._id') // Exclude unnecessary fields
             .sort({ createdAt: -1 }) // Sort by createdAt in descending order
             .limit(query.limit || 0) // Default to 10 items per page
