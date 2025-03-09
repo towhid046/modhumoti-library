@@ -1,5 +1,6 @@
 import ErrorElement from '../../components/shared/ErrorElement/ErrorElement';
 import LoadingSpinner from '../../components/shared/LoadingSpinner/LoadingSpinner';
+import Reveal from '../../components/shared/Reveal/Reveal';
 import useScrollToTop from '../../hooks/useScrollToTop';
 import useToGetPublicData from '../../hooks/useToGetPublicData';
 import BookCard from './../../components/shared/BookCard/BookCard';
@@ -19,8 +20,10 @@ const Books = () => {
             <PageHeader title="Books" url="/books" />
             <section className="container mx-auto px-4 mb-32">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {books?.map((book, index) => (
-                        <BookCard key={index} book={book} />
+                    {books?.map((book) => (
+                        <Reveal key={book._id}>
+                            <BookCard book={book} />
+                        </Reveal>
                     ))}
                 </div>
                 <Pagination />
