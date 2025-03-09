@@ -28,7 +28,7 @@ const quickLinks = [
   { path: "/", label: "Home" },
   { path: "/books", label: "Books" },
   { path: "/sheets", label: "Sheets" },
-  { path: "/stationeries", label: "Stationary" },
+  { path: "/stationary", label: "Stationary" },
 ];
 
 const Footer = () => {
