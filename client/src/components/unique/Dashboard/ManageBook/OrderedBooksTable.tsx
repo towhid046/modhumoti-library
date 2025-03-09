@@ -115,7 +115,7 @@ const OrderedBooksTable: React.FC<BookTableProps> = ({ orders, refetch }) => {
                                 <td>
                                     <select
                                         onChange={(e) => updateBookOrderHandler(item._id, e.target.value)}
-                                        className={`${item.status === "Pending" ? 'bg-[#00A36C]' : 'bg-[#4285F4]'} rounded-md py-1 text-white px-1.5`}
+                                        className={`${item.status === "Pending" ? 'bg-[#00A36C]' : 'bg-[#4285F4]'} rounded-md py-1 text-white px-1.5 focus:outline-none`}
                                     >
                                         <option value="Pending" selected={item.status === 'Pending'}>Pending</option>
                                         <option value="Processing" selected={item.status === 'Processing'}>Processing</option>

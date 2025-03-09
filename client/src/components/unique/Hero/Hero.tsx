@@ -21,8 +21,8 @@ const Hero: React.FC = () => {
               Your trusted source for Books, Sheets, and Stationeries. Your
               trusted source for Books, Sheets, and Stationeries.{" "}
             </p>
-            <Link to="/books">
-              <Button>Explore Books</Button>
+            <Link to="/sheets">
+              <Button>Order Sheets</Button>
             </Link>
           </div>
         </div>

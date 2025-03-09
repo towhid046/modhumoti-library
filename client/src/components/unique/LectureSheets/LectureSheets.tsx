@@ -10,7 +10,7 @@ const LectureSheets = () => {
         title="Need A"
         actionText="Lecture Sheets?"
         urlLabel="Order Now"
-        url="/lecture_sheet_order_page"
+        url="/sheets"
       />
       <div className="flex mb-24 items-center md:gap-12 gap-6 flex-col lg:flex-row">
         <div className="lg:flex-1 space-y-5">

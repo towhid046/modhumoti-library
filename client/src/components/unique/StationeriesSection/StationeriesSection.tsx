@@ -55,7 +55,7 @@ const StationeriesSection = () => {
         title="Essential"
         actionText="Stationeries"
         urlLabel="View More"
-        url="/stationeries"
+        url="/stationary"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-3">
         {stationeries?.map((stationary) => (

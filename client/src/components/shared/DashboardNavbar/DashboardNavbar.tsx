@@ -3,18 +3,18 @@ import { IoLibraryOutline, IoCartOutline } from "react-icons/io5";
 import { GrMultiple } from "react-icons/gr";
 import { FaHome } from "react-icons/fa";
 import Logo from "../Logo/Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const navLinks = [
+  {
+    path: "/dashboard",
+    label: "Manage Books",
+    icon: IoLibraryOutline,
+  },
   {
     path: "/dashboard/manage-orders",
     label: "Manage Order",
     icon: IoCartOutline,
-  },
-  {
-    path: "/dashboard/manage-books",
-    label: "Manage Books",
-    icon: IoLibraryOutline,
   },
   {
     path: "/dashboard/manage-stationers",
@@ -26,6 +26,9 @@ const navLinks = [
 const mainNavLinks = [{ path: "/", label: "Home", icon: FaHome }];
 
 const DashboardNavbar: React.FC = () => {
+
+  const path = useLocation().pathname
+
   return (
     <nav className="w-72 h-[90vh] sticky top-0 bg-base-200 min-h-screen py-12 z-40">
       <div className="w-full">
@@ -38,13 +41,9 @@ const DashboardNavbar: React.FC = () => {
               <li key={link.path}>
                 <NavLink
                   to={link.path}
-                  className={({ isActive }) =>
-                    `flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-[3px] duration-300 transition ${isActive
-                      ? "bg-blue-100 border-primary-color"
-                      : "hover:border-blue-100 hover:bg-blue-100 border-base-200"
-                    }`
-                  }
-                >
+                  className={`flex items-center w-full py-2 px-4 lg:gap-2 gap-1.5 border-l-[3px] duration-300 transition ${path === link.path
+                    ? "bg-blue-100 border-primary-color"
+                    : "hover:border-blue-100 hover:bg-blue-100 border-base-200"}`}>
                   <span>{React.createElement(link.icon)}</span>
                   <span>{link.label}</span>
                 </NavLink>
