@@ -7,7 +7,7 @@ const bookOrderSchema = new Schema({
     streetAddress: { type: String, required: true, trim: true },
     phoneNumber: { type: String, required: true, trim: true, match: /^\d{11}$/ },
     orderNotes: { type: String, trim: true },
-    status: { type: String, enum: ["Pending", "Processing", "Shipped", "Delivered", "Canceled"], default: "Pending" },
+    status: { type: String, enum: ["Pending", "Processing", "Delivered", "Canceled"], default: "Pending" },
     deliveryOption: { type: String, enum: ["COD", "At Shop"], required: true },
     bookIds: [
         {

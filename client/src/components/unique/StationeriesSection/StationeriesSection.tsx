@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import SectionHeader from "../../shared/SectionHeader/SectionHeader";
+import Reveal from "../../shared/Reveal/Reveal";
 const stationeries = [
   {
     id: 3,
@@ -55,20 +56,22 @@ const StationeriesSection = () => {
         title="Essential"
         actionText="Stationeries"
         urlLabel="View More"
-        url="/stationeries"
+        url="/stationary"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-3">
         {stationeries?.map((stationary) => (
-          <Link to='/stationary' key={stationary?.id} className="flex flex-col gap-4 items-center justify-center">
-            <figure className="border rounded-full  hover:border-primary-color cursor-pointer hover:shadow-lg duration-500 transition">
-              <div className="border-[24px] rounded-full flex items-center justify-center">
-                <img className='rounded-full h-32 w-32 object-cover ' width={100} height={100} src={stationary.image} alt={""} />
+          <Reveal>
+            <Link to='/stationary' key={stationary?.id} className="flex flex-col gap-4 items-center justify-center">
+              <figure className="border rounded-full  hover:border-primary-color cursor-pointer hover:shadow-lg duration-500 transition">
+                <div className="border-[24px] rounded-full flex items-center justify-center">
+                  <img className='rounded-full h-32 w-32 object-cover ' width={100} height={100} src={stationary.image} alt={""} />
+                </div>
+              </figure>
+              <div>
+                <h2 className="text-lg font-semibold">{stationary.title}</h2>
               </div>
-            </figure>
-            <div>
-              <h2 className="text-lg font-semibold">{stationary.title}</h2>
-            </div>
-          </Link>
+            </Link>
+          </Reveal>
         ))}
       </div>
     </section>

@@ -89,7 +89,7 @@ export const getAllBookOrderController = async (req: Request, res: Response) => 
         }
 
         // Fetch orders with pagination, sorting, and population
-        const orders = await BookOrder.find()
+        const orders = await BookOrder.find({status:{$in:['Pending','Processing']}})
             .select('-__v -bookIds._id') // Exclude unnecessary fields
             .sort({ createdAt: -1 }) // Sort by createdAt in descending order
             .limit(query.limit || 0) // Default to 10 items per page
@@ -159,3 +159,26 @@ export const putBookOrderByIdController = async (req: Request, res: Response) =>
         res.status(400).send({ message: "Failed to update order", error });
     }
 }
+
+export const deleteBookOrderByIdController = async (req: Request, res: Response) => {
+    try {
+        const orderId = req.params.id;
+        if (!orderId) {
+            res.status(400).send({ message: "Order ID is required" });
+            return;
+        }
+
+        const order = await BookOrder.findById(orderId);
+        if (!order) {
+            res.status(404).send({ message: "Order not found" });
+            return;
+        }
+
+        await BookOrder.findByIdAndDelete(orderId);
+
+        res.status(200).send({ message: "Order deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting order by ID:", error); // Log the error for debugging
+        res.status(400).send({ message: "Failed to delete order", error });
+    }
+};

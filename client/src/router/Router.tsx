@@ -47,7 +47,7 @@ const Router = () => {
             element: <DashboardLayout />,
             errorElement: <NotFound isAdmin={true} />,
             children: [
-                { path: '/dashboard/manage-books', element: <Suspense fallback={<LoadingSpinner />}><ManageBooks /></Suspense> },
+                { path: '/dashboard', element: <Suspense fallback={<LoadingSpinner />}><ManageBooks /></Suspense> },
                 { path: '/dashboard/manage-stationers', element: <Suspense fallback={<LoadingSpinner />}><ManageStationers /></Suspense> },
                 {
                     path: '/dashboard/manage-orders',

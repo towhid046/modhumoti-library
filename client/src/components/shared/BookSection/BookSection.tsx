@@ -5,6 +5,7 @@ import SectionHeader from './../SectionHeader/SectionHeader';
 import ViewMoreButton from './../ViewMoreButton/ViewMoreButton';
 import BookCard from './../BookCard/BookCard';
 import { Book } from './../../../lib/commonTypes';
+import Reveal from "../Reveal/Reveal";
 
 interface BookSectionProps {
   category?: string;
@@ -34,11 +35,15 @@ const BookSection = ({
         url="/books"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {books?.map((book, index) => (
-          <BookCard key={index} book={book} />
+        {books?.map((book) => (
+          <Reveal key={book._id}>
+            <BookCard book={book} />
+          </Reveal>
         ))}
       </div>
-      <ViewMoreButton label="More Books" url="/books" />
+      <Reveal>
+        <ViewMoreButton label="More Books" url="/books" />
+      </Reveal>
     </section>
   );
 };

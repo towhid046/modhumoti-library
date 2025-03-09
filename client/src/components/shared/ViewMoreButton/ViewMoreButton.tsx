@@ -9,7 +9,7 @@ const ViewMoreButton = ({ label, url }: ViewMoreButtonProps) => {
   return (
     <div className="flex md:hidden justify-center pt-8 ">
       <Link to={url}>
-        <Button customClass="rounded-full flex items-center gap-4 ">
+        <Button customClass="rounded-md flex items-center gap-4 ">
           <span>{label}</span>
           <FaArrowTrendUp className="text-xl text-base-300" />
         </Button>

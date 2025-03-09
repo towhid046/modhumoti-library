@@ -1,4 +1,5 @@
 import customerSupportImage from "../../../assets/images/customer-support.png";
+import Reveal from "../../shared/Reveal/Reveal";
 import SectionHeader from "../../shared/SectionHeader/SectionHeader";
 import ContactForm from "./ContactForm/ContactForm";
 
@@ -14,11 +15,11 @@ const ContactSection = () => {
         />
 
         <div className="flex flex-col lg:flex-row items-center lg:gap-10 gap-5">
-          <div className="lg:flex-1 w-full">
+          <Reveal className="lg:flex-1 w-full">
             <ContactForm />
-          </div>
+          </Reveal>
 
-          <div className="lg:flex-1 w-full">
+          <Reveal className="lg:flex-1 w-full">
             <div className="flex  justify-center">
               <img
                 src={customerSupportImage}
@@ -26,7 +27,7 @@ const ContactSection = () => {
                 className="md:max-w-96 max-w-80 object-cover"
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>
