@@ -1,6 +1,6 @@
 import useScrollToTop from '../../hooks/useScrollToTop';
 import PageHeader from './../../components/shared/PageHeader/PageHeader';
-import Pagination from './../../components/unique/Pagination/Pagination';
+// import Pagination from './../../components/unique/Pagination/Pagination';
 const stationeries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 const image = `https://images.pexels.com/photos/254717/pexels-photo-254717.jpeg?auto=compress&cs=tinysrgb&w=600`;
 const Stationary = () => {
@@ -38,7 +38,7 @@ const Stationary = () => {
                     ))}
                 </div>
                 <div>
-                    <Pagination />
+                    {/* <Pagination /> */}
                 </div>
             </section>
         </>
