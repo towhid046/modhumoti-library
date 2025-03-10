@@ -46,7 +46,7 @@ const Books = () => {
     return (
         <>
             <PageHeader title="Books" url="/books" />
-            <section className="container mx-auto px-4 mb-32">
+            <section className="container mx-auto px-4 md:mb-20 mb-12">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {books?.map((book) => (
                         <Reveal key={book._id}>

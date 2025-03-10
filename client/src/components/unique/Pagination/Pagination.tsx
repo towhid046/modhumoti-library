@@ -61,7 +61,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, setCur
   };
 
   return (
-    <div className="flex justify-end pt-8">
+    <div className="flex md:justify-end justify-center pt-8">
       <div className="flex flex-col md:flex-row items-center md:gap-5 gap-2">
         <p>Page {currentPage} of {totalPages}</p>
         <div className="flex items-center gap-3">

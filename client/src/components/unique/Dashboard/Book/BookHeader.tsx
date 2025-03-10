@@ -14,7 +14,7 @@ const BookHeader: React.FC<BookHeaderProps> = ({ bookLength, setSearchValue, sea
   return (
     <header className='px-4 items-center flex justify-between py-5 w-full bg-base-200 sticky top-0 z-50'>
       <div>
-        <p className='px-2.5 py-1 rounded-full bg-black text-gray-100 text-sm'>Books: {bookLength}</p>
+        <p className='px-2.5 py-1 rounded-full bg-black text-gray-100 text-sm'>Total books: {bookLength}</p>
       </div>
       <form className="w-80 flex items-center gap-4 relative">
         <label

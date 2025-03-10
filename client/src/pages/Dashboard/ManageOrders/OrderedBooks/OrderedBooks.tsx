@@ -4,16 +4,23 @@ import ErrorElement from '../../../../components/shared/ErrorElement/ErrorElemen
 import LoadingSpinner from '../../../../components/shared/LoadingSpinner/LoadingSpinner';
 import OrderedBooksTable from './../../../../components/unique/Dashboard/ManageBook/OrderedBooksTable';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Pagination from '../../../../components/unique/Pagination/Pagination';
+import useToGetPublicData from '../../../../hooks/useToGetPublicData';
 
 const OrderedBooks = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [orders, setOrders] = useState<BookOrderProps[]>([]);
-
     const axiosSecure = useAxiosSecure()
+
+    const { data } = useToGetPublicData<{ count: number }>('/checkout-book/ordered-book-count')
+
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [bookPerPage, setBookPerPage] = useState<number>(10)
+    const totalPages = Math.ceil((data?.count || 0) / bookPerPage)
 
     const loadBooks = async () => {
         try {
-            const res = await axiosSecure(`/checkout-book`)
+            const res = await axiosSecure(`/checkout-book?limit=${bookPerPage}&skip=${(currentPage - 1) * bookPerPage}`)
             setOrders(res.data)
         } catch (error) {
             console.error(error)
@@ -23,7 +30,7 @@ const OrderedBooks = () => {
     }
     useEffect(() => {
         loadBooks()
-    }, [])
+    }, [currentPage, bookPerPage])
 
     let render = null;
 
@@ -36,10 +43,26 @@ const OrderedBooks = () => {
     }
 
     if (orders?.length) {
-        render = (<OrderedBooksTable
-            orders={orders}
-            refetch={loadBooks}
-        />);
+        render = (
+            <>
+                <OrderedBooksTable
+                    orders={orders}
+                    refetch={loadBooks}
+                />
+                <div className='flex justify-between items-end pb-6 px-6'>
+                    <div className='flex gap-2 items-center'>
+                        <p>Books per page:</p>
+                        <select onChange={(e) => setBookPerPage(Number(e.target.value))} className='border rounded-md py-1 px-2 focus:outline-none' name="" id="">
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
+                    </div>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+                </div>
+            </>
+        );
     }
 
     return (
