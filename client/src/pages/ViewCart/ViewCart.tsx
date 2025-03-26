@@ -118,7 +118,7 @@ const ViewCart = () => {
                     </div>
 
                     {/* Cart Summary */}
-                    <div className="bg-white p-6 rounded-md shadow-md max-h-fit">
+                    <div className="bg-white p-6 rounded-md shadow-md max-h-fit mt-5 md:mt-0">
                         <h2 className="text-lg font-bold border-b pb-2 mb-4">Cart Totals</h2>
                         <div className="flex justify-between border-b pb-2">
                             <span>Subtotal</span>

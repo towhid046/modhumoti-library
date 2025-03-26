@@ -35,6 +35,7 @@ const BookTable: React.FC<BookTableProps> = ({ books, refetch, setIsUpdateBookMo
           });
         }
       } catch (error: any) {
+        console.error(error);
         toast.error('Failed to delete book', {
           autoClose: 2000
         });

@@ -109,3 +109,13 @@ export const getCartItems = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const estimateBookCount = async (req: Request, res: Response) => {
+  try {
+    const count = await Book.estimatedDocumentCount();
+    res.status(200).json({ count });
+  } catch (error) {
+    console.error("Error estimating book count:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
