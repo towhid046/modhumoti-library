@@ -8,6 +8,7 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 import useToGetPublicData from "../../hooks/useToGetPublicData";
 import { Book as BookProp } from './../../lib/commonTypes';
 import ProductCounter from "../../components/shared/ProductCounter/ProductCounter";
+import Button from "../../components/shared/Button/Button";
 
 const Book = () => {
     const { id } = useParams();
@@ -60,7 +61,7 @@ const Book = () => {
                                 <p>Publish: {publisher}</p>
                                 <p>Publish Year: {year}</p>
                                 <p className="text-xl font-bold text-primary-color">
-                                    Price: {price}{" "}
+                                    Price: {price} ৳
                                 </p>
                                 <p>Left: {leftCount} pics</p>
                             </div>
@@ -70,7 +71,7 @@ const Book = () => {
                                 <ProductCounter book={book} />
                                 {/* Buy Now Button */}
                                 <div className="w-full flex-1">
-                                    <BuyNowButton id={_id} />
+                                    {book.leftCount === 0 ? <Button customClass="!w-full !cursor-default !bg-red-400">Out of Stock</Button> : <BuyNowButton id={_id} />}
                                 </div>
                             </div>
                         </div>

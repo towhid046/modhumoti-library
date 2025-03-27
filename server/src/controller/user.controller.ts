@@ -1,11 +1,12 @@
 // dependencies
 import express from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken'
-import { User } from '../models/User.model';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { z } from 'zod';
+import { User } from '../models/User.model';
 import { zodUserSchema } from '../schemas/User.schema';
+import setCookie from '../utils/setCookie';
 
-export const postUserHandler = async (req: express.Request, res: express.Response) => {
+export const registerUserHandler = async (req: express.Request, res: express.Response) => {
     try {
         // ✅ Validate user input with Zod using parse()
         const validUserData = zodUserSchema.parse({ ...req.body, role: "member" });
@@ -21,22 +22,10 @@ export const postUserHandler = async (req: express.Request, res: express.Respons
         }
 
         // ✅ Create new user
-        const newUser = await User.create({ name, email, password, role });
+         await User.create({ name, email, password, role });
 
-        // ✅ Generate JWT token
-        const token = jwt.sign(
-            { id: newUser._id, email: newUser.email },
-            process.env.JWT_SECRET as string,
-            { expiresIn: '7d' }
-        );
-
-        // ✅ Set HTTP-only cookie with the token
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-        });
+        // ✅ Set cookie
+        await setCookie(req,res)
 
         // ✅ Send response
         res.status(200).json({ message: 'User registered successfully!' });
@@ -84,5 +73,24 @@ export const checkAdmin = async (req: express.Request, res: express.Response) =>
         res.status(200).send({isAdmin:true})
     } catch (error) {
         res.status(500).send({ message:"Internal Server Error" });
+    }
+}
+
+export const loginUserHandler = async (req: express.Request, res: express.Response) => {
+    try{
+        setCookie(req,res);
+        res.send({message: "User logged in successfully"});
+    }catch(error){
+        res.status(500).send({message: "Internal Server Error"});
+    }
+}
+
+export const logoutHandler = async (req: express.Request, res: express.Response) => { 
+    try {
+        res.clearCookie('token');
+        res.status(200).send({ message: 'Logged out successfully' });
+    }
+    catch (error) {
+        res.status(500).send({ message: 'Internal Server Error' });
     }
 }
