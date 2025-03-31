@@ -4,7 +4,6 @@ import { departments } from "./sheetData";
 import { toast } from "react-toastify";
 import Button from "../../shared/Button/Button";
 import { IoMdClose } from "react-icons/io";
-import { AiOutlineFullscreen } from "react-icons/ai";
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none transition duration-300 focus:border-primary-color";
@@ -17,17 +16,16 @@ interface InputValue {
   year?: string;
   semester?: string;
   lectureSheets: { id: number; name: string }[];
-  pdfFile?: File;
+  pdfFiles: File[];
 }
 
 const years = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 
 const SheetOrderForm = () => {
-  const { register, handleSubmit, setValue, watch } = useForm<InputValue>();
+  const { register, handleSubmit } = useForm<InputValue>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [lectureSheets, setLectureSheets] = useState([{ id: 1, name: "" }]);
-  const [pdfFile, setPdfFile] = useState<File | null>(null);
-  const [pdfPreview, setPdfPreview] = useState<string | null>(null);
+  const [lectureSheets, setLectureSheets] = useState<{ id: number; name: string }[]>([]);
+  const [pdfFiles, setPdfFiles] = useState<File[]>([]);
 
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     if (!data.name || !data.phone) {
@@ -36,7 +34,7 @@ const SheetOrderForm = () => {
     }
     setIsLoading(true);
     try {
-      console.log(data);
+      console.log({ ...data, pdfFiles });
     } catch (error) {
       console.error(error);
     } finally {
@@ -53,82 +51,95 @@ const SheetOrderForm = () => {
   };
 
   const handlePdfUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setPdfFile(file);
-      setPdfPreview(URL.createObjectURL(file));
+    event.stopPropagation()
+    if (event.target.files) {
+      setPdfFiles([...pdfFiles, ...Array.from(event.target.files)]);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="border rounded-md p-6">
       {/* PDF Upload Section */}
-      {!pdfPreview && (
-        <div className="w-full border-2 border-dashed p-4 text-center">
-          <input type="file" accept="application/pdf" onChange={handlePdfUpload} className="hidden" id="pdf-upload" />
-          <label htmlFor="pdf-upload" className="cursor-pointer">Upload PDF</label>
-        </div>
-      )}
+      <div
+        className={`w-full border-2 border-dashed p-5 text-center ${pdfFiles.length >= 5 && "hidden"}`}>
+        <input
+          type="file"
+          accept="application/pdf"
+          multiple
+          onChange={handlePdfUpload}
+          className="hidden"
+          id="pdf-upload"
+        />
+        <label htmlFor="pdf-upload" className="cursor-pointer bg-indigo-50 bg-opacity-60 py-2.5 px-4 rounded-md text-blue-400 text-lg">+ Upload {pdfFiles.length > 0 && 'another'} PDF</label>
+      </div>
 
-      {/* PDF Preview */}
-      {pdfPreview && (
-        <div className="relative border rounded-md p-4 flex justify-between items-center">
-          <embed src={pdfPreview} className="w-full h-[50vh]" />
-          <div className="absolute top-2 right-2 flex gap-2">
-            <button onClick={() => window.open(pdfPreview, "_blank")}>
-              <AiOutlineFullscreen size={20} />
-            </button>
-            <button onClick={() => setPdfPreview(null)}>
-              <IoMdClose size={20} />
-            </button>
-          </div>
-        </div>
+      {/* PDF Files List */}
+      {pdfFiles.length > 0 && (
+        <ul className="mt-2 space-y-2">
+          {pdfFiles.map((file, index) => (
+            <li key={index} className="flex justify-between items-center border p-2 rounded">
+              {file.name}
+              <span className="cursor-pointer" onClick={() => setPdfFiles(pdfFiles.filter((_, i) => i !== index))}>
+                <IoMdClose size={20} className="text-red-500" />
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
 
       {/* Name & Phone Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div className={inputParentClassName}>
-          <label>Your Name</label>
-          <input {...register("name", { required: true })} type="text" className={commonInputClassName} required />
+          <strong>Your Name</strong>
+          <input {...register("name", { required: true })} type="text" className={commonInputClassName} required placeholder="Your name" />
         </div>
 
         <div className={inputParentClassName}>
-          <label>Your Phone Number</label>
-          <input {...register("phone", { required: true })} type="tel" className={commonInputClassName} required />
+          <strong>Your Phone Number</strong>
+          <input {...register("phone", { required: true })} type="tel" className={commonInputClassName} required placeholder="Phone Number" />
         </div>
       </div>
 
-      {/* Dynamic Lecture Sheet Fields */}
-      <div className="mt-4">
-        {lectureSheets.map((sheet) => (
-          <div key={sheet.id} className="flex gap-2 items-center mb-2">
-            <input type="text" placeholder="Teacher Name & Sheet Number" className={commonInputClassName} required />
-            <button onClick={() => handleRemoveLectureSheet(sheet.id)} className="text-red-500">
-              <IoMdClose size={20} />
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddLectureSheet} className="text-blue-500">
-          + Add Lecture Sheet
-        </button>
-      </div>
+      {/* Add Lecture Sheet Button */}
+      {lectureSheets.length < 5 && <div onClick={handleAddLectureSheet} className="text-blue-500 mt-4 cursor-pointer w-fit">
+        + Add Lecture Sheet
+      </div>}
+
+      {/* Dynamic Lecture Sheet Fields (Hidden Initially) */}
+      {lectureSheets.length > 0 && (
+        <div className="mt-4">
+          {lectureSheets.map((sheet) => (
+            <div key={sheet.id} className="flex gap-2 items-center mb-2">
+              <input
+                type="text"
+                placeholder="Teacher Name & Sheet Number"
+                className={commonInputClassName}
+                required
+              />
+              <button onClick={() => handleRemoveLectureSheet(sheet.id)} className="text-red-500">
+                <IoMdClose size={20} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Department, Year, and Semester (Only if Lecture Sheet is Added) */}
       {lectureSheets.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <select {...register("department")} className={commonInputClassName}>
+          <select {...register("department")} className={commonInputClassName} required>
             <option value="">Select Department</option>
             {departments.map((dept) => (
               <option key={dept.name} value={dept.sortName}>{dept.name}</option>
             ))}
           </select>
-          <select {...register("year")} className={commonInputClassName}>
+          <select {...register("year")} className={commonInputClassName} required>
             <option value="">Select Year</option>
             {years.map((year) => (
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
-          <select {...register("semester")} className={commonInputClassName}>
+          <select {...register("semester")} className={commonInputClassName} required>
             <option value="">Select Semester</option>
             <option value="1st">1st</option>
             <option value="2nd">2nd</option>
