@@ -9,8 +9,8 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
     <Link to={`/books/${_id}`} className='md:h-[450px] border rounded-md transition duration-700 hover:shadow-lg hover:border-primary-color group cursor-pointer flex flex-col justify-between'>
       <div className="px-4 pt-4">
         <figure className="relative rounded-md overflow-hidden cursor-pointer">
-          <div className="absolute right-2 bottom-2 bg-primary-color py-1.5 px-2.5 text-white rounded-full text-xs z-30">
-            {leftCount} Leaf
+          <div className={`absolute right-2 bottom-2 ${leftCount === 0 ? 'bg-red-400' : 'bg-primary-color'} py-1.5 px-2.5 text-white rounded-full text-xs z-30`}>
+            {leftCount === 0 ? <span>Out of stock</span> : <span>{leftCount} Leaf</span>}
           </div>
           <img
             width={100}
@@ -23,7 +23,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         <div className="py-4">
           <h2 className="text-gray-800 text-lg font-semibold">{title}</h2>
           <p className="text-gray-500 text-[14px] italic">By {author}</p>
-          <p className="text-xl font-bold text-primary-color mt-2">{price} BDT</p>
+          <p className="text-xl font-bold text-primary-color mt-2">{price} ৳</p>
         </div>
       </div>
       <div className="bg-blue-200 transition duration-700 lg:py-3 py-2 flex w-full justify-center items-center rounded-b-md cursor-pointer group-hover:bg-primary-color group-hover:text-white">

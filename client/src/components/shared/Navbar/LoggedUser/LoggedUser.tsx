@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../../../hooks/useAuth";
 import LoadingSpinner from "./../../LoadingSpinner/LoadingSpinner";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const LoggedUser = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -11,6 +12,7 @@ const LoggedUser = () => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [profilePic, setProfilePic] = useState<string | null>(null);
+  const axiosPublic = useAxiosPublic()
 
   useEffect(() => {
     if (user?.photoURL) {
@@ -22,6 +24,7 @@ const LoggedUser = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     await logout()
+    await axiosPublic.post("/users/logout")
     navigate("/");
     toast.success("Logout success!");
     if (!user) {

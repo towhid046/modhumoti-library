@@ -4,7 +4,7 @@ import { FiEye } from "react-icons/fi";
 import { GoEyeClosed } from "react-icons/go";
 import { toast } from "react-toastify";
 import Button from './../../shared/Button/Button';
-// import useAxiosPublic from './../../../hooks/useAxiosPublic';
+import useAxiosPublic from './../../../hooks/useAxiosPublic';
 import { useNavigate } from "react-router-dom";
 import useAuth from './../../../hooks/useAuth';
 
@@ -28,19 +28,19 @@ const LoginForm = () => {
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
   const navigate = useNavigate();
   const { login } = useAuth()
-  // const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic()
 
   // Handle form submission
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     setIsLoading(true);
     const { email, password } = data;
     try {
-      // await axiosPublic.post('/users', { email })
       await login(email, password)
+      await axiosPublic.post('/users/login', { email })
       toast.success('Login success!')
       navigate('/')
     } catch (err) {
-      toast.error('Something went wrong!');
+      toast.error('Login failed!');
       console.log(err)
     } finally {
       setIsLoading(false);

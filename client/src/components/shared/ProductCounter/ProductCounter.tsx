@@ -27,7 +27,7 @@ const ProductCounter: React.FC<ProductCounterProps> = ({ book }) => {
             <button
                 className={`w-9 ${path.includes('cart') ? 'h-8 w-7' : 'h-10 w-9'} flex items-center justify-center rounded-r-md disabled:cursor-not-allowed border-l border-gray-300 hover:bg-gray-100 transition-colors duration-200`}
                 onClick={() => incrementCount(_id)}
-                disabled={itemCount?.count === leftCount}
+                disabled={!leftCount || itemCount?.count === leftCount}
             >
                 +
             </button>
