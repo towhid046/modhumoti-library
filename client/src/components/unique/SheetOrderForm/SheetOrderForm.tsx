@@ -4,6 +4,7 @@ import { departments } from "./sheetData";
 import { toast } from "react-toastify";
 import Button from "../../shared/Button/Button";
 import { IoMdClose } from "react-icons/io";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const commonInputClassName =
   "w-full px-3 py-2 border rounded focus:outline-none transition duration-300 focus:border-primary-color";
@@ -27,20 +28,62 @@ const SheetOrderForm = () => {
   const [lectureSheets, setLectureSheets] = useState<{ id: number; name: string }[]>([]);
   const [pdfFiles, setPdfFiles] = useState<File[]>([]);
 
+  const axiosPublic = useAxiosPublic()
+
   const onSubmit: SubmitHandler<InputValue> = async (data) => {
     if (!data.name || !data.phone) {
       toast.error("Name and Phone are required");
       return;
     }
+    if (lectureSheets.length === 0 && pdfFiles.length === 0) {
+      toast.error("Please upload at least one PDF or add a lecture sheet");
+      return;
+    }
+    if (data.phone.length !== 11) {
+      toast.error("Phone number must be 11 digits");
+      return;
+    }
+    if (lectureSheets.length > 0 && (!data.department || !data.year || !data.semester)) {
+      toast.error("Department, Year, and Semester are required");
+      return;
+    }
+
     setIsLoading(true);
+
     try {
-      console.log({ ...data, pdfFiles });
+      // **Creating FormData Object**
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("phone", data.phone);
+      if (data.department) formData.append("department", data.department);
+      if (data.year) formData.append("year", data.year);
+      if (data.semester) formData.append("semester", data.semester);
+
+      // Append lectureSheets as JSON
+      formData.append("lectureSheets", JSON.stringify(lectureSheets));
+
+      // Append files
+      pdfFiles.forEach((file) => {
+        formData.append("pdfFiles", file);
+      });
+
+      const res = await axiosPublic.post(`/order-sheet`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(res.data);
+      toast.success("Submitted successfully!");
+
     } catch (error) {
       console.error(error);
+      toast.error("Failed to submit the order");
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const handleAddLectureSheet = () => {
     setLectureSheets([...lectureSheets, { id: Date.now(), name: "" }]);
@@ -61,7 +104,7 @@ const SheetOrderForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="border rounded-md p-6">
       {/* PDF Upload Section */}
       <div
-        className={`w-full border-2 border-dashed p-5 text-center ${pdfFiles.length >= 5 && "hidden"}`}>
+        className={`w-full border-2 border-dashed md:p-5 p-4 rounded-md text-center ${pdfFiles.length >= 5 && "hidden"}`}>
         <input
           type="file"
           accept="application/pdf"
@@ -69,8 +112,9 @@ const SheetOrderForm = () => {
           onChange={handlePdfUpload}
           className="hidden"
           id="pdf-upload"
+          name="pdfFiles"
         />
-        <label htmlFor="pdf-upload" className="cursor-pointer bg-indigo-50 bg-opacity-60 py-2.5 px-4 rounded-md text-blue-400 text-lg">+ Upload {pdfFiles.length > 0 && 'another'} PDF</label>
+        <label htmlFor="pdf-upload" className="cursor-pointer bg-indigo-50 bg-opacity-60 py-2.5 px-4 rounded-md text-blue-400 md:text-lg hover:bg-indigo-100 hover:text-blue-500 duration-300">+ Upload {pdfFiles.length > 0 && 'another'} PDF</label>
       </div>
 
       {/* PDF Files List */}
@@ -87,6 +131,35 @@ const SheetOrderForm = () => {
         </ul>
       )}
 
+      {/* Add Lecture Sheet Button */}
+      {lectureSheets.length < 5 && <div onClick={handleAddLectureSheet} className="text-blue-500 mt-4 cursor-pointer w-fit">
+        + Add Lecture Sheet
+      </div>}
+
+      {/* Dynamic Lecture Sheet Fields (Hidden Initially) */}
+      {lectureSheets.length > 0 && (
+        <div className="mt-4">
+          {lectureSheets.map((sheet) =>
+            <div key={sheet.id} className="flex gap-2 items-center mb-2">
+              <input
+                type="text"
+                placeholder="Teacher Name & Sheet Number"
+                className={commonInputClassName}
+                onChange={(e) => {
+                  const updatedSheets = lectureSheets.map((s) => (s.id === sheet.id ? { ...s, name: e.target.value } : s));
+                  setLectureSheets(updatedSheets);
+                }
+                }
+                required
+              />
+              <button onClick={() => handleRemoveLectureSheet(sheet.id)} className="text-red-500">
+                <IoMdClose size={20} />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Name & Phone Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <div className={inputParentClassName}>
@@ -99,30 +172,6 @@ const SheetOrderForm = () => {
           <input {...register("phone", { required: true })} type="tel" className={commonInputClassName} required placeholder="Phone Number" />
         </div>
       </div>
-
-      {/* Add Lecture Sheet Button */}
-      {lectureSheets.length < 5 && <div onClick={handleAddLectureSheet} className="text-blue-500 mt-4 cursor-pointer w-fit">
-        + Add Lecture Sheet
-      </div>}
-
-      {/* Dynamic Lecture Sheet Fields (Hidden Initially) */}
-      {lectureSheets.length > 0 && (
-        <div className="mt-4">
-          {lectureSheets.map((sheet) => (
-            <div key={sheet.id} className="flex gap-2 items-center mb-2">
-              <input
-                type="text"
-                placeholder="Teacher Name & Sheet Number"
-                className={commonInputClassName}
-                required
-              />
-              <button onClick={() => handleRemoveLectureSheet(sheet.id)} className="text-red-500">
-                <IoMdClose size={20} />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Department, Year, and Semester (Only if Lecture Sheet is Added) */}
       {lectureSheets.length > 0 && (
