@@ -29,7 +29,7 @@ const BookOrderDetails: React.FC<BookOrderDetailsProps> = ({ orderId, setIsPrevi
                 <div className='space-y-2 text-gray-700'>
                     <p><strong>Order ID:</strong> {book?._id}</p>
                     <p><strong>Order Date:</strong> {formatDateAndTimeByTimestamp(book?.createdAt || Date.now())}</p>
-                    <p><strong>Customer:</strong> {book?.name} {book?.email && (book?.email)}</p>
+                    <p><strong>Customer:</strong> {book?.name} ({book?.email ? book?.email : 'N/A'})</p>
                     <p><strong>Phone:</strong> {book?.phoneNumber}</p>
                     <p><strong>Delivery Address:</strong> {book?.streetAddress}, {book?.area}</p>
                     <p><strong>Delivery Option:</strong> {book?.deliveryOption}</p>

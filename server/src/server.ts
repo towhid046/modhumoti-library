@@ -39,7 +39,7 @@ app.use("/api/v1/order-sheet", sheetOrderRouter);
 // Connect to MongoDB
 connectDB()
 
-app.post("/",  (req, res) => {
+app.get("/",  (req, res) => {
     res.send("Modhumoti Library server is running...");
 });
 
