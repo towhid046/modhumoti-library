@@ -28,3 +28,17 @@ export interface BookOrderProps {
   totalPrice: number;
   createdAt: number;
 }
+
+export interface SheetOrder {
+  _id: string;
+  name: string;
+  phone: string;
+  department: string;
+  year: string;
+  semester: string;
+  lectureSheets: {
+    _id: string;
+    name: string;
+  }[];
+  pdfFiles: string[];
+}

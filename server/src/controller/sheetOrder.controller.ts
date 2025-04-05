@@ -3,6 +3,11 @@ import { SheetOrder } from "../models/SheetOrder.model";
 import cloudinary from "../config/cloudinary";
 import { sheetOrderZodSchema } from "../schemas/SheetOrder.schema";
 
+interface QueryProp {
+  limit?: number;
+  skip?: number;
+}
+
 export const createSheetOrder = async (req: Request, res: Response) => {
 
   try {
@@ -75,3 +80,52 @@ export const createSheetOrder = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const getSheetOrderHandler = async (req: Request, res: Response) => {
+    const query: QueryProp = {}; // Use Partial to make properties optional
+    try {
+        // Parse limit and skip from query params
+        if (req.query?.limit) {
+            const limit = parseInt(req.query.limit as string);
+            if (isNaN(limit)) {
+                res.status(400).send({ message: "Limit must be a number" });
+                return;
+            }
+            query.limit = limit;
+        }
+        if (req.query?.skip) {
+            const skip = parseInt(req.query.skip as string);
+            if (isNaN(skip)) {
+                res.status(400).send({ message: "Skip must be a number" });
+                return;
+            }
+            query.skip = skip;
+        }
+
+        // Fetch orders with pagination, sorting, and population
+        const orders = await SheetOrder.find()
+            .select("-__v -createdAt -updatedAt") // Exclude __v field
+            .limit(query.limit || 0)
+            .skip(query.skip || 0) 
+
+        res.status(200).send(orders);
+    } catch (error) {
+        console.error("Error fetching orders:", error); // Log the error for debugging
+        res.status(400).send({ message: "Failed to fetch orders", error });
+    }
+};
+
+export const getSheetOrderById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const order = await SheetOrder.findById(id);
+        if (!order) {
+            res.status(404).send({ message: "Order not found" });
+            return;
+        }
+        res.status(200).send(order);
+    } catch (error) {
+        console.error("Error fetching order:", error);
+        res.status(400).send({ message: "Failed to fetch order", error });
+    }
+}
