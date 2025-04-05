@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { BookOrderProps } from '../../../../lib/commonTypes';
 import ErrorElement from '../../../../components/shared/ErrorElement/ErrorElement';
 import LoadingSpinner from '../../../../components/shared/LoadingSpinner/LoadingSpinner';
-import OrderedBooksTable from './../../../../components/unique/Dashboard/ManageBook/OrderedBooksTable';
-import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import OrderedBooksTable from '../../../../components/unique/Dashboard/ManageBookOrder/OrderedBooksTable';
 import Pagination from '../../../../components/unique/Pagination/Pagination';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useToGetPublicData from '../../../../hooks/useToGetPublicData';
+import { BookOrderProps } from '../../../../lib/commonTypes';
 
 const OrderedBooks = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
